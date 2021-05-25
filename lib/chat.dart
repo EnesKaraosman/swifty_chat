@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'chat-message-list-items/image_widget.dart';
-import 'chat-message-list-items/text_widget.dart';
+import 'chat_list_item.dart';
+import 'models/chat_message.dart';
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 Random _rnd = Random();
@@ -15,13 +15,11 @@ extension RangeExtension on int {
 }
 
 class Chat extends StatelessWidget {
-  List<ChatMessage> _items = 1.to(100).map((num) {
-    if (num % 7 == 0) {
-      return ChatMessage.image('https://picsum.photos/300/200');
-    } else {
-      return ChatMessage.text(getRandomString(Random().nextInt(40)));
-    }
-  }).toList();
+  List<ChatMessage> items = [];
+
+  Function? onQuickReplyItemPressed;
+
+  Chat({required this.items, this.onQuickReplyItemPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -30,41 +28,14 @@ class Chat extends StatelessWidget {
 
   Widget get _chatList {
     return ListView.builder(
-      itemCount: _items.length,
+      itemCount: items.length,
       itemBuilder: (BuildContext context, int index) {
-        return ChatListItem(_items[index]);
+        return ChatListItem(
+          chatMessage: items[index],
+          onQuickReplyItemPressed: onQuickReplyItemPressed,
+        );
       }
     );
   }
 }
 
-class ChatMessage {
-  String? id;
-  bool isMe = Random().nextBool();
-
-  String? text;
-  String? imageURL;
-
-  ChatMessage.text(String text): text = text;
-  ChatMessage.image(String imageURL): imageURL = imageURL;
-}
-
-class ChatListItem extends StatelessWidget {
-  final ChatMessage _chatMessage;
-
-  ChatListItem(this._chatMessage);
-  
-  @override
-  Widget build(BuildContext context) {
-    return _messageWidget;
-  }
-  
-  Widget get _messageWidget {
-    if (_chatMessage.text != null) {
-      return TextMessageWidget(_chatMessage);
-    } else if (_chatMessage.imageURL != null) {
-      return ImageMessageWidget(_chatMessage);
-    }
-    return Text("Unknown type");
-  }
-}

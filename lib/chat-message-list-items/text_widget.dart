@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/chat.dart';
 import 'package:styled_widget/styled_widget.dart';
+
+import 'package:flutter_chat/models/chat_message.dart';
 
 class TextMessageWidget extends StatelessWidget {
   final ChatMessage _chatMessage;
