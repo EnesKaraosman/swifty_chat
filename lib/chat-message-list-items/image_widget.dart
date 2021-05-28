@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/models/chat_message.dart';
+import 'package:flutter_chat/models/message.dart';
 
 class ImageMessageWidget extends StatelessWidget {
-  final ChatMessage _chatMessage;
+  final Message _chatMessage;
 
   ImageMessageWidget(this._chatMessage);
 
@@ -16,7 +16,7 @@ class ImageMessageWidget extends StatelessWidget {
         //   height: 200,
         // ),
         Image(
-          image: NetworkImage(_chatMessage.imageURL!),
+          image: NetworkImage(_chatMessage.messageKind.imageURL!),
           // height: 200,
           width: _imageWidth(context),
         )

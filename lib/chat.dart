@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'chat_list_item.dart';
-import 'models/chat_message.dart';
+import 'models/message.dart';
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 Random _rnd = Random();
@@ -15,7 +15,7 @@ extension RangeExtension on int {
 }
 
 class Chat extends StatelessWidget {
-  List<ChatMessage> items = [];
+  List<Message> items = [];
 
   Function? onQuickReplyItemPressed;
 

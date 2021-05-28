@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_chat/models/chat_message.dart';
+import 'package:flutter_chat/models/message.dart';
 
 class QuickReplyWidget extends StatelessWidget {
-  final ChatMessage chatMessage;
+  final Message chatMessage;
   final Function? onQuickReplyItemPressed;
 
   const QuickReplyWidget(
@@ -17,7 +17,7 @@ class QuickReplyWidget extends StatelessWidget {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
-            ...chatMessage.quickReplies.map((qr) {
+            ...chatMessage.messageKind.quickReplies.map((qr) {
               return OutlinedButton(
                 child: Text(qr.title),
                 onPressed: () => onQuickReplyItemPressed?.call(qr),
