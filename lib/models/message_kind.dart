@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_chat/models/IQuickReplyItem.dart';
 
 class MessageKind {
