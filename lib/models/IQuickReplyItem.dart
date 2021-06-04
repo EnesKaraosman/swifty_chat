@@ -1,7 +1,7 @@
 abstract class IQuickReplyItem {
-  String title;
-  String? payload;
-  String? url;
+  final String title;
+  final String? payload;
+  final String? url;
 
-  IQuickReplyItem({required this.title, this.payload, this.url});
+  const IQuickReplyItem({required this.title, this.payload, this.url});
 }

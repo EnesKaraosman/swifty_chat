@@ -11,10 +11,24 @@ class TextMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      Text(_chatMessage.messageKind.text!).padding(all: 8).card()
+      if (_chatMessage.isMe)
+        SizedBox(width: 20,),
+
+      Flexible( //newly added
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+            child: Text(_chatMessage.messageKind.text!, softWrap: true,)
+                .padding(all: 8)
+                .card(),
+          )
+      ),
+
+      if (!_chatMessage.isMe)
+        SizedBox(width: 20,)
+      
     ],
       mainAxisAlignment:
-          _chatMessage.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      _chatMessage.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
     );
   }
 }
