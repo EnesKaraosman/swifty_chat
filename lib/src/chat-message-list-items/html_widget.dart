@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/models/message.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
+
+import '../models/message.dart';
 
 class HTMLWidget extends StatelessWidget {
   final Message chatMessage;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_chat/models/message.dart';
-import 'package:flutter_chat/models/IQuickReplyItem.dart';
+import '../models/message.dart';
+import '../models/quick_reply_item.dart';
 
 class QuickReplyWidget extends StatelessWidget {
   final Message chatMessage;
-  final void Function(IQuickReplyItem)? onQuickReplyItemPressed;
+  final void Function(QuickReplyItem)? onQuickReplyItemPressed;
 
   const QuickReplyWidget(
       {required this.chatMessage,

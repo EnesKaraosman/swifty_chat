@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-import 'package:flutter_chat/models/message.dart';
+import '../models/message.dart';
 
 class TextMessageWidget extends StatelessWidget {
   final Message _chatMessage;
@@ -25,7 +25,7 @@ class TextMessageWidget extends StatelessWidget {
 
       if (!_chatMessage.isMe)
         SizedBox(width: 20,)
-      
+
     ],
       mainAxisAlignment:
       _chatMessage.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,

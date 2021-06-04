@@ -1,8 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'chat_list_item.dart';
-import 'models/message.dart';
-import 'models/IQuickReplyItem.dart';
+
+import '../src/chat_list_item.dart';
+import '../src/models/message.dart';
+import '../src/models/quick_reply_item.dart';
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 Random _rnd = Random();
@@ -19,11 +20,11 @@ extension RangeExtension on int {
 class Chat extends StatelessWidget {
   List<Message> items = [];
 
-  void Function(IQuickReplyItem)? _onQuickReplyItemPressed;
+  void Function(QuickReplyItem)? _onQuickReplyItemPressed;
 
   Chat({required this.items});
 
-  Chat setOnQuickReplyItemPressed(void Function(IQuickReplyItem)? fn) {
+  Chat setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
     _onQuickReplyItemPressed = fn;
     return this;
   }

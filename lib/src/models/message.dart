@@ -1,5 +1,5 @@
-import 'package:flutter_chat/models/chat_user.dart';
-import 'package:flutter_chat/models/message_kind.dart';
+import '../models/message_kind.dart';
+import '../models/chat_user.dart';
 
 abstract class Message {
   final ChatUser user;
