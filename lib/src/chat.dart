@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/html_parser.dart';
 
 import '../src/chat_list_item.dart';
 import '../src/models/message.dart';
@@ -21,11 +22,17 @@ class Chat extends StatelessWidget {
   List<Message> items = [];
 
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
+  Map<String, OnTap> Function()? _onHtmlWidgetPressed;
 
   Chat({required this.items});
 
   Chat setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
     _onQuickReplyItemPressed = fn;
+    return this;
+  }
+
+  Chat setOnHTMLWidgetPressed(Map<String, OnTap> Function()? fn) {
+    _onHtmlWidgetPressed = fn;
     return this;
   }
 
@@ -39,7 +46,8 @@ class Chat extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
           return ChatListItem(chatMessage: items[index])
-              .setOnQuickReplyItemPressed(_onQuickReplyItemPressed);
+            .setOnQuickReplyItemPressed(_onQuickReplyItemPressed)
+            .setOnHtmlWidgetPressed(_onHtmlWidgetPressed);
         }
     );
   }

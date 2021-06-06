@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/html_parser.dart';
 
 import '../src/models/message.dart';
 import '../src/models/quick_reply_item.dart';
@@ -11,9 +12,15 @@ class ChatListItem extends StatelessWidget {
   final Message chatMessage;
 
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
+  Map<String, OnTap> Function()? _onHtmlWidgetPressed;
 
   ChatListItem setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
     _onQuickReplyItemPressed = fn;
+    return this;
+  }
+
+  ChatListItem setOnHtmlWidgetPressed(Map<String, OnTap> Function()? fn) {
+    _onHtmlWidgetPressed = fn;
     return this;
   }
 
@@ -35,6 +42,9 @@ class ChatListItem extends StatelessWidget {
         onQuickReplyItemPressed: _onQuickReplyItemPressed,
       );
     }
-    return HTMLWidget(chatMessage: chatMessage);
+    return HTMLWidget(
+      chatMessage: chatMessage,
+      onHtmlWidgetPressed: _onHtmlWidgetPressed,
+    );
   }
 }
