@@ -6,8 +6,8 @@ class MessageKind {
   List<QuickReplyItem> quickReplies = [];
   String? htmlData;
 
-  MessageKind.text(String text): text = text;
-  MessageKind.image(String imageURL): imageURL = imageURL;
-  MessageKind.quickReply(List<QuickReplyItem> quickReplies): quickReplies = quickReplies;
-  MessageKind.html(String html): htmlData = html;
+  MessageKind.text(this.text);
+  MessageKind.image(this.imageURL);
+  MessageKind.quickReply(this.quickReplies);
+  MessageKind.html(this.htmlData);
 }

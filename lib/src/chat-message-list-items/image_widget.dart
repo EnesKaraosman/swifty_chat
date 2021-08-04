@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../chat.dart';
 import '../models/message.dart';
 
 class ImageMessageWidget extends StatelessWidget {
   final Message _chatMessage;
 
-  ImageMessageWidget(this._chatMessage);
+  const ImageMessageWidget(this._chatMessage);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment:
+          _chatMessage.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         // CachedNetworkImage(
         //   imageUrl: _chatMessage.imageURL!,
@@ -22,8 +25,6 @@ class ImageMessageWidget extends StatelessWidget {
           width: _imageWidth(context),
         )
       ],
-      mainAxisAlignment:
-          _chatMessage.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
     );
   }
 
@@ -32,6 +33,7 @@ class ImageMessageWidget extends StatelessWidget {
   }
 
   double _imageWidth(BuildContext context) {
-    return _availableWidth(context) * 0.6;
+    final availableWidth = _availableWidth(context);
+    return ChatState.of(context).messageCellSizeConfigurator.imageCellMaxWidthConfiguration(availableWidth);
   }
 }

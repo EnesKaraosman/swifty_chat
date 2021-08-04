@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
+import '../chat.dart';
 import '../models/message.dart';
 import '../models/quick_reply_item.dart';
 
 class QuickReplyWidget extends StatelessWidget {
   final Message chatMessage;
-  final void Function(QuickReplyItem)? onQuickReplyItemPressed;
 
-  const QuickReplyWidget({required this.chatMessage,
-    this.onQuickReplyItemPressed});
+  const QuickReplyWidget({
+    required this.chatMessage
+  });
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
-      children: _buttons,).padding(all: 8);
+      children: _buttons(context),).padding(all: 8);
   }
 
-  List<Widget> get _buttons {
+  List<Widget> _buttons(BuildContext context) {
     return chatMessage.messageKind.quickReplies.map((qr) =>
         OutlinedButton(
+          onPressed: () => ChatState.of(context).onQuickReplyItemPressed?.call(qr),
           child: Text(qr.title),
-          onPressed: () => onQuickReplyItemPressed?.call(qr),
         )
     ).toList();
   }

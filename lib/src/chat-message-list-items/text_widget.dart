@@ -6,29 +6,37 @@ import '../models/message.dart';
 class TextMessageWidget extends StatelessWidget {
   final Message _chatMessage;
 
-  TextMessageWidget(this._chatMessage);
+  const TextMessageWidget(this._chatMessage);
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      if (_chatMessage.isMe)
-        SizedBox(width: 20,),
+    final cardTheme = Theme.of(context).cardTheme;
 
-      Flexible( //newly added
-          child: Container(
-            padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-            child: Text(_chatMessage.messageKind.text!, softWrap: true,)
-                .padding(all: 8)
-                .card(),
-          )
-      ),
-
-      if (!_chatMessage.isMe)
-        SizedBox(width: 20,)
-
-    ],
+    return Row(
       mainAxisAlignment:
-      _chatMessage.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          _chatMessage.isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        if (_chatMessage.isMe)
+          const SizedBox(
+            width: 20,
+          ),
+        Flexible(
+            //newly added
+            child: Container(
+          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+          child: Text(
+            _chatMessage.messageKind.text!,
+            softWrap: true,
+            style: Theme.of(context).textTheme.bodyText1,
+          )
+              .padding(all: 8)
+              .card(color: cardTheme.color, margin: cardTheme.margin),
+        )),
+        if (!_chatMessage.isMe)
+          const SizedBox(
+            width: 20,
+          )
+      ],
     );
   }
 }

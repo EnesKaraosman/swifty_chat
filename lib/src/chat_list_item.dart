@@ -11,19 +11,13 @@ import '../src/chat-message-list-items/html_widget.dart';
 class ChatListItem extends StatelessWidget {
   final Message chatMessage;
 
-  void Function(QuickReplyItem)? _onQuickReplyItemPressed;
-  Map<String, OnTap> Function()? _onHtmlWidgetPressed;
-
-  ChatListItem setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
-    _onQuickReplyItemPressed = fn;
-    return this;
-  }
-
-  ChatListItem setOnHtmlWidgetPressed(Map<String, OnTap> Function()? fn) {
-    _onHtmlWidgetPressed = fn;
-    return this;
-  }
-
+  // Map<String, OnTap> Function()? _onHtmlWidgetPressed;
+  //
+  // ChatListItem setOnHtmlWidgetPressed(Map<String, OnTap> Function()? fn) {
+  //   _onHtmlWidgetPressed = fn;
+  //   return this;
+  // }
+  
   ChatListItem({required this.chatMessage});
 
   @override
@@ -39,12 +33,13 @@ class ChatListItem extends StatelessWidget {
     } else if (chatMessage.messageKind.quickReplies.isNotEmpty) {
       return QuickReplyWidget(
         chatMessage: chatMessage,
-        onQuickReplyItemPressed: _onQuickReplyItemPressed,
+      );
+    } else if (chatMessage.messageKind.htmlData != null) {
+      return HTMLWidget(
+        chatMessage: chatMessage,
+        // onHtmlWidgetPressed: _onHtmlWidgetPressed,
       );
     }
-    return HTMLWidget(
-      chatMessage: chatMessage,
-      onHtmlWidgetPressed: _onHtmlWidgetPressed,
-    );
+    return Text('Undetermined MessageKind');
   }
 }
