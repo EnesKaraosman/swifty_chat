@@ -11,13 +11,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  styled_widget: ^0.3.1
   flutter_html: ^2.0.0
+  styled_widget: ^0.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  lint: ^1.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
