@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/html_parser.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 import '../src/chat_list_item.dart';
 import '../src/message_cell_size_configurator.dart';
@@ -14,11 +17,11 @@ class ChatState extends InheritedWidget {
   final Widget child;
 
   ChatState({
-    this.key,
-    this.onHtmlWidgetPressed,
-    this.onQuickReplyItemPressed,
-    required this.messageCellSizeConfigurator,
-    required this.child
+      this.key,
+      this.onHtmlWidgetPressed,
+      this.onQuickReplyItemPressed,
+      required this.messageCellSizeConfigurator,
+      required this.child
   }) : super(key: key, child: child);
 
   static ChatState of(BuildContext context) {
@@ -32,21 +35,27 @@ class ChatState extends InheritedWidget {
   bool updateShouldNotify(ChatState oldWidget) => false;
 }
 
-class Chat extends StatelessWidget {
-  List<Message> items = [];
+class Chat extends StatefulWidget {
+  List<Message> messages = [];
   ThemeData? lightTheme;
   ThemeData? darkTheme;
+  Widget chatMessageInputField;
 
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
+
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
   Map<String, OnTap> Function()? _onHtmlWidgetPressed;
 
   Chat({
-    required this.items,
+    required this.messages,
     required this.messageCellSizeConfigurator,
+    required this.chatMessageInputField,
     this.lightTheme,
     this.darkTheme,
   });
+
+  @override
+  _ChatState createState() => _ChatState();
 
   Chat setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
     _onQuickReplyItemPressed = fn;
@@ -57,30 +66,33 @@ class Chat extends StatelessWidget {
     _onHtmlWidgetPressed = fn;
     return this;
   }
+}
+
+class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: Scaffold(
-        body: ChatState(
-          messageCellSizeConfigurator: messageCellSizeConfigurator,
-          onHtmlWidgetPressed: _onHtmlWidgetPressed,
-          onQuickReplyItemPressed: _onQuickReplyItemPressed,
-          child: _chatList,
-        ),
+    return Scaffold(
+      body: ChatState(
+        messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
+        onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
+        onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
+        child: Column(
+          children: [
+            _chatList(),
+            widget.chatMessageInputField
+          ],
+        ).gestures(onTap: () => FocusScope.of(context).unfocus()),
       ),
     );
   }
 
-  Widget get _chatList {
-    return ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ChatListItem(chatMessage: items[index]);
-              // .setOnHtmlWidgetPressed(_onHtmlWidgetPressed);
-        });
-  }
+  Widget _chatList() => Expanded(
+        child: ListView.builder(
+            // (reverse: true) Helps to scroll content automatically when keyboard opens
+            reverse: true,
+            itemCount: widget.messages.length,
+            itemBuilder: (BuildContext context, int index) =>
+                ChatListItem(chatMessage: widget.messages[index])),
+      );
 }

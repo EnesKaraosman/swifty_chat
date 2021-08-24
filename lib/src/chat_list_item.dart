@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/html_parser.dart';
 
-import '../src/models/message.dart';
-import '../src/models/quick_reply_item.dart';
-import '../src/chat-message-list-items/text_widget.dart';
+import '../src/chat-message-list-items/html_widget.dart';
 import '../src/chat-message-list-items/image_widget.dart';
 import '../src/chat-message-list-items/quick_reply_widget.dart';
-import '../src/chat-message-list-items/html_widget.dart';
+import '../src/chat-message-list-items/text_widget.dart';
+import '../src/models/message.dart';
 
 class ChatListItem extends StatelessWidget {
   final Message chatMessage;
@@ -18,7 +16,7 @@ class ChatListItem extends StatelessWidget {
   //   return this;
   // }
   
-  ChatListItem({required this.chatMessage});
+  const ChatListItem({required this.chatMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +38,6 @@ class ChatListItem extends StatelessWidget {
         // onHtmlWidgetPressed: _onHtmlWidgetPressed,
       );
     }
-    return Text('Undetermined MessageKind');
+    return const Text('Undetermined MessageKind');
   }
 }

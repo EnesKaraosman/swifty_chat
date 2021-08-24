@@ -23,42 +23,68 @@ class _MyAppState extends State<MyApp> {
   EKChatUser get randomUser => Random().nextBool() ? incoming : outgoing;
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _messages.addAll(generateRandomMessages());
+    });
+  }
+
+  late Chat chatView;
+
+  @override
   Widget build(BuildContext context) {
+    chatView = _chatWidget(context);
     return MaterialApp(
       title: 'Flutter Chat',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      theme: AppTheme.light(context),
+      darkTheme: AppTheme.dark(context),
+      debugShowCheckedModeBanner: false,
       home: MaterialApp(
         home: Scaffold(
           appBar: AppBar(
             title: const Text('Flutter Chat Example'),
           ),
-          body: _chatWidget,
+          body: chatView,
         ),
       ),
     );
   }
 
-  Widget get _chatWidget {
-    return Chat(
-      lightTheme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      items: _messages,
-      messageCellSizeConfigurator: MessageCellSizeConfigurator.defaultConfiguration,
-    ).setOnHTMLWidgetPressed(() => {
-      "onLinkTap": (url, _, __, ___) {
-        print("onLinkTapped: $url");
-      },
-      "onImageTap": (src, _, __, ___) {
-        print("onImageTapped: $src");
-      }
-    }).setOnQuickReplyItemPressed((item) {
-        print(item.title);
-      },
-    );
-  }
+  Chat _chatWidget(BuildContext context) => Chat(
+    lightTheme: AppTheme.light(context),
+    darkTheme: AppTheme.dark(context),
+    messages: _messages,
+    messageCellSizeConfigurator: MessageCellSizeConfigurator.defaultConfiguration,
+    chatMessageInputField: MessageInputField(sendButtonTapped: (msg) {
+      print(msg);
+      setState(() {
+        final message = EKMessage(
+          user: randomUser,
+          id: DateTime.now().toString(),
+          isMe: Random().nextBool(),
+          messageKind: MessageKind.text(msg),
+        );
+        // _messages.insert(0, message);
+        _messages.add(message);
+        // chatView.scrollToBottom();
+      });
+    },),
+  ).setOnHTMLWidgetPressed(() => {
+    "onLinkTap": (url, _, __, ___) {
+      print("onLinkTapped: $url");
+    },
+    "onImageTap": (src, _, __, ___) {
+      print("onImageTapped: $src");
+    }
+  }).setOnQuickReplyItemPressed((item) {
+      print(item.title);
+    },
+  );
 
-  List<EKMessage> get _messages => 1.to(100).map((idx) {
+  final List<EKMessage> _messages = [];
+
+  List<EKMessage> generateRandomMessages() => 1.to(100).map((idx) {
     if (idx % 7 == 0) {
       return EKMessage(
         user: randomUser,

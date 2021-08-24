@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-import '../chat.dart';
 import '../models/message.dart';
 
 class HTMLWidget extends StatelessWidget {
@@ -27,12 +26,14 @@ class HTMLWidget extends StatelessWidget {
     // Map<String, OnTap> Function()? functions = ChatState.of(context).onHtmlWidgetPressed?.call();
     // _onLinkTap = functions["onLinkTap"];
     // _onImageTap = functions["onImageTap"];
-    return Flexible(
-      child: Html(
-        data: chatMessage.messageKind.htmlData,
-        onLinkTap: _onLinkTap,
-        onImageTap: _onImageTap,
-      ).padding(all: 8).card(),
-    );
+    // return Wrap(
+    //   children: [
+        return Html(
+          data: chatMessage.messageKind.htmlData,
+          onLinkTap: _onLinkTap,
+          onImageTap: _onImageTap,
+        ).padding(all: 8).card();
+    //   ],
+    // );
   }
 }

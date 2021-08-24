@@ -20,9 +20,7 @@ class TextMessageWidget extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-        Flexible(
-            //newly added
-            child: Container(
+        Container(
           padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
           child: Text(
             _chatMessage.messageKind.text!,
@@ -31,7 +29,7 @@ class TextMessageWidget extends StatelessWidget {
           )
               .padding(all: 8)
               .card(color: cardTheme.color, margin: cardTheme.margin),
-        )),
+        ).flexible(),
         if (!_chatMessage.isMe)
           const SizedBox(
             width: 20,

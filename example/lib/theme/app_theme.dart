@@ -9,32 +9,50 @@ import 'package:google_fonts/google_fonts.dart';
 * outlinedButtonTheme: quick reply button theme (MessageKind.quickReply)
 * */
 
-class AppTheme {
-  static var light = ThemeData.light().copyWith(
+const kPrimaryColor = Color(0xFF00BF6D);
+const kSecondaryColor = Color(0xFFFE9901);
+const kContentColorLightTheme = Color(0xFF1D1D35);
+const kContentColorDarkTheme = Color(0xFFF5FCF9);
+const kWarningColor = Color(0xFFF3BB1C);
+const kErrorColor = Color(0xFFF03738);
+
+mixin AppTheme {
+  static ThemeData light(BuildContext context) => ThemeData.light().copyWith(
+    primaryColor: kPrimaryColor,
     scaffoldBackgroundColor: Colors.lightGreen[30],
-    cardTheme: CardTheme(color: Colors.orange[50]),
-    textTheme: TextTheme(
-      bodyText1: GoogleFonts.sourceCodePro().copyWith(color: Colors.black87),
+    iconTheme: const IconThemeData(color: kContentColorLightTheme),
+    // cardTheme: CardTheme(color: kPrimaryColor.withOpacity(0.1)),
+    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
+        .apply(bodyColor: kContentColorLightTheme),
+    colorScheme: const ColorScheme.light(
+      primary: kPrimaryColor,
+      secondary: kSecondaryColor,
+      error: kErrorColor,
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
-          textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontWeight: FontWeight.bold))
+          textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.bold))
       ),
     ),
   );
 
-  static var dark = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Colors.black.withOpacity(0.83),
-    cardTheme:
-        CardTheme(color: Color(0xFF3B3F41), margin: const EdgeInsets.all(8)),
-    textTheme: TextTheme(
-      bodyText1: GoogleFonts.lato().copyWith(color: Colors.white),
+  static ThemeData dark(BuildContext context) => ThemeData.dark().copyWith(
+    primaryColor: kPrimaryColor,
+    scaffoldBackgroundColor: kContentColorLightTheme,
+    iconTheme: const IconThemeData(color: kContentColorDarkTheme),
+    cardTheme: const CardTheme(color: Color(0xFF3B3F41), margin: EdgeInsets.all(8)),
+    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
+        .apply(bodyColor: kContentColorDarkTheme),
+    colorScheme: const ColorScheme.dark().copyWith(
+      primary: kPrimaryColor,
+      secondary: kSecondaryColor,
+      error: kErrorColor,
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
         foregroundColor: MaterialStateProperty.all<Color>(Colors.pink),
-        textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(fontWeight: FontWeight.bold))
+        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.bold))
       ),
     ),
   );
