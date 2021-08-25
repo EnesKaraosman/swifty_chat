@@ -17,11 +17,11 @@ class ChatState extends InheritedWidget {
   final Widget child;
 
   ChatState({
-      this.key,
-      this.onHtmlWidgetPressed,
-      this.onQuickReplyItemPressed,
-      required this.messageCellSizeConfigurator,
-      required this.child
+    this.key,
+    this.onHtmlWidgetPressed,
+    this.onQuickReplyItemPressed,
+    required this.messageCellSizeConfigurator,
+    required this.child,
   }) : super(key: key, child: child);
 
   static ChatState of(BuildContext context) {
@@ -49,7 +49,7 @@ class Chat extends StatefulWidget {
     required this.messages,
     required this.messageCellSizeConfigurator,
     required this.chatMessageInputField,
-    this.theme
+    this.theme,
   });
 
   @override
@@ -67,33 +67,28 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: widget.theme ?? ThemeData.light(),
-      child: Scaffold(
-        body: ChatState(
-          messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
-          onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
-          onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
-          child: Column(
-            children: [
-              _chatList(),
-              widget.chatMessageInputField
-            ],
-          ).gestures(onTap: () => FocusScope.of(context).unfocus()),
+      child: ChatState(
+        messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
+        onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
+        onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
+        child: Column(
+          children: [_chatList(), widget.chatMessageInputField],
+        ).gestures(
+          onTap: () => FocusScope.of(context).unfocus(),
         ),
       ),
     );
   }
 
-  Widget _chatList() => Expanded(
-        child: ListView.builder(
-            // (reverse: true) Helps to scroll content automatically when keyboard opens
-            reverse: true,
-            itemCount: widget.messages.length,
-            itemBuilder: (BuildContext context, int index) =>
-                ChatListItem(chatMessage: widget.messages[index])),
-      );
+  Widget _chatList() => ListView.builder(
+        // (reverse: true) Helps to scroll content automatically when keyboard opens
+        reverse: true,
+        itemCount: widget.messages.length,
+        itemBuilder: (BuildContext context, int index) =>
+            ChatListItem(chatMessage: widget.messages[index]),
+      ).expanded();
 }

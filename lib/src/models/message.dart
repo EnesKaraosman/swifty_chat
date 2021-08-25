@@ -11,6 +11,6 @@ abstract class Message {
     required this.user,
     required this.id,
     required this.isMe,
-    required this.messageKind
+    required this.messageKind,
   });
 }

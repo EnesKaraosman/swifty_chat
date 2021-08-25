@@ -15,8 +15,10 @@ class ChatListItem extends StatelessWidget {
   //   _onHtmlWidgetPressed = fn;
   //   return this;
   // }
-  
-  const ChatListItem({required this.chatMessage});
+
+  const ChatListItem({
+    required this.chatMessage,
+  });
 
   @override
   Widget build(BuildContext context) {

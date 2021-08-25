@@ -54,7 +54,10 @@ class _MyAppState extends State<MyApp> {
                   isLightThemeActive = !isLightThemeActive;
                 });
               },
-              child: const Text('Change Theme', style: TextStyle(color: Colors.white),),
+              child: const Text(
+                'Change Theme',
+                style: TextStyle(color: Colors.white),
+              ),
             )
           ],
         ),
@@ -81,9 +84,7 @@ class _MyAppState extends State<MyApp> {
                   isMe: Random().nextBool(),
                   messageKind: MessageKind.text(msg),
                 );
-                // _messages.insert(0, message);
                 _messages.add(message);
-                // chatView.scrollToBottom();
               },
             );
           },
@@ -103,41 +104,43 @@ class _MyAppState extends State<MyApp> {
             (item) => debugPrint(item.title),
           );
 
-  List<EKMessage> generateRandomMessages() => 1.to(100).map((idx) {
-        if (idx % 7 == 0) {
-          return EKMessage(
-            user: randomUser,
-            id: DateTime.now().toString(),
-            isMe: Random().nextBool(),
-            messageKind: MessageKind.image('https://picsum.photos/300/200'),
-          );
-        } else if (idx % 13 == 0) {
-          return EKMessage(
-            user: randomUser,
-            id: DateTime.now().toString(),
-            isMe: Random().nextBool(),
-            messageKind: MessageKind.quickReply(
-              List.generate(
-                Random().nextInt(7),
-                (index) => EKQuickReplyItem(title: "Option $index"),
+  List<EKMessage> generateRandomMessages() => 1.to(100).map(
+        (idx) {
+          if (idx % 7 == 0) {
+            return EKMessage(
+              user: randomUser,
+              id: DateTime.now().toString(),
+              isMe: Random().nextBool(),
+              messageKind: MessageKind.image('https://picsum.photos/300/200'),
+            );
+          } else if (idx % 13 == 0) {
+            return EKMessage(
+              user: randomUser,
+              id: DateTime.now().toString(),
+              isMe: Random().nextBool(),
+              messageKind: MessageKind.quickReply(
+                List.generate(
+                  Random().nextInt(7),
+                  (index) => EKQuickReplyItem(title: "Option $index"),
+                ),
               ),
-            ),
-          );
-        } else if (idx == 17) {
-          return EKMessage(
-            user: randomUser,
-            id: DateTime.now().toString(),
-            isMe: Random().nextBool(),
-            messageKind: MessageKind.html(htmlData),
-          );
-        } else {
-          return EKMessage(
-            user: randomUser,
-            id: DateTime.now().toString(),
-            isMe: Random().nextBool(),
-            messageKind:
-                MessageKind.text(getRandomString(1 + Random().nextInt(40))),
-          );
-        }
-      }).toList();
+            );
+          } else if (idx == 17) {
+            return EKMessage(
+              user: randomUser,
+              id: DateTime.now().toString(),
+              isMe: Random().nextBool(),
+              messageKind: MessageKind.html(htmlData),
+            );
+          } else {
+            return EKMessage(
+              user: randomUser,
+              id: DateTime.now().toString(),
+              isMe: Random().nextBool(),
+              messageKind:
+                  MessageKind.text(getRandomString(1 + Random().nextInt(40))),
+            );
+          }
+        },
+      ).toList();
 }

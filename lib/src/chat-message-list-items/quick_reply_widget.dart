@@ -8,22 +8,24 @@ class QuickReplyWidget extends StatelessWidget {
   final Message chatMessage;
 
   const QuickReplyWidget({
-    required this.chatMessage
+    required this.chatMessage,
   });
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
-      children: _buttons(context),).padding(all: 8);
+      children: _buttons(context),
+    ).padding(all: 8);
   }
 
   List<Widget> _buttons(BuildContext context) {
-    return chatMessage.messageKind.quickReplies.map((qr) =>
-        OutlinedButton(
-          onPressed: () => ChatState.of(context).onQuickReplyItemPressed?.call(qr),
-          child: Text(qr.title),
-        )
-    ).toList();
+    return chatMessage.messageKind.quickReplies
+        .map((qr) => OutlinedButton(
+              onPressed: () =>
+                  ChatState.of(context).onQuickReplyItemPressed?.call(qr),
+              child: Text(qr.title),
+            ))
+        .toList();
   }
 }
