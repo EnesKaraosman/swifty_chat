@@ -3,7 +3,6 @@ import 'package:styled_widget/styled_widget.dart';
 
 import '../chat.dart';
 import '../models/message.dart';
-import '../models/quick_reply_item.dart';
 
 class QuickReplyWidget extends StatelessWidget {
   final Message chatMessage;

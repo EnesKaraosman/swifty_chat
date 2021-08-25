@@ -21,19 +21,19 @@ class ImageMessageWidget extends StatelessWidget {
         // ),
         Image(
           image: NetworkImage(_chatMessage.messageKind.imageURL!),
-          // height: 200,
           width: _imageWidth(context),
         )
       ],
     );
   }
 
-  double _availableWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
-  }
+  double _availableWidth(BuildContext context) =>
+      MediaQuery.of(context).size.width;
 
   double _imageWidth(BuildContext context) {
     final availableWidth = _availableWidth(context);
-    return ChatState.of(context).messageCellSizeConfigurator.imageCellMaxWidthConfiguration(availableWidth);
+    return ChatState.of(context)
+        .messageCellSizeConfigurator
+        .imageCellMaxWidthConfiguration(availableWidth);
   }
 }

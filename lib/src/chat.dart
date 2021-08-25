@@ -37,8 +37,7 @@ class ChatState extends InheritedWidget {
 
 class Chat extends StatefulWidget {
   List<Message> messages = [];
-  ThemeData? lightTheme;
-  ThemeData? darkTheme;
+  ThemeData? theme;
   Widget chatMessageInputField;
 
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
@@ -50,8 +49,7 @@ class Chat extends StatefulWidget {
     required this.messages,
     required this.messageCellSizeConfigurator,
     required this.chatMessageInputField,
-    this.lightTheme,
-    this.darkTheme,
+    this.theme
   });
 
   @override
@@ -72,17 +70,20 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ChatState(
-        messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
-        onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
-        onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
-        child: Column(
-          children: [
-            _chatList(),
-            widget.chatMessageInputField
-          ],
-        ).gestures(onTap: () => FocusScope.of(context).unfocus()),
+    return Theme(
+      data: widget.theme ?? ThemeData.light(),
+      child: Scaffold(
+        body: ChatState(
+          messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
+          onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
+          onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
+          child: Column(
+            children: [
+              _chatList(),
+              widget.chatMessageInputField
+            ],
+          ).gestures(onTap: () => FocusScope.of(context).unfocus()),
+        ),
       ),
     );
   }

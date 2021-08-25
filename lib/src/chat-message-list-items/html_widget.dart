@@ -26,14 +26,10 @@ class HTMLWidget extends StatelessWidget {
     // Map<String, OnTap> Function()? functions = ChatState.of(context).onHtmlWidgetPressed?.call();
     // _onLinkTap = functions["onLinkTap"];
     // _onImageTap = functions["onImageTap"];
-    // return Wrap(
-    //   children: [
-        return Html(
-          data: chatMessage.messageKind.htmlData,
-          onLinkTap: _onLinkTap,
-          onImageTap: _onImageTap,
-        ).padding(all: 8).card();
-    //   ],
-    // );
+    return Html(
+      data: chatMessage.messageKind.htmlData,
+      onLinkTap: _onLinkTap,
+      onImageTap: _onImageTap,
+    ).padding(all: 8).card();
   }
 }

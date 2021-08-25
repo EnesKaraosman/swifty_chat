@@ -70,13 +70,13 @@ class _MyAppState extends State<MyApp> {
       messageCellSizeConfigurator: MessageCellSizeConfigurator.defaultConfiguration,
     ).setOnHTMLWidgetPressed(() => {
       "onLinkTap": (url, _, __, ___) {
-        print("onLinkTapped: $url");
+        debugPrint("onLinkTapped: $url");
       },
       "onImageTap": (src, _, __, ___) {
-        print("onImageTapped: $src");
+        debugPrint("onImageTapped: $src");
       }
     }).setOnQuickReplyItemPressed((item) {
-        print(item.title);
+        debugPrint(item.title);
       },
     );
   }
