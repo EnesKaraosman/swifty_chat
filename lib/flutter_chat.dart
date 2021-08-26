@@ -1,6 +1,6 @@
 library flutter_chat;
 
-export 'src/chat.dart';
+export 'src/chat.dart' show Chat;
 export 'src/chat_input_field.dart';
 export 'src/message_cell_size_configurator.dart';
 export 'src/models/chat_user.dart';

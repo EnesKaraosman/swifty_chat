@@ -23,7 +23,7 @@ class QuickReplyWidget extends StatelessWidget {
     return chatMessage.messageKind.quickReplies
         .map((qr) => OutlinedButton(
               onPressed: () =>
-                  ChatState.of(context).onQuickReplyItemPressed?.call(qr),
+                  ChatStateContainer.of(context).onQuickReplyItemPressed?.call(qr),
               child: Text(qr.title),
             ))
         .toList();

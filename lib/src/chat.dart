@@ -9,14 +9,14 @@ import '../src/message_cell_size_configurator.dart';
 import '../src/models/message.dart';
 import '../src/models/quick_reply_item.dart';
 
-class ChatState extends InheritedWidget {
+class ChatStateContainer extends InheritedWidget {
   Key? key;
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
   void Function(QuickReplyItem)? onQuickReplyItemPressed;
   Map<String, OnTap> Function()? onHtmlWidgetPressed;
   final Widget child;
 
-  ChatState({
+  ChatStateContainer({
     this.key,
     this.onHtmlWidgetPressed,
     this.onQuickReplyItemPressed,
@@ -24,15 +24,15 @@ class ChatState extends InheritedWidget {
     required this.child,
   }) : super(key: key, child: child);
 
-  static ChatState of(BuildContext context) {
-    final ChatState? result =
-        context.dependOnInheritedWidgetOfExactType<ChatState>();
+  static ChatStateContainer of(BuildContext context) {
+    final ChatStateContainer? result =
+        context.dependOnInheritedWidgetOfExactType<ChatStateContainer>();
     assert(result != null, 'No Chat found in context');
     return result!;
   }
 
   @override
-  bool updateShouldNotify(ChatState oldWidget) => false;
+  bool updateShouldNotify(ChatStateContainer oldWidget) => false;
 }
 
 class Chat extends StatefulWidget {
@@ -68,21 +68,19 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   @override
-  Widget build(BuildContext context) {
-    return Theme(
-      data: widget.theme ?? ThemeData.light(),
-      child: ChatState(
-        messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
-        onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
-        onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
-        child: Column(
-          children: [_chatList(), widget.chatMessageInputField],
-        ).gestures(
-          onTap: () => FocusScope.of(context).unfocus(),
+  Widget build(BuildContext context) => Theme(
+        data: widget.theme ?? ThemeData.light(),
+        child: ChatStateContainer(
+          messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
+          onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
+          onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
+          child: Column(
+            children: [_chatList(), widget.chatMessageInputField],
+          ).gestures(
+            onTap: () => FocusScope.of(context).unfocus(),
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   Widget _chatList() => ListView.builder(
         // (reverse: true) Helps to scroll content automatically when keyboard opens

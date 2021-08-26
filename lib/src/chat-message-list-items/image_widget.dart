@@ -32,7 +32,7 @@ class ImageMessageWidget extends StatelessWidget {
 
   double _imageWidth(BuildContext context) {
     final availableWidth = _availableWidth(context);
-    return ChatState.of(context)
+    return ChatStateContainer.of(context)
         .messageCellSizeConfigurator
         .imageCellMaxWidthConfiguration(availableWidth);
   }
