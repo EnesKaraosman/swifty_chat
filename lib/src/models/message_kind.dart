@@ -1,13 +1,17 @@
+import 'package:flutter_chat/src/models/carousel_item.dart';
+
 import '../models/quick_reply_item.dart';
 
 class MessageKind {
   String? text;
   String? imageURL;
-  List<QuickReplyItem> quickReplies = [];
   String? htmlData;
+  List<QuickReplyItem> quickReplies = [];
+  List<CarouselItem> carouselItems = [];
 
   MessageKind.text(this.text);
   MessageKind.image(this.imageURL);
-  MessageKind.quickReply(this.quickReplies);
   MessageKind.html(this.htmlData);
+  MessageKind.quickReply(this.quickReplies);
+  MessageKind.carousel(this.carouselItems);
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:example/models/ek_carousel_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/flutter_chat.dart';
 
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
 
   EKChatUser incoming = const EKChatUser(userName: "incoming");
   EKChatUser outgoing = const EKChatUser(userName: "outgoing");
+
   EKChatUser get randomUser => Random().nextBool() ? incoming : outgoing;
 
   bool isLightThemeActive = true;
@@ -122,6 +124,25 @@ class _MyAppState extends State<MyApp> {
                 List.generate(
                   Random().nextInt(7),
                   (index) => EKQuickReplyItem(title: "Option $index"),
+                ),
+              ),
+            );
+          } else if (idx % 23 == 0) {
+            return EKMessage(
+              user: randomUser,
+              id: DateTime.now().toString(),
+              isMe: Random().nextBool(),
+              messageKind: MessageKind.carousel(
+                List.generate(
+                  Random().nextInt(3),
+                  (index) => EKCarouselItem(
+                      title: 'Title $index',
+                      subtitle: 'Subtitle $index',
+                      imageURL: 'https://picsum.photos/200/300',
+                      buttons: [
+                        CarouselButtonItem(title: 'Select', url: 'url', payload: 'payload')
+                      ]
+                  ),
                 ),
               ),
             );
