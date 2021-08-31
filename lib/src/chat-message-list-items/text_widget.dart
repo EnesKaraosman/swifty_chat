@@ -3,15 +3,12 @@ import 'package:styled_widget/styled_widget.dart';
 
 import '../models/message.dart';
 import '../models/user_avatar.dart';
+import '../protocols/has_avatar.dart';
 
-class TextMessageWidget extends StatelessWidget {
+class TextMessageWidget extends StatelessWidget with HasAvatar {
   final Message _chatMessage;
 
   const TextMessageWidget(this._chatMessage);
-
-  UserAvatar? get userAvatar => _chatMessage.user.avatar;
-
-  Uri? get avatarUri => userAvatar?.imageURL;
 
   List<Widget> avatarAndSpacer({required bool isMe, double space = 8}) => [
         SizedBox(width: space),
@@ -23,6 +20,7 @@ class TextMessageWidget extends StatelessWidget {
       ].toList();
 
   Widget incomingMessage(BuildContext context) => Row(
+        crossAxisAlignment: avatarPosition.alignment,
         children: [
           ...avatarAndSpacer(isMe: false),
           textContainer(context),
@@ -31,6 +29,7 @@ class TextMessageWidget extends StatelessWidget {
 
   Widget outgoingMessage(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: avatarPosition.alignment,
         children: [
           textContainer(context),
           ...avatarAndSpacer(isMe: true),
@@ -52,4 +51,7 @@ class TextMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       _chatMessage.isMe ? outgoingMessage(context) : incomingMessage(context);
+
+  @override
+  Message get message => _chatMessage;
 }

@@ -205,6 +205,14 @@ class _MyAppState extends State<MyApp> {
 
 To set avatar for a `ChatUser`, simply pass `avatar` parameter of the related user.
 
+```dart
+UserAvatar({
+    required this.imageURL,
+    this.size = 40,
+    this.position = AvatarPosition.center, // top, center, bottom
+});
+```
+
 ### Theming
 
 Visit [Theming.md](Theming.md) for details.

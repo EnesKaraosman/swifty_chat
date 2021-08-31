@@ -23,7 +23,10 @@ class _MyAppState extends State<MyApp> {
 
   EKChatUser incoming = EKChatUser(
     userName: "incoming",
-    avatar: UserAvatar(imageURL: Uri.parse('https://i.pravatar.cc/240')),
+    avatar: UserAvatar(
+      imageURL: Uri.parse('https://i.pravatar.cc/240'),
+      position: AvatarPosition.bottom,
+    ),
   );
   EKChatUser outgoing = const EKChatUser(
     userName: "outgoing",
