@@ -21,8 +21,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final List<EKMessage> _messages = [];
 
-  EKChatUser incoming = const EKChatUser(userName: "incoming");
-  EKChatUser outgoing = const EKChatUser(userName: "outgoing");
+  EKChatUser incoming = EKChatUser(
+    userName: "incoming",
+    avatar: UserAvatar(imageURL: Uri.parse('https://i.pravatar.cc/240')),
+  );
+  EKChatUser outgoing = const EKChatUser(
+    userName: "outgoing",
+  );
 
   EKChatUser get randomUser => Random().nextBool() ? incoming : outgoing;
 
@@ -83,7 +88,7 @@ class _MyAppState extends State<MyApp> {
                 final message = EKMessage(
                   user: randomUser,
                   id: DateTime.now().toString(),
-                  isMe: Random().nextBool(),
+                  isMe: randomUser.userName == outgoing.userName,
                   messageKind: MessageKind.text(msg),
                 );
                 _messages.add(message);
@@ -108,18 +113,20 @@ class _MyAppState extends State<MyApp> {
 
   List<EKMessage> generateRandomMessages() => 1.to(100).map(
         (idx) {
+          final user = randomUser;
+          final bool isMe = user.userName == outgoing.userName;
           if (idx % 7 == 0) {
             return EKMessage(
-              user: randomUser,
+              user: user,
               id: DateTime.now().toString(),
-              isMe: Random().nextBool(),
+              isMe: isMe,
               messageKind: MessageKind.image('https://picsum.photos/300/200'),
             );
           } else if (idx % 13 == 0) {
             return EKMessage(
-              user: randomUser,
+              user: user,
               id: DateTime.now().toString(),
-              isMe: Random().nextBool(),
+              isMe: isMe,
               messageKind: MessageKind.quickReply(
                 List.generate(
                   Random().nextInt(7),
@@ -129,35 +136,39 @@ class _MyAppState extends State<MyApp> {
             );
           } else if (idx % 23 == 0) {
             return EKMessage(
-              user: randomUser,
+              user: user,
               id: DateTime.now().toString(),
-              isMe: Random().nextBool(),
+              isMe: isMe,
               messageKind: MessageKind.carousel(
                 List.generate(
                   Random().nextInt(3),
                   (index) => EKCarouselItem(
-                      title: 'Title $index',
-                      subtitle: 'Subtitle $index',
-                      imageURL: 'https://picsum.photos/200/300',
-                      buttons: [
-                        CarouselButtonItem(title: 'Select', url: 'url', payload: 'payload')
-                      ]
+                    title: 'Title $index',
+                    subtitle: 'Subtitle $index',
+                    imageURL: 'https://picsum.photos/200/300',
+                    buttons: [
+                      CarouselButtonItem(
+                        title: 'Select',
+                        url: 'url',
+                        payload: 'payload',
+                      )
+                    ],
                   ),
                 ),
               ),
             );
           } else if (idx == 17) {
             return EKMessage(
-              user: randomUser,
+              user: user,
               id: DateTime.now().toString(),
-              isMe: Random().nextBool(),
+              isMe: isMe,
               messageKind: MessageKind.html(htmlData),
             );
           } else {
             return EKMessage(
-              user: randomUser,
+              user: user,
               id: DateTime.now().toString(),
-              isMe: Random().nextBool(),
+              isMe: isMe,
               messageKind:
                   MessageKind.text(getRandomString(1 + Random().nextInt(40))),
             );

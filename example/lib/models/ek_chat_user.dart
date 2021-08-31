@@ -3,8 +3,8 @@ import 'package:flutter_chat/flutter_chat.dart';
 class EKChatUser extends ChatUser {
 
   final String userName;
-  final Uri? avatarURL;
+  final UserAvatar? avatar;
 
-  const EKChatUser({required this.userName, this.avatarURL})
-      : super(userName: userName, avatarURL: avatarURL);
+  const EKChatUser({required this.userName, this.avatar})
+      : super(userName: userName, avatar: avatar);
 }

@@ -23,6 +23,7 @@ Note that `EK...` prefixed classes are the concrete implementation of the relate
 ```dart
 import 'dart:math';
 
+import 'package:example/models/ek_carousel_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/flutter_chat.dart';
 
@@ -43,8 +44,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final List<EKMessage> _messages = [];
 
-  EKChatUser incoming = const EKChatUser(userName: "incoming");
-  EKChatUser outgoing = const EKChatUser(userName: "outgoing");
+  EKChatUser incoming = EKChatUser(
+    userName: "incoming",
+    avatar: UserAvatar(imageURL: Uri.parse('https://i.pravatar.cc/240')),
+  );
+  EKChatUser outgoing = const EKChatUser(
+    userName: "outgoing",
+  );
+
   EKChatUser get randomUser => Random().nextBool() ? incoming : outgoing;
 
   bool isLightThemeActive = true;
@@ -65,7 +72,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Chat',
       theme:
-      isLightThemeActive ? AppTheme.light(context) : AppTheme.dark(context),
+          isLightThemeActive ? AppTheme.light(context) : AppTheme.dark(context),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -90,84 +97,113 @@ class _MyAppState extends State<MyApp> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-    theme: isLightThemeActive
-        ? AppTheme.light(context)
-        : AppTheme.dark(context),
-    messages: _messages,
-    messageCellSizeConfigurator:
-    MessageCellSizeConfigurator.defaultConfiguration,
-    chatMessageInputField: MessageInputField(
-      sendButtonTapped: (msg) {
-        debugPrint(msg);
-        setState(
+        theme: isLightThemeActive
+            ? AppTheme.light(context)
+            : AppTheme.dark(context),
+        messages: _messages,
+        messageCellSizeConfigurator:
+            MessageCellSizeConfigurator.defaultConfiguration,
+        chatMessageInputField: MessageInputField(
+          sendButtonTapped: (msg) {
+            debugPrint(msg);
+            setState(
               () {
-            final message = EKMessage(
-              user: randomUser,
-              id: DateTime.now().toString(),
-              isMe: Random().nextBool(),
-              messageKind: MessageKind.text(msg),
+                final message = EKMessage(
+                  user: randomUser,
+                  id: DateTime.now().toString(),
+                  isMe: randomUser.userName == outgoing.userName,
+                  messageKind: MessageKind.text(msg),
+                );
+                _messages.add(message);
+              },
             );
-            _messages.add(message);
           },
-        );
-      },
-    ),
-  )
-      .setOnHTMLWidgetPressed(
-        () => {
-      "onLinkTap": (url, _, __, ___) {
-        debugPrint("onLinkTapped: $url");
-      },
-      "onImageTap": (src, _, __, ___) {
-        debugPrint("onImageTapped: $src");
-      }
-    },
-  )
-      .setOnQuickReplyItemPressed(
-        (item) => debugPrint(item.title),
-  );
+        ),
+      )
+          .setOnHTMLWidgetPressed(
+            () => {
+              "onLinkTap": (url, _, __, ___) {
+                debugPrint("onLinkTapped: $url");
+              },
+              "onImageTap": (src, _, __, ___) {
+                debugPrint("onImageTapped: $src");
+              }
+            },
+          )
+          .setOnQuickReplyItemPressed(
+            (item) => debugPrint(item.title),
+          );
 
   List<EKMessage> generateRandomMessages() => 1.to(100).map(
         (idx) {
-      if (idx % 7 == 0) {
-        return EKMessage(
-          user: randomUser,
-          id: DateTime.now().toString(),
-          isMe: Random().nextBool(),
-          messageKind: MessageKind.image('https://picsum.photos/300/200'),
-        );
-      } else if (idx % 13 == 0) {
-        return EKMessage(
-          user: randomUser,
-          id: DateTime.now().toString(),
-          isMe: Random().nextBool(),
-          messageKind: MessageKind.quickReply(
-            List.generate(
-              Random().nextInt(7),
+          final user = randomUser;
+          final bool isMe = user.userName == outgoing.userName;
+          if (idx % 7 == 0) {
+            return EKMessage(
+              user: user,
+              id: DateTime.now().toString(),
+              isMe: isMe,
+              messageKind: MessageKind.image('https://picsum.photos/300/200'),
+            );
+          } else if (idx % 13 == 0) {
+            return EKMessage(
+              user: user,
+              id: DateTime.now().toString(),
+              isMe: isMe,
+              messageKind: MessageKind.quickReply(
+                List.generate(
+                  Random().nextInt(7),
                   (index) => EKQuickReplyItem(title: "Option $index"),
-            ),
-          ),
-        );
-      } else if (idx == 17) {
-        return EKMessage(
-          user: randomUser,
-          id: DateTime.now().toString(),
-          isMe: Random().nextBool(),
-          messageKind: MessageKind.html(htmlData),
-        );
-      } else {
-        return EKMessage(
-          user: randomUser,
-          id: DateTime.now().toString(),
-          isMe: Random().nextBool(),
-          messageKind:
-          MessageKind.text(getRandomString(1 + Random().nextInt(40))),
-        );
-      }
-    },
-  ).toList();
+                ),
+              ),
+            );
+          } else if (idx % 23 == 0) {
+            return EKMessage(
+              user: user,
+              id: DateTime.now().toString(),
+              isMe: isMe,
+              messageKind: MessageKind.carousel(
+                List.generate(
+                  Random().nextInt(3),
+                  (index) => EKCarouselItem(
+                    title: 'Title $index',
+                    subtitle: 'Subtitle $index',
+                    imageURL: 'https://picsum.photos/200/300',
+                    buttons: [
+                      CarouselButtonItem(
+                        title: 'Select',
+                        url: 'url',
+                        payload: 'payload',
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else if (idx == 17) {
+            return EKMessage(
+              user: user,
+              id: DateTime.now().toString(),
+              isMe: isMe,
+              messageKind: MessageKind.html(htmlData),
+            );
+          } else {
+            return EKMessage(
+              user: user,
+              id: DateTime.now().toString(),
+              isMe: isMe,
+              messageKind:
+                  MessageKind.text(getRandomString(1 + Random().nextInt(40))),
+            );
+          }
+        },
+      ).toList();
 }
 ```
+
+### Avatar
+
+To set avatar for a `ChatUser`, simply pass `avatar` parameter of the related user.
 
 ### Theming
 
