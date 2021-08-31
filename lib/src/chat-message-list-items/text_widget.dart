@@ -17,6 +17,7 @@ class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoing
         children: [
           ...avatarWithPadding(),
           textContainer(context),
+          SizedBox(width: 24)
         ],
       );
 
@@ -25,6 +26,7 @@ class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoing
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: avatarPosition.alignment,
         children: [
+          SizedBox(width: 24),
           textContainer(context),
           ...avatarWithPadding(),
         ],
