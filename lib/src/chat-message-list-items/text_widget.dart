@@ -1,38 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/src/protocols/incoming_outgoing_message_widgets.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 import '../models/message.dart';
 import '../models/user_avatar.dart';
 import '../protocols/has_avatar.dart';
 
-class TextMessageWidget extends StatelessWidget with HasAvatar {
+class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoingMessageWidgets {
   final Message _chatMessage;
 
   const TextMessageWidget(this._chatMessage);
 
-  List<Widget> avatarAndSpacer({required bool isMe, double space = 8}) => [
-        SizedBox(width: space),
-        if (avatarUri != null)
-          CircleAvatar(
-            backgroundImage: NetworkImage(avatarUri!.toString()),
-          ),
-        SizedBox(width: space),
-      ].toList();
-
-  Widget incomingMessage(BuildContext context) => Row(
+  @override
+  Widget incomingMessageWidget(BuildContext context) => Row(
         crossAxisAlignment: avatarPosition.alignment,
         children: [
-          ...avatarAndSpacer(isMe: false),
+          ...avatarWithPadding(),
           textContainer(context),
         ],
       );
 
-  Widget outgoingMessage(BuildContext context) => Row(
+  @override
+  Widget outgoingMessageWidget(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: avatarPosition.alignment,
         children: [
           textContainer(context),
-          ...avatarAndSpacer(isMe: true),
+          ...avatarWithPadding(),
         ],
       );
 
@@ -50,7 +44,7 @@ class TextMessageWidget extends StatelessWidget with HasAvatar {
 
   @override
   Widget build(BuildContext context) =>
-      _chatMessage.isMe ? outgoingMessage(context) : incomingMessage(context);
+      _chatMessage.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);
 
   @override
   Message get message => _chatMessage;
