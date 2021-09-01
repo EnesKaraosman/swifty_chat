@@ -6,9 +6,9 @@ abstract class ChatUser {
   final String userName;
 
   /// User's avatar options
-  final UserAvatar? avatar;
+  UserAvatar? avatar;
 
-  const ChatUser({
+  ChatUser({
     required this.userName,
     this.avatar
   });

@@ -16,8 +16,13 @@ extension AvatarAlignment on AvatarPosition {
 }
 
 class UserAvatar {
+  /// Profile image
   final Uri imageURL;
+
+  /// Width & Height (diameter)
   final double size;
+
+  /// AvatarPosition, related with message (top, center, bottom)
   final AvatarPosition position;
 
   UserAvatar({

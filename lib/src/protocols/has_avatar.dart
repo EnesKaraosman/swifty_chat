@@ -14,10 +14,13 @@ abstract class HasAvatar {
 
   Uri? get avatarUri => userAvatar?.imageURL;
 
+  double get _radius => (userAvatar?.size ?? 36) / 2;
+
   List<Widget> avatarWithPadding([double padding = 8]) => [
     SizedBox(width: padding),
     if (avatarUri != null)
       CircleAvatar(
+        radius: _radius,
         backgroundImage: NetworkImage(avatarUri!.toString()),
       ),
     SizedBox(width: padding),
