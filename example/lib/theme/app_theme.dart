@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 * scaffoldBackgroundColor: main background color
 * cardTheme: text container background color
 * textTheme: text theme for messages (MessageKind.text)
+*   + headline6: carousel title
+*   + subtitle2: carousel subtitle
 * outlinedButtonTheme: quick reply button theme (MessageKind.quickReply)
 * */
 

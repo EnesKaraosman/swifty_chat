@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
       position: AvatarPosition.bottom,
     ),
   );
-  EKChatUser outgoing = const EKChatUser(
+  EKChatUser outgoing = EKChatUser(
     userName: "outgoing",
   );
 
@@ -147,8 +147,8 @@ class _MyAppState extends State<MyApp> {
                   Random().nextInt(3),
                   (index) => EKCarouselItem(
                     title: 'Title $index',
-                    subtitle: 'Subtitle $index',
-                    imageURL: 'https://picsum.photos/200/300',
+                    subtitle: 'Subtitle $index ${getRandomString(1 + Random().nextInt(80))}',
+                    imageURL: 'https://picsum.photos/300/200',
                     buttons: [
                       CarouselButtonItem(
                         title: 'Select',

@@ -5,6 +5,6 @@ class EKChatUser extends ChatUser {
   final String userName;
   final UserAvatar? avatar;
 
-  const EKChatUser({required this.userName, this.avatar})
+  EKChatUser({required this.userName, this.avatar})
       : super(userName: userName, avatar: avatar);
 }

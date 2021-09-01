@@ -1,3 +1,4 @@
+import 'package:dart_extensions/dart_extensions.dart' hide Message;
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/protocols/has_avatar.dart';
 import 'package:flutter_chat/src/protocols/incoming_outgoing_message_widgets.dart';
@@ -39,14 +40,10 @@ class ImageMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoin
   Widget build(BuildContext context) =>
       _chatMessage.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);
 
-  double _availableWidth(BuildContext context) =>
-      MediaQuery.of(context).size.width;
-
   double _imageWidth(BuildContext context) {
-    final availableWidth = _availableWidth(context);
     return ChatStateContainer.of(context)
         .messageCellSizeConfigurator
-        .imageCellMaxWidthConfiguration(availableWidth);
+        .imageCellMaxWidthConfiguration(context.mq.size.width);
   }
 
   @override
