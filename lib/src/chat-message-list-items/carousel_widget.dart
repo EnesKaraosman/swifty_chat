@@ -29,7 +29,7 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
         itemCount: items.length,
         itemBuilder: (context, index, _) => _carouselItem(context, items[index]),
         options: CarouselOptions(
-          height: _carouselSize(context).height,
+          height: _carouselItemHeight(context),
           disableCenter: true,
           enableInfiniteScroll: false,
         ),
@@ -74,11 +74,11 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
         ),
       );
 
-  Size _carouselSize(BuildContext context) {
-    final size = ChatStateContainer
+  double _carouselItemHeight(BuildContext context) {
+    final height = ChatStateContainer
         .of(context)
         .messageCellSizeConfigurator
         .carouselCellMaxHeightConfiguration(context.mq.size.height);
-    return size;
+    return height;
   }
 }
