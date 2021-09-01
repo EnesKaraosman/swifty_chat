@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dart_extensions/dart_extensions.dart' hide Message;
 import 'package:flutter/material.dart';
@@ -64,7 +61,7 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
                   .map(
                     (button) =>
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => ChatStateContainer.of(context).onCarouselButtonItemPressed?.call(button),
                       child: Text(button.title),
                     ),
               )

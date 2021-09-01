@@ -102,16 +102,18 @@ class _MyAppState extends State<MyApp> {
       )
           .setOnHTMLWidgetPressed(
             () => {
-              "onLinkTap": (url, _, __, ___) {
-                debugPrint("onLinkTapped: $url");
-              },
-              "onImageTap": (src, _, __, ___) {
-                debugPrint("onImageTapped: $src");
-              }
+              "onLinkTap": (url, _, __, ___) =>
+                  debugPrint("onLinkTapped: $url"),
+              "onImageTap": (src, _, __, ___) =>
+                  debugPrint("onImageTapped: $src")
             },
           )
+          .setOnCarouselItemButtonPressed((item) => debugPrint(item.payload))
           .setOnQuickReplyItemPressed(
-            (item) => debugPrint(item.title),
+            (item) {
+              debugPrint(item.title);
+              chatView.scrollToBottom();
+            },
           );
 
   List<EKMessage> generateRandomMessages() => 1.to(100).map(
@@ -147,7 +149,8 @@ class _MyAppState extends State<MyApp> {
                   Random().nextInt(3),
                   (index) => EKCarouselItem(
                     title: 'Title $index',
-                    subtitle: 'Subtitle $index ${getRandomString(1 + Random().nextInt(80))}',
+                    subtitle:
+                        'Subtitle $index ${getRandomString(1 + Random().nextInt(80))}',
                     imageURL: 'https://picsum.photos/300/200',
                     buttons: [
                       CarouselButtonItem(

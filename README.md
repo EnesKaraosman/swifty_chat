@@ -1,5 +1,19 @@
 # flutter_chat
 
+### Features
+
+Supported Message types;
+- Text
+- Image
+- Html
+- QuickReply
+- Carousel
+
+Other;
+
+- Scroll to bottom
+  + use `scrollToBottom` method on `Chat`
+
 ### Usage
 
 TLDR;
@@ -12,7 +26,8 @@ This lib requires some abstract classes to be implemented to get started.
 class MessageKind {
   MessageKind.text(String text);
   MessageKind.image(String imageURL);
-  MessageKind.quickReply(List<IQuickReplyItem> quickReplies);
+  MessageKind.quickReply(List<QuickReplyItem> quickReplies);
+  MessageKind.carousel(List<CarouselItem> carousel);
   MessageKind.html(String html);
 }
 ```
@@ -46,9 +61,12 @@ class _MyAppState extends State<MyApp> {
 
   EKChatUser incoming = EKChatUser(
     userName: "incoming",
-    avatar: UserAvatar(imageURL: Uri.parse('https://i.pravatar.cc/240')),
+    avatar: UserAvatar(
+      imageURL: Uri.parse('https://i.pravatar.cc/240'),
+      position: AvatarPosition.bottom,
+    ),
   );
-  EKChatUser outgoing = const EKChatUser(
+  EKChatUser outgoing = EKChatUser(
     userName: "outgoing",
   );
 
@@ -72,7 +90,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Chat',
       theme:
-          isLightThemeActive ? AppTheme.light(context) : AppTheme.dark(context),
+      isLightThemeActive ? AppTheme.light(context) : AppTheme.dark(context),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -97,107 +115,108 @@ class _MyAppState extends State<MyApp> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-        theme: isLightThemeActive
-            ? AppTheme.light(context)
-            : AppTheme.dark(context),
-        messages: _messages,
-        messageCellSizeConfigurator:
-            MessageCellSizeConfigurator.defaultConfiguration,
-        chatMessageInputField: MessageInputField(
-          sendButtonTapped: (msg) {
-            debugPrint(msg);
-            setState(
+    theme: isLightThemeActive
+        ? AppTheme.light(context)
+        : AppTheme.dark(context),
+    messages: _messages,
+    messageCellSizeConfigurator:
+    MessageCellSizeConfigurator.defaultConfiguration,
+    chatMessageInputField: MessageInputField(
+      sendButtonTapped: (msg) {
+        debugPrint(msg);
+        setState(
               () {
-                final message = EKMessage(
-                  user: randomUser,
-                  id: DateTime.now().toString(),
-                  isMe: randomUser.userName == outgoing.userName,
-                  messageKind: MessageKind.text(msg),
-                );
-                _messages.add(message);
-              },
+            final message = EKMessage(
+              user: randomUser,
+              id: DateTime.now().toString(),
+              isMe: randomUser.userName == outgoing.userName,
+              messageKind: MessageKind.text(msg),
             );
+            _messages.add(message);
           },
-        ),
-      )
-          .setOnHTMLWidgetPressed(
-            () => {
-              "onLinkTap": (url, _, __, ___) {
-                debugPrint("onLinkTapped: $url");
-              },
-              "onImageTap": (src, _, __, ___) {
-                debugPrint("onImageTapped: $src");
-              }
-            },
-          )
-          .setOnQuickReplyItemPressed(
-            (item) => debugPrint(item.title),
-          );
+        );
+      },
+    ),
+  )
+      .setOnHTMLWidgetPressed(
+        () => {
+      "onLinkTap": (url, _, __, ___) =>
+          debugPrint("onLinkTapped: $url"),
+      "onImageTap": (src, _, __, ___) =>
+          debugPrint("onImageTapped: $src")
+    },
+  )
+      .setOnCarouselItemButtonPressed((item) => debugPrint(item.payload))
+      .setOnQuickReplyItemPressed((item) {
+        debugPrint(item.title);
+        chatView.scrollToBottom();
+      });
 
   List<EKMessage> generateRandomMessages() => 1.to(100).map(
         (idx) {
-          final user = randomUser;
-          final bool isMe = user.userName == outgoing.userName;
-          if (idx % 7 == 0) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.image('https://picsum.photos/300/200'),
-            );
-          } else if (idx % 13 == 0) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.quickReply(
-                List.generate(
-                  Random().nextInt(7),
+      final user = randomUser;
+      final bool isMe = user.userName == outgoing.userName;
+      if (idx % 7 == 0) {
+        return EKMessage(
+          user: user,
+          id: DateTime.now().toString(),
+          isMe: isMe,
+          messageKind: MessageKind.image('https://picsum.photos/300/200'),
+        );
+      } else if (idx % 13 == 0) {
+        return EKMessage(
+          user: user,
+          id: DateTime.now().toString(),
+          isMe: isMe,
+          messageKind: MessageKind.quickReply(
+            List.generate(
+              Random().nextInt(7),
                   (index) => EKQuickReplyItem(title: "Option $index"),
-                ),
-              ),
-            );
-          } else if (idx % 23 == 0) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.carousel(
-                List.generate(
-                  Random().nextInt(3),
+            ),
+          ),
+        );
+      } else if (idx % 23 == 0) {
+        return EKMessage(
+          user: user,
+          id: DateTime.now().toString(),
+          isMe: isMe,
+          messageKind: MessageKind.carousel(
+            List.generate(
+              Random().nextInt(3),
                   (index) => EKCarouselItem(
-                    title: 'Title $index',
-                    subtitle: 'Subtitle $index',
-                    imageURL: 'https://picsum.photos/200/300',
-                    buttons: [
-                      CarouselButtonItem(
-                        title: 'Select',
-                        url: 'url',
-                        payload: 'payload',
-                      )
-                    ],
-                  ),
-                ),
+                title: 'Title $index',
+                subtitle:
+                'Subtitle $index ${getRandomString(1 + Random().nextInt(80))}',
+                imageURL: 'https://picsum.photos/300/200',
+                buttons: [
+                  CarouselButtonItem(
+                    title: 'Select',
+                    url: 'url',
+                    payload: 'payload',
+                  )
+                ],
               ),
-            );
-          } else if (idx == 17) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.html(htmlData),
-            );
-          } else {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind:
-                  MessageKind.text(getRandomString(1 + Random().nextInt(40))),
-            );
-          }
-        },
-      ).toList();
+            ),
+          ),
+        );
+      } else if (idx == 17) {
+        return EKMessage(
+          user: user,
+          id: DateTime.now().toString(),
+          isMe: isMe,
+          messageKind: MessageKind.html(htmlData),
+        );
+      } else {
+        return EKMessage(
+          user: user,
+          id: DateTime.now().toString(),
+          isMe: isMe,
+          messageKind:
+          MessageKind.text(getRandomString(1 + Random().nextInt(40))),
+        );
+      }
+    },
+  ).toList();
 }
 ```
 
