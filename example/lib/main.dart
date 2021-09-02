@@ -1,14 +1,6 @@
-import 'dart:math';
-
-import 'package:example/models/ek_carousel_item.dart';
+import 'package:example/advanced_chat.dart';
+import 'package:example/basic_chat.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/flutter_chat.dart';
-
-import 'mock/mock_html.dart';
-import 'mock/mock_string.dart';
-import 'models/ek_chat_user.dart';
-import 'models/ek_message.dart';
-import 'models/ek_quick_reply_item.dart';
 import 'theme/app_theme.dart';
 
 void main() => runApp(MyApp());
@@ -19,166 +11,45 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final List<EKMessage> _messages = [];
-
-  EKChatUser incoming = EKChatUser(
-    userName: "incoming",
-    avatar: UserAvatar(
-      imageURL: Uri.parse('https://i.pravatar.cc/240'),
-      position: AvatarPosition.bottom,
-    ),
-  );
-  EKChatUser outgoing = EKChatUser(
-    userName: "outgoing",
-  );
-
-  EKChatUser get randomUser => Random().nextBool() ? incoming : outgoing;
-
-  bool isLightThemeActive = true;
-
-  late Chat chatView;
-
   @override
-  void initState() {
-    super.initState();
-    setState(() {
-      _messages.addAll(generateRandomMessages());
-    });
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Chat',
+      theme: AppTheme.light(context),
+      darkTheme: AppTheme.dark(context),
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (_) => const Home(),
+        '/basic-chat': (_) => BasicChat(),
+        '/advanced-chat': (_) => AdvancedChat(),
+      },
+    );
   }
+}
+
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    chatView = _chatWidget(context);
-    return MaterialApp(
-      title: 'Flutter Chat',
-      theme:
-          isLightThemeActive ? AppTheme.light(context) : AppTheme.dark(context),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Chat'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  isLightThemeActive = !isLightThemeActive;
-                });
-              },
-              child: const Text(
-                'Change Theme',
-                style: TextStyle(color: Colors.white),
-              ),
-            )
-          ],
-        ),
-        body: chatView,
+    return Scaffold(
+      body: ListView(
+        children: [
+          const Divider(color: Colors.white70),
+          ListTile(
+            title: const Text('Basic Chat'),
+            trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+            onTap: () => Navigator.of(context).pushNamed('/basic-chat'),
+          ),
+          const Divider(color: Colors.white70),
+          ListTile(
+            title: const Text('Advanced Chat'),
+            trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+            onTap: () => Navigator.of(context).pushNamed('/advanced-chat'),
+          ),
+          const Divider(color: Colors.white70),
+        ],
       ),
     );
   }
-
-  Chat _chatWidget(BuildContext context) => Chat(
-        theme: isLightThemeActive
-            ? AppTheme.light(context)
-            : AppTheme.dark(context),
-        messages: _messages,
-        messageCellSizeConfigurator:
-            MessageCellSizeConfigurator.defaultConfiguration,
-        chatMessageInputField: MessageInputField(
-          sendButtonTapped: (msg) {
-            debugPrint(msg);
-            setState(
-              () {
-                final message = EKMessage(
-                  user: randomUser,
-                  id: DateTime.now().toString(),
-                  isMe: randomUser.userName == outgoing.userName,
-                  messageKind: MessageKind.text(msg),
-                );
-                _messages.add(message);
-              },
-            );
-          },
-        ),
-      )
-          .setOnHTMLWidgetPressed(
-            () => {
-              "onLinkTap": (url, _, __, ___) =>
-                  debugPrint("onLinkTapped: $url"),
-              "onImageTap": (src, _, __, ___) =>
-                  debugPrint("onImageTapped: $src")
-            },
-          )
-          .setOnCarouselItemButtonPressed((item) => debugPrint(item.payload))
-          .setOnQuickReplyItemPressed(
-            (item) {
-              debugPrint(item.title);
-              chatView.scrollToBottom();
-            },
-          );
-
-  List<EKMessage> generateRandomMessages() => 1.to(100).map(
-        (idx) {
-          final user = randomUser;
-          final bool isMe = user.userName == outgoing.userName;
-          if (idx % 7 == 0) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.image('https://picsum.photos/300/200'),
-            );
-          } else if (idx % 13 == 0) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.quickReply(
-                List.generate(
-                  Random().nextInt(7),
-                  (index) => EKQuickReplyItem(title: "Option $index"),
-                ),
-              ),
-            );
-          } else if (idx % 23 == 0) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.carousel(
-                List.generate(
-                  Random().nextInt(3),
-                  (index) => EKCarouselItem(
-                    title: 'Title $index',
-                    subtitle:
-                        'Subtitle $index ${getRandomString(1 + Random().nextInt(80))}',
-                    imageURL: 'https://picsum.photos/300/200',
-                    buttons: [
-                      CarouselButtonItem(
-                        title: 'Select',
-                        url: 'url',
-                        payload: 'payload',
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
-          } else if (idx == 17) {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind: MessageKind.html(htmlData),
-            );
-          } else {
-            return EKMessage(
-              user: user,
-              id: DateTime.now().toString(),
-              isMe: isMe,
-              messageKind:
-                  MessageKind.text(getRandomString(1 + Random().nextInt(40))),
-            );
-          }
-        },
-      ).toList();
 }
