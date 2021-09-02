@@ -43,9 +43,9 @@ class _BasicChatState extends State<BasicChat> {
             setState(
               () {
                 final message = EKMessage(
-                  user: randomUser,
+                  user: outgoing,
                   id: DateTime.now().toString(),
-                  isMe: randomUser.userName == outgoing.userName,
+                  isMe: true,
                   messageKind: MessageKind.text(msg),
                 );
                 _messages.insert(0, message);

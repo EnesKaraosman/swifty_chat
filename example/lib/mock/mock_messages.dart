@@ -59,7 +59,7 @@ EKMessage generateRandomMessage(MockMessageKind ofMessageKind) {
         isMe: isMe,
         messageKind: MessageKind.carousel(
           List.generate(
-            Random().nextInt(3),
+            1 + Random().nextInt(3),
             (index) => EKCarouselItem(
               title: 'Title $index',
               subtitle: faker.lorem.sentence(),
@@ -87,9 +87,7 @@ EKMessage generateRandomMessage(MockMessageKind ofMessageKind) {
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
-        messageKind:
-            // MessageKind.text(getRandomString(1 + Random().nextInt(40))),
-            MessageKind.text(faker.lorem.sentence()),
+        messageKind: MessageKind.text(faker.lorem.sentence()),
       );
   }
 }
