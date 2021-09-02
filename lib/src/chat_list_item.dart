@@ -23,17 +23,11 @@ class ChatListItem extends StatelessWidget {
     } else if (chatMessage.messageKind.imageURL != null) {
       return ImageMessageWidget(chatMessage);
     } else if (chatMessage.messageKind.quickReplies.isNotEmpty) {
-      return QuickReplyWidget(
-        chatMessage: chatMessage,
-      );
+      return QuickReplyWidget(chatMessage);
     } else if (chatMessage.messageKind.htmlData != null) {
-      return HTMLWidget(
-        chatMessage: chatMessage,
-      );
+      return HTMLWidget(chatMessage);
     } else if (chatMessage.messageKind.carouselItems.isNotEmpty) {
-      return CarouselWidget(
-        chatMessage: chatMessage,
-      );
+      return CarouselWidget(chatMessage);
     }
     return const Text('Undetermined MessageKind');
   }

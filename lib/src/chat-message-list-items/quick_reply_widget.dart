@@ -7,9 +7,7 @@ import '../models/message.dart';
 class QuickReplyWidget extends StatelessWidget {
   final Message chatMessage;
 
-  const QuickReplyWidget({
-    required this.chatMessage,
-  });
+  const QuickReplyWidget(this.chatMessage);
 
   @override
   Widget build(BuildContext context) {

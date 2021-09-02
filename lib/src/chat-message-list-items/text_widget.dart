@@ -17,7 +17,7 @@ class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoing
         children: [
           ...avatarWithPadding(),
           textContainer(context),
-          SizedBox(width: 24)
+          const SizedBox(width: 24)
         ],
       );
 
@@ -26,7 +26,7 @@ class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoing
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: avatarPosition.alignment,
         children: [
-          SizedBox(width: 24),
+          const SizedBox(width: 24),
           textContainer(context),
           ...avatarWithPadding(),
         ],
@@ -35,7 +35,7 @@ class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoing
   Widget textContainer(BuildContext context) {
     final cardTheme = Theme.of(context).cardTheme;
     return Container(
-      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+      padding: EdgeInsets.zero,
       child: Text(
         _chatMessage.messageKind.text!,
         softWrap: true,

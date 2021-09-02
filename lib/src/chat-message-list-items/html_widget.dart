@@ -8,22 +8,17 @@ import '../models/message.dart';
 class HTMLWidget extends StatelessWidget {
   final Message chatMessage;
 
-  HTMLWidget({
-    required this.chatMessage,
-  });
-
-  OnTap? _onLinkTap;
-  OnTap? _onImageTap;
+  const HTMLWidget(this.chatMessage);
 
   @override
   Widget build(BuildContext context) {
     final functions = ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
-    _onLinkTap = functions?["onLinkTap"];
-    _onImageTap = functions?["onImageTap"];
+    final OnTap? onLinkTap = functions?["onLinkTap"];
+    final OnTap? onImageTap = functions?["onImageTap"];
     return Html(
       data: chatMessage.messageKind.htmlData,
-      onLinkTap: _onLinkTap,
-      onImageTap: _onImageTap,
+      onLinkTap: onLinkTap,
+      onImageTap: onImageTap,
     ).padding(all: 8).card();
   }
 }

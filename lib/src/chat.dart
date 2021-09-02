@@ -12,9 +12,9 @@ import '../src/models/quick_reply_item.dart';
 class ChatStateContainer extends InheritedWidget {
   Key? key;
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
-  void Function(QuickReplyItem)? onQuickReplyItemPressed;
-  void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
-  Map<String, OnTap> Function()? onHtmlWidgetPressed;
+  final void Function(QuickReplyItem)? onQuickReplyItemPressed;
+  final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
+  final Map<String, OnTap> Function()? onHtmlWidgetPressed;
   final Widget child;
 
   ChatStateContainer({

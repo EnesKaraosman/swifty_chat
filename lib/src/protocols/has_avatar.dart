@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 import '../models/message.dart';
 import '../models/user_avatar.dart';

@@ -11,9 +11,7 @@ import '../protocols/has_avatar.dart';
 class CarouselWidget extends StatelessWidget with HasAvatar {
   final Message chatMessage;
 
-  const CarouselWidget({
-    required this.chatMessage,
-  });
+  const CarouselWidget(this.chatMessage);
 
   List<CarouselItem> get items => chatMessage.messageKind.carouselItems;
 
