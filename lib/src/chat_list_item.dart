@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 import '../src/chat-message-list-items/carousel_widget.dart';
 import '../src/chat-message-list-items/html_widget.dart';
 import '../src/chat-message-list-items/image_widget.dart';
 import '../src/chat-message-list-items/quick_reply_widget.dart';
 import '../src/chat-message-list-items/text_widget.dart';
+import '../src/extensions/theme_context.dart';
 import '../src/models/message.dart';
 
 class ChatListItem extends StatelessWidget {
@@ -15,7 +17,12 @@ class ChatListItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => _messageWidget;
+  Widget build(BuildContext context) => _messageWidget.padding(
+        top: context.theme.messageInset.top,
+        left: context.theme.messageInset.left,
+        right: context.theme.messageInset.right,
+        bottom: context.theme.messageInset.bottom,
+      );
 
   Widget get _messageWidget {
     if (chatMessage.messageKind.text != null) {

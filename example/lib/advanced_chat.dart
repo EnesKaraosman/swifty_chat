@@ -3,7 +3,6 @@ import 'package:swifty_chat/swifty_chat.dart';
 
 import 'mock/mock_messages.dart';
 import 'models/ek_message.dart';
-import 'theme/app_theme.dart';
 
 class AdvancedChat extends StatefulWidget {
   @override
@@ -30,8 +29,6 @@ class _AdvancedChat extends State<AdvancedChat> {
     chatView = _chatWidget(context);
     return MaterialApp(
       title: 'Flutter Chat',
-      theme:
-      isLightThemeActive ? AppTheme.light(context) : AppTheme.dark(context),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -56,9 +53,7 @@ class _AdvancedChat extends State<AdvancedChat> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-    theme: isLightThemeActive
-        ? AppTheme.light(context)
-        : AppTheme.dark(context),
+    theme: isLightThemeActive ? const DefaultChatTheme() : const DarkChatTheme(),
     messages: _messages,
     messageCellSizeConfigurator:
     MessageCellSizeConfigurator.defaultConfiguration,

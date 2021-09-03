@@ -3,7 +3,6 @@ import 'package:swifty_chat/swifty_chat.dart';
 
 import 'mock/mock_messages.dart';
 import 'models/ek_message.dart';
-import 'theme/app_theme.dart';
 
 class BasicChat extends StatefulWidget {
   @override
@@ -33,7 +32,7 @@ class _BasicChatState extends State<BasicChat> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-        theme: AppTheme.dark(context),
+        theme: const DarkChatTheme(),
         messages: _messages,
         messageCellSizeConfigurator:
             MessageCellSizeConfigurator.defaultConfiguration,

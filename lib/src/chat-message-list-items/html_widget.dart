@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 import '../chat.dart';
+import '../extensions/theme_context.dart';
 import '../models/message.dart';
 
 class HTMLWidget extends StatelessWidget {
@@ -15,10 +16,13 @@ class HTMLWidget extends StatelessWidget {
     final functions = ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
     final OnTap? onImageTap = functions?["onImageTap"];
-    return Html(
-      data: chatMessage.messageKind.htmlData,
-      onLinkTap: onLinkTap,
-      onImageTap: onImageTap,
-    ).padding(all: 8).card();
+    return Container(
+      color: context.theme.secondaryColor,
+      child: Html(
+        data: chatMessage.messageKind.htmlData,
+        onLinkTap: onLinkTap,
+        onImageTap: onImageTap,
+      ).padding(all: context.theme.textMessagePadding),
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 import '../chat.dart';
+import '../extensions/theme_context.dart';
 import '../models/message.dart';
 
 class QuickReplyWidget extends StatelessWidget {
@@ -20,8 +21,10 @@ class QuickReplyWidget extends StatelessWidget {
   List<Widget> _buttons(BuildContext context) {
     return chatMessage.messageKind.quickReplies
         .map((qr) => OutlinedButton(
-              onPressed: () =>
-                  ChatStateContainer.of(context).onQuickReplyItemPressed?.call(qr),
+              style: context.theme.quickReplyButtonStyle,
+              onPressed: () => ChatStateContainer.of(context)
+                  .onQuickReplyItemPressed
+                  ?.call(qr),
               child: Text(qr.title),
             ))
         .toList();

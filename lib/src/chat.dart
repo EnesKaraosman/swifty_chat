@@ -1,7 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/html_parser.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:swifty_chat/src/theme/chat_theme.dart';
+import 'package:swifty_chat/src/theme/default_theme.dart';
+import 'package:swifty_chat/src/inherited_chat_theme.dart';
 
 import '../src/chat_list_item.dart';
 import '../src/message_cell_size_configurator.dart';
@@ -39,7 +41,7 @@ class ChatStateContainer extends InheritedWidget {
 
 class Chat extends StatefulWidget {
   List<Message> messages = [];
-  ThemeData? theme;
+  ChatTheme theme;
   Widget chatMessageInputField;
 
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
@@ -53,7 +55,7 @@ class Chat extends StatefulWidget {
     required this.messages,
     required this.messageCellSizeConfigurator,
     required this.chatMessageInputField,
-    this.theme,
+    this.theme = const DefaultChatTheme(),
   });
 
   @override
@@ -86,13 +88,13 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) =>
-      Theme(
-        data: widget.theme ?? ThemeData.light(),
-        child: ChatStateContainer(
-          messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
-          onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
-          onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
-          onCarouselButtonItemPressed: widget._onCarouselButtonItemPressed,
+      ChatStateContainer(
+        messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
+        onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
+        onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
+        onCarouselButtonItemPressed: widget._onCarouselButtonItemPressed,
+        child: InheritedChatTheme(
+          theme: widget.theme,
           child: Column(
             children: [_chatList(), widget.chatMessageInputField],
           ).gestures(
@@ -102,12 +104,15 @@ class _ChatState extends State<Chat> {
       );
 
   Widget _chatList() =>
-      ListView.builder(
-        controller: widget._scrollController,
-        // (reverse: true) Helps to scroll content automatically when keyboard opens
-        reverse: true,
-        itemCount: widget.messages.length,
-        itemBuilder: (BuildContext context, int index) =>
-            ChatListItem(chatMessage: widget.messages[index]),
+      Container(
+        color: widget.theme.backgroundColor,
+        child: ListView.builder(
+          controller: widget._scrollController,
+          // (reverse: true) Helps to scroll content automatically when keyboard opens
+          reverse: true,
+          itemCount: widget.messages.length,
+          itemBuilder: (BuildContext context, int index) =>
+              ChatListItem(chatMessage: widget.messages[index]),
+        ),
       ).expanded();
 }

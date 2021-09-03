@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 import '../chat.dart';
+import '../extensions/theme_context.dart';
 import '../models/carousel_item.dart';
 import '../models/message.dart';
 import '../protocols/has_avatar.dart';
@@ -32,7 +33,7 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
 
   Widget _carouselItem(BuildContext context, CarouselItem item) =>
       Container(
-        color: Colors.grey,
+        color: context.theme.secondaryColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -42,24 +43,20 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
               ).flexible(),
             Text(
               item.title,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline6,
-            ).padding(all: 8),
+              style: context.theme.carouselTitleTextStyle,
+            ).padding(all: context.theme.textMessagePadding),
             Text(
               item.subtitle,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .subtitle2,
-            ).padding(all: 8),
+              style: context.theme.carouselSubtitleTextStyle,
+              textAlign: TextAlign.center,
+            ).padding(all: context.theme.textMessagePadding),
             Wrap(
               children: item.buttons
                   .map(
                     (button) =>
                     ElevatedButton(
                       onPressed: () => ChatStateContainer.of(context).onCarouselButtonItemPressed?.call(button),
+                      style: context.theme.carouselButtonStyle,
                       child: Text(button.title),
                     ),
               )

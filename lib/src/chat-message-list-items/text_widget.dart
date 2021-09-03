@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
+import '../extensions/theme_context.dart';
 import '../models/message.dart';
 import '../models/user_avatar.dart';
 import '../protocols/has_avatar.dart';
 import '../protocols/incoming_outgoing_message_widgets.dart';
 
-class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoingMessageWidgets {
+class TextMessageWidget extends StatelessWidget
+    with HasAvatar, IncomingOutgoingMessageWidgets {
   final Message _chatMessage;
 
   const TextMessageWidget(this._chatMessage);
@@ -33,20 +35,37 @@ class TextMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoing
       );
 
   Widget textContainer(BuildContext context) {
-    final cardTheme = Theme.of(context).cardTheme;
+    final _theme = context.theme;
+    final _messageBorderRadius = _theme.messageBorderRadius;
+    final _borderRadius = BorderRadius.only(
+      bottomLeft: Radius.circular(message.isMe ? _messageBorderRadius : 0),
+      bottomRight: Radius.circular(message.isMe ? 0 : _messageBorderRadius),
+      topLeft: Radius.circular(_messageBorderRadius),
+      topRight: Radius.circular(_messageBorderRadius),
+    );
     return Container(
       padding: EdgeInsets.zero,
-      child: Text(
-        _chatMessage.messageKind.text!,
-        softWrap: true,
-        style: Theme.of(context).textTheme.bodyText1,
-      ).padding(all: 8).card(color: cardTheme.color, margin: cardTheme.margin),
+      decoration: BoxDecoration(
+        borderRadius: _borderRadius,
+        color: message.isMe ? _theme.primaryColor : _theme.secondaryColor
+      ),
+      child: ClipRRect(
+        borderRadius: _borderRadius,
+        child: Text(
+          _chatMessage.messageKind.text!,
+          softWrap: true,
+          style: message.isMe
+              ? _theme.outgoingMessageBodyTextStyle
+              : _theme.incomingMessageBodyTextStyle,
+        ).padding(all: _theme.textMessagePadding),
+      ),
     ).flexible();
   }
 
   @override
-  Widget build(BuildContext context) =>
-      _chatMessage.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);
+  Widget build(BuildContext context) => _chatMessage.isMe
+      ? outgoingMessageWidget(context)
+      : incomingMessageWidget(context);
 
   @override
   Message get message => _chatMessage;
