@@ -1,4 +1,4 @@
-import 'package:flutter_chat/flutter_chat.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 
 class EKCarouselItem extends CarouselItem {
   final String title;

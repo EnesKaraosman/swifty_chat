@@ -1,4 +1,4 @@
-# flutter_chat
+# swifty_chat
 
 ### Message Cell Size Configuration
 

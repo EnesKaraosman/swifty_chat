@@ -1,4 +1,4 @@
-import 'package:flutter_chat/flutter_chat.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 import '../models/ek_chat_user.dart';
 
 class EKMessage extends Message {

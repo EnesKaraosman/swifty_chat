@@ -1,11 +1,11 @@
 import 'package:dart_extensions/dart_extensions.dart' hide Message;
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/protocols/has_avatar.dart';
-import 'package:flutter_chat/src/protocols/incoming_outgoing_message_widgets.dart';
 
 import '../chat.dart';
 import '../models/message.dart';
 import '../models/user_avatar.dart';
+import '../protocols/has_avatar.dart';
+import '../protocols/incoming_outgoing_message_widgets.dart';
 
 class ImageMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoingMessageWidgets {
   final Message _chatMessage;

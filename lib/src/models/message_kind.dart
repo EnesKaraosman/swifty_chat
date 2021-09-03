@@ -1,5 +1,4 @@
-import 'package:flutter_chat/src/models/carousel_item.dart';
-
+import '../models/carousel_item.dart';
 import '../models/quick_reply_item.dart';
 
 class MessageKind {

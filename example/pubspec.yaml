@@ -28,7 +28,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_chat:
+  swifty_chat:
     path: ../
 
   google_fonts:

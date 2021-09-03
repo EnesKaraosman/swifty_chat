@@ -1,4 +1,4 @@
-library flutter_chat;
+library swifty_chat;
 
 export 'src/chat.dart' show Chat;
 export 'src/chat_input_field.dart';

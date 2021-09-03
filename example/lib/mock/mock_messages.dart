@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter_chat/flutter_chat.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 import 'package:faker/faker.dart';
 
 import '../mock/mock_html.dart';

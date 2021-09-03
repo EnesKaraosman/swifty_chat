@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/flutter_chat.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 
 import 'mock/mock_messages.dart';
 import 'models/ek_message.dart';
