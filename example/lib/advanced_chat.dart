@@ -60,14 +60,15 @@ class _AdvancedChat extends State<AdvancedChat> {
     messageCellSizeConfigurator:
     MessageCellSizeConfigurator.defaultConfiguration,
     chatMessageInputField: MessageInputField(
+      key: const Key('message_input_field'),
       sendButtonTapped: (msg) {
         debugPrint(msg);
         setState(
               () {
             final message = EKMessage(
-              user: randomUser,
+              user: outgoing,
               id: DateTime.now().toString(),
-              isMe: randomUser.userName == outgoing.userName,
+              isMe: true,
               messageKind: MessageKind.text(msg),
             );
             _messages.insert(0, message);

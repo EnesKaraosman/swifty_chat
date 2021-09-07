@@ -19,26 +19,53 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final basicChatItem = find.byKey(const Key('basic_chat_item'));
+      final basicChatItem = find.byKey('basic_chat_item'.key);
       await tester.tap(basicChatItem);
 
       await wait(1000);
 
-      final messageInput = find.byKey(const Key('message_input_field'));
-      expect(messageInput, findsOneWidget);
+      final messageInput = find.byKey('message_input_field'.key);
+      expect(messageInput, findsOneWidget, reason: '⚠️ Make sure to add message input widget');
 
       const testMessage = 'Test message';
       final messageTextField = find.byKey(ChatKeys.messageTextField.key);
       await tester.enterText(messageTextField, testMessage);
 
-      await wait(1000);
+      await tester.pumpAndSettle();
 
       final messageSendButton = find.byKey(ChatKeys.messageSendButton.key);
       await tester.tap(messageSendButton);
 
       // Check if message displayed on List.
       await wait(1000);
-      expect(find.text(testMessage), findsOneWidget);
+      expect(find.text(testMessage), findsOneWidget, reason: '⚠️ Make sure to implement sendButton press action');
+    });
+
+    testWidgets('Advanced Chat Test', (tester) async {
+      app.main();
+
+      await tester.pumpAndSettle();
+
+      final advancedChatItem = find.byKey('advanced_chat_item'.key);
+      await tester.tap(advancedChatItem);
+
+      await wait(1000);
+
+      final messageInput = find.byKey('message_input_field'.key);
+      expect(messageInput, findsOneWidget, reason: '⚠️ Make sure to add message input widget');
+
+      const testMessage = 'Test message';
+      final messageTextField = find.byKey(ChatKeys.messageTextField.key);
+      await tester.enterText(messageTextField, testMessage);
+
+      await tester.pumpAndSettle();
+
+      final messageSendButton = find.byKey(ChatKeys.messageSendButton.key);
+      await tester.tap(messageSendButton);
+
+      // Check if message displayed on List.
+      await wait(1000);
+      expect(find.text(testMessage), findsOneWidget, reason: '⚠️ Make sure to implement sendButton press action');
     });
   });
 }
