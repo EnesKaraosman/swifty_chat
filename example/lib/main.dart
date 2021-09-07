@@ -20,8 +20,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (_) => const Home(),
-        '/basic-chat': (_) => BasicChat(),
-        '/advanced-chat': (_) => AdvancedChat(),
+        '/basic-chat': (_) => const BasicChat(Key('basic_chat')),
+        '/advanced-chat': (_) => const AdvancedChat(Key('advanced_chat')),
       },
     );
   }
@@ -37,12 +37,14 @@ class Home extends StatelessWidget {
         children: [
           const Divider(color: Colors.white70),
           ListTile(
+            key: const Key('basic_chat_item'),
             title: const Text('Basic Chat'),
             trailing: const Icon(Icons.keyboard_arrow_right_rounded),
             onTap: () => Navigator.of(context).pushNamed('/basic-chat'),
           ),
           const Divider(color: Colors.white70),
           ListTile(
+            key: const Key('advanced_chat_item'),
             title: const Text('Advanced Chat'),
             trailing: const Icon(Icons.keyboard_arrow_right_rounded),
             onTap: () => Navigator.of(context).pushNamed('/advanced-chat'),

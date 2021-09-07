@@ -2,6 +2,7 @@ library swifty_chat;
 
 export 'src/chat.dart' show Chat;
 export 'src/chat_input_field.dart';
+export 'src/extensions/keys.dart';
 export 'src/message_cell_size_configurator.dart';
 export 'src/models/carousel_item.dart';
 export 'src/models/chat_user.dart';

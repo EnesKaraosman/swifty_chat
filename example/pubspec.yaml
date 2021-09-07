@@ -28,15 +28,17 @@ dependencies:
   flutter:
     sdk: flutter
 
+  google_fonts:
+
   swifty_chat:
     path: ../
-
-  google_fonts:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  integration_test:
+    sdk: flutter
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -5,6 +5,8 @@ import 'mock/mock_messages.dart';
 import 'models/ek_message.dart';
 
 class BasicChat extends StatefulWidget {
+  const BasicChat(Key? key): super(key: key);
+
   @override
   _BasicChatState createState() => _BasicChatState();
 }
@@ -37,6 +39,7 @@ class _BasicChatState extends State<BasicChat> {
         messageCellSizeConfigurator:
             MessageCellSizeConfigurator.defaultConfiguration,
         chatMessageInputField: MessageInputField(
+          key: const Key('message_input_field'),
           sendButtonTapped: (msg) {
             debugPrint(msg);
             setState(

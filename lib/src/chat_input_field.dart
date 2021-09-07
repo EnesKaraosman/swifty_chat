@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
+import '../src/extensions/keys.dart';
+
 class MessageInputField extends StatelessWidget {
   MessageInputField({Key? key, required this.sendButtonTapped}) : super(key: key);
 
@@ -18,6 +20,7 @@ class MessageInputField extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: TextField(
+              key: ChatKeys.messageTextField.key,
               controller: textEditingController,
               textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration.collapsed(
@@ -39,6 +42,7 @@ class MessageInputField extends StatelessWidget {
             ),
           ),
           Container(
+            key: ChatKeys.messageSendButton.key,
             width: 40,
             height: 40,
             decoration: BoxDecoration(

@@ -110,7 +110,7 @@ packages:
       name: flutter_html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   flutter_layout_grid:
     dependency: transitive
     description:
@@ -342,7 +342,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.14"
+    version: "2.1.15"
   video_player_platform_interface:
     dependency: transitive
     description:
@@ -405,7 +405,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.8"
+    version: "2.2.9"
   xml:
     dependency: transitive
     description:

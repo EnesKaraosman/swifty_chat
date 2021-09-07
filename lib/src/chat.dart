@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/html_parser.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:swifty_chat/src/extensions/keys.dart';
 import 'package:swifty_chat/src/theme/chat_theme.dart';
 import 'package:swifty_chat/src/theme/default_theme.dart';
 import 'package:swifty_chat/src/inherited_chat_theme.dart';
@@ -107,6 +108,7 @@ class _ChatState extends State<Chat> {
       Container(
         color: widget.theme.backgroundColor,
         child: ListView.builder(
+          key: ChatKeys.chatListView.key,
           controller: widget._scrollController,
           // (reverse: true) Helps to scroll content automatically when keyboard opens
           reverse: true,

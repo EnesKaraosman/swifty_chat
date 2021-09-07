@@ -5,6 +5,8 @@ import 'mock/mock_messages.dart';
 import 'models/ek_message.dart';
 
 class AdvancedChat extends StatefulWidget {
+  const AdvancedChat(Key? key): super(key: key);
+
   @override
   _AdvancedChat createState() => _AdvancedChat();
 }
