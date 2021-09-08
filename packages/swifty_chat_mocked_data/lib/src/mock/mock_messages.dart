@@ -1,66 +1,56 @@
 import 'dart:math';
-
-import 'package:swifty_chat/swifty_chat.dart';
+import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:faker/faker.dart';
 
-import '../mock/mock_html.dart';
-import '../models/ek_carousel_item.dart';
-import '../models/ek_chat_user.dart';
-import '../models/ek_message.dart';
-import '../models/ek_quick_reply_item.dart';
+import './models/mock_chat_user.dart';
+import './models/mock_message.dart';
+import './models/mock_carousel_item.dart';
+import './models/mock_quick_reply_item.dart';
+import './mock_message_kind.dart';
+import 'mock_html.dart';
 
 extension RangeExtension on int {
   List<int> to(int maxInclusive) =>
       [for (int i = this; i <= maxInclusive; i++) i];
 }
 
-enum MockMessageKind { text, image, quickReply, carousel, html }
-
-EKChatUser incoming = EKChatUser(
-  userName: "incoming",
-  avatar: UserAvatar(imageURL: Uri.parse('https://picsum.photos/50/50')),
-);
-EKChatUser outgoing = EKChatUser(userName: "outgoing");
-
-EKChatUser get randomUser => Random().nextBool() ? incoming : outgoing;
-
-List<EKMessage> generateRandomTextMessages({int count = 60}) => 1
+List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
     .to(count)
     .map((e) => generateRandomMessage(MockMessageKind.text))
     .toList();
 
-EKMessage generateRandomMessage(MockMessageKind ofMessageKind) {
-  final user = randomUser;
-  final bool isMe = user.userName == outgoing.userName;
+MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
+  final user = MockChatUser.randomUser;
+  final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
   switch (ofMessageKind) {
     case MockMessageKind.image:
-      return EKMessage(
+      return MockMessage(
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
         messageKind: MessageKind.image('https://picsum.photos/300/200'),
       );
     case MockMessageKind.quickReply:
-      return EKMessage(
+      return MockMessage(
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
         messageKind: MessageKind.quickReply(
           List.generate(
             Random().nextInt(7),
-            (index) => EKQuickReplyItem(title: "Option $index"),
+                (index) => MockQuickReplyItem(title: "Option $index"),
           ),
         ),
       );
     case MockMessageKind.carousel:
-      return EKMessage(
+      return MockMessage(
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
         messageKind: MessageKind.carousel(
           List.generate(
             1 + Random().nextInt(3),
-            (index) => EKCarouselItem(
+                (index) => EKCarouselItem(
               title: 'Title $index',
               subtitle: faker.lorem.sentence(),
               imageURL: 'https://picsum.photos/300/200',
@@ -76,14 +66,14 @@ EKMessage generateRandomMessage(MockMessageKind ofMessageKind) {
         ),
       );
     case MockMessageKind.html:
-      return EKMessage(
+      return MockMessage(
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
         messageKind: MessageKind.html(htmlData),
       );
     case MockMessageKind.text:
-      return EKMessage(
+      return MockMessage(
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -92,18 +82,18 @@ EKMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   }
 }
 
-List<EKMessage> generateRandomMessages({int count = 80}) => 1.to(count).map(
+List<MockMessage> generateRandomMessages({int count = 80}) => 1.to(count).map(
       (idx) {
-        if (idx % 7 == 0) {
-          return generateRandomMessage(MockMessageKind.image);
-        } else if (idx % 13 == 0) {
-          return generateRandomMessage(MockMessageKind.quickReply);
-        } else if (idx % 23 == 0) {
-          return generateRandomMessage(MockMessageKind.carousel);
-        } else if (idx == 17) {
-          return generateRandomMessage(MockMessageKind.html);
-        } else {
-          return generateRandomMessage(MockMessageKind.text);
-        }
-      },
-    ).toList();
+    if (idx % 7 == 0) {
+      return generateRandomMessage(MockMessageKind.image);
+    } else if (idx % 13 == 0) {
+      return generateRandomMessage(MockMessageKind.quickReply);
+    } else if (idx % 23 == 0) {
+      return generateRandomMessage(MockMessageKind.carousel);
+    } else if (idx == 17) {
+      return generateRandomMessage(MockMessageKind.html);
+    } else {
+      return generateRandomMessage(MockMessageKind.text);
+    }
+  },
+).toList();

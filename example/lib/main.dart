@@ -1,7 +1,6 @@
 import 'package:example/advanced_chat.dart';
 import 'package:example/basic_chat.dart';
 import 'package:flutter/material.dart';
-import 'theme/app_theme.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,8 +14,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Chat',
-      theme: AppTheme.light(context),
-      darkTheme: AppTheme.dark(context),
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (_) => const Home(),

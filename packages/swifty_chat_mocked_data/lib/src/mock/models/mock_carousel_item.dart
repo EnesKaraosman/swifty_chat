@@ -1,4 +1,6 @@
-import 'package:swifty_chat/swifty_chat.dart';
+import 'package:swifty_chat_data/swifty_chat_data.dart';
+
+import './mock_carousel_item.dart';
 
 class EKCarouselItem extends CarouselItem {
   final String title;
@@ -12,8 +14,9 @@ class EKCarouselItem extends CarouselItem {
     this.imageURL,
     this.buttons = const [],
   }) : super(
-            title: title,
-            subtitle: subtitle,
-            buttons: buttons,
-            imageURL: imageURL);
+          title: title,
+          subtitle: subtitle,
+          buttons: buttons,
+          imageURL: imageURL,
+        );
 }

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_chat/swifty_chat.dart';
-
-import 'mock/mock_messages.dart';
-import 'models/ek_message.dart';
+import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
 class BasicChat extends StatefulWidget {
-  const BasicChat(Key? key): super(key: key);
+  const BasicChat(Key? key) : super(key: key);
 
   @override
   _BasicChatState createState() => _BasicChatState();
 }
 
 class _BasicChatState extends State<BasicChat> {
-  final List<EKMessage> _messages = [];
+  final List<MockMessage> _messages = [];
 
   late Chat chatView;
 
@@ -44,8 +42,8 @@ class _BasicChatState extends State<BasicChat> {
             debugPrint(msg);
             setState(
               () {
-                final message = EKMessage(
-                  user: outgoing,
+                final message = MockMessage(
+                  user: MockChatUser.outgoingUser,
                   id: DateTime.now().toString(),
                   isMe: true,
                   messageKind: MessageKind.text(msg),

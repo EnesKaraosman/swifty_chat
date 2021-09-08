@@ -107,7 +107,7 @@ packages:
     source: hosted
     version: "1.2.0"
   faker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: faker
       url: "https://pub.dartlang.org"
@@ -420,7 +420,14 @@ packages:
       path: "../packages/swifty_chat_data"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "0.0.1"
+  swifty_chat_mocked_data:
+    dependency: "direct main"
+    description:
+      path: "../packages/swifty_chat_mocked_data"
+      relative: true
+    source: path
+    version: "0.0.1"
   sync_http:
     dependency: transitive
     description:

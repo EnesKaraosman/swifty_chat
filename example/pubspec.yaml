@@ -23,8 +23,6 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.2
 
-  faker:
-
   flutter:
     sdk: flutter
 
@@ -32,6 +30,9 @@ dependencies:
 
   swifty_chat:
     path: ../
+
+  swifty_chat_mocked_data:
+    path: ../packages/swifty_chat_mocked_data
 
 dev_dependencies:
   flutter_test:

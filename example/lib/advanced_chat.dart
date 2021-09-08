@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_chat/swifty_chat.dart';
-
-import 'mock/mock_messages.dart';
-import 'models/ek_message.dart';
+import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
 class AdvancedChat extends StatefulWidget {
-  const AdvancedChat(Key? key): super(key: key);
+  const AdvancedChat(Key? key) : super(key: key);
 
   @override
   _AdvancedChat createState() => _AdvancedChat();
 }
 
 class _AdvancedChat extends State<AdvancedChat> {
-  final List<EKMessage> _messages = [];
+  final List<MockMessage> _messages = [];
 
   bool isLightThemeActive = true;
 
@@ -55,48 +53,50 @@ class _AdvancedChat extends State<AdvancedChat> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-    theme: isLightThemeActive ? const DefaultChatTheme() : const DarkChatTheme(),
-    messages: _messages,
-    messageCellSizeConfigurator:
-    MessageCellSizeConfigurator.defaultConfiguration,
-    chatMessageInputField: MessageInputField(
-      key: const Key('message_input_field'),
-      sendButtonTapped: (msg) {
-        debugPrint(msg);
-        setState(
+        theme: isLightThemeActive
+            ? const DefaultChatTheme()
+            : const DarkChatTheme(),
+        messages: _messages,
+        messageCellSizeConfigurator:
+            MessageCellSizeConfigurator.defaultConfiguration,
+        chatMessageInputField: MessageInputField(
+          key: const Key('message_input_field'),
+          sendButtonTapped: (msg) {
+            debugPrint(msg);
+            setState(
               () {
-            final message = EKMessage(
-              user: outgoing,
-              id: DateTime.now().toString(),
-              isMe: true,
-              messageKind: MessageKind.text(msg),
+                final message = MockMessage(
+                  user: MockChatUser.outgoingUser,
+                  id: DateTime.now().toString(),
+                  isMe: true,
+                  messageKind: MessageKind.text(msg),
+                );
+                _messages.insert(0, message);
+              },
             );
-            _messages.insert(0, message);
           },
-        );
-      },
-    ),
-  )
-      .setOnHTMLWidgetPressed(
-        () => {
-      "onLinkTap": (url, _, __, ___) =>
-          debugPrint("onLinkTapped: $url"),
-      "onImageTap": (src, _, __, ___) =>
-          debugPrint("onImageTapped: $src")
-    },
-  )
-      .setOnCarouselItemButtonPressed((item) => debugPrint(item.payload))
-      .setOnQuickReplyItemPressed(
+        ),
+      )
+          .setOnHTMLWidgetPressed(
+            () => {
+              "onLinkTap": (url, _, __, ___) =>
+                  debugPrint("onLinkTapped: $url"),
+              "onImageTap": (src, _, __, ___) =>
+                  debugPrint("onImageTapped: $src")
+            },
+          )
+          .setOnCarouselItemButtonPressed((item) => debugPrint(item.payload))
+          .setOnQuickReplyItemPressed(
         (item) {
-      debugPrint(item.title);
-      final message = EKMessage(
-        user: randomUser,
-        id: DateTime.now().toString(),
-        isMe: randomUser.userName == outgoing.userName,
-        messageKind: MessageKind.text(item.title),
+          debugPrint(item.title);
+          final message = MockMessage(
+            user: MockChatUser.outgoingUser,
+            id: DateTime.now().toString(),
+            isMe: true,
+            messageKind: MessageKind.text(item.title),
+          );
+          _messages.insert(0, message);
+          chatView.scrollToBottom();
+        },
       );
-      _messages.insert(0, message);
-      chatView.scrollToBottom();
-    },
-  );
 }
