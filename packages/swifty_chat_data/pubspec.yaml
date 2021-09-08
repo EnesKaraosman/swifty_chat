@@ -1,7 +1,7 @@
 name: swifty_chat_data
 description: Data package for the swifty_chat package.
 version: 0.0.1
-homepage:
+publish_to: 'none'
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

@@ -57,8 +57,6 @@ class _AdvancedChat extends State<AdvancedChat> {
             ? const DefaultChatTheme()
             : const DarkChatTheme(),
         messages: _messages,
-        messageCellSizeConfigurator:
-            MessageCellSizeConfigurator.defaultConfiguration,
         chatMessageInputField: MessageInputField(
           key: const Key('message_input_field'),
           sendButtonTapped: (msg) {

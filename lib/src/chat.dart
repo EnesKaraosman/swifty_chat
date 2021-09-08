@@ -43,7 +43,7 @@ class Chat extends StatefulWidget {
   ChatTheme theme;
   Widget chatMessageInputField;
 
-  final MessageCellSizeConfigurator messageCellSizeConfigurator;
+  MessageCellSizeConfigurator? messageCellSizeConfigurator;
 
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
   void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
@@ -52,10 +52,12 @@ class Chat extends StatefulWidget {
 
   Chat({
     required this.messages,
-    required this.messageCellSizeConfigurator,
     required this.chatMessageInputField,
+    this.messageCellSizeConfigurator,
     this.theme = const DefaultChatTheme(),
-  });
+  }) {
+    messageCellSizeConfigurator ??= MessageCellSizeConfigurator.defaultConfiguration;
+  }
 
   @override
   _ChatState createState() => _ChatState();
@@ -88,7 +90,7 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) =>
       ChatStateContainer(
-        messageCellSizeConfigurator: widget.messageCellSizeConfigurator,
+        messageCellSizeConfigurator: widget.messageCellSizeConfigurator!,
         onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
         onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
         onCarouselButtonItemPressed: widget._onCarouselButtonItemPressed,

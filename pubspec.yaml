@@ -13,8 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_html: ^2.0.0
-  styled_widget: ^0.3.1
+  flutter_html: ^2.1.2
+  styled_widget: ^0.4.0
 
   swifty_chat_data:
     path: ./packages/swifty_chat_data
@@ -24,8 +24,9 @@ dev_dependencies:
     sdk: flutter
 
   lint: ^1.0.0
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+
+  swifty_chat_mocked_data:
+    path: ./packages/swifty_chat_mocked_data
 
 # The following section is specific to Flutter.
 flutter:

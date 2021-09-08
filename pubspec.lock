@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   csslib:
     dependency: transitive
     description:
@@ -92,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  faker:
+    dependency: transitive
+    description:
+      name: faker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   ffi:
     dependency: transitive
     description:
@@ -300,14 +314,21 @@ packages:
       name: styled_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1+2"
+    version: "0.4.0+3"
   swifty_chat_data:
     dependency: "direct main"
     description:
       path: "packages/swifty_chat_data"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "0.0.1"
+  swifty_chat_mocked_data:
+    dependency: "direct dev"
+    description:
+      path: "packages/swifty_chat_mocked_data"
+      relative: true
+    source: path
+    version: "0.0.1"
   term_glyph:
     dependency: transitive
     description:

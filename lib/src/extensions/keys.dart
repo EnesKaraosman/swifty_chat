@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 mixin ChatKeys {
+  static const messageInputWidget = 'message_input_widget';
   static const messageTextField = 'message_text_field';
   static const messageSendButton = 'message_send_button';
 
