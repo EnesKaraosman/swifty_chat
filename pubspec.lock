@@ -301,6 +301,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.1+2"
+  swifty_chat_data:
+    dependency: "direct main"
+    description:
+      path: "packages/swifty_chat_data"
+      relative: true
+    source: path
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:

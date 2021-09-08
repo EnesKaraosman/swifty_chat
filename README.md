@@ -56,7 +56,7 @@ As you see above;
 
 *What kind of message kind exists?*
 
-[MessageKind](./lib/src/models/message_kind.dart)
+[MessageKind](packages/swifty_chat_data/lib/src/models/message_kind.dart)
 
 ```dart
 class MessageKind {

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import '../extensions/theme_context.dart';
-import '../models/message.dart';
-import '../models/user_avatar.dart';
 import '../protocols/has_avatar.dart';
 import '../protocols/incoming_outgoing_message_widgets.dart';
 

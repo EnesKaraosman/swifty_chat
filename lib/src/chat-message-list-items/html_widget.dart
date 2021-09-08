@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import '../chat.dart';
 import '../extensions/theme_context.dart';
-import '../models/message.dart';
 
 class HTMLWidget extends StatelessWidget {
   final Message chatMessage;
