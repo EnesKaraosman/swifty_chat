@@ -60,7 +60,7 @@ class Chat extends StatefulWidget {
   }
 
   @override
-  _ChatState createState() => _ChatState();
+  ChatState createState() => ChatState();
 
   Chat setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
     _onQuickReplyItemPressed = fn;
@@ -86,7 +86,7 @@ class Chat extends StatefulWidget {
   }
 }
 
-class _ChatState extends State<Chat> {
+class ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) =>
       ChatStateContainer(

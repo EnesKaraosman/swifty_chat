@@ -14,10 +14,30 @@ extension RangeExtension on int {
       [for (int i = this; i <= maxInclusive; i++) i];
 }
 
-List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
-    .to(count)
-    .map((e) => generateRandomMessage(MockMessageKind.text))
-    .toList();
+List<MockMessage> generateRandomTextMessagesWithName(
+    String Function(int index) nameGenerator,
+    {int count = 20}) {
+  final user = MockChatUser.randomUser;
+  final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
+  return 1
+      .to(count)
+      .map(
+        (idx) =>
+        MockMessage(
+          user: user,
+          id: DateTime.now().toString(),
+          isMe: isMe,
+          messageKind: MessageKind.text(nameGenerator(idx)),
+        ),
+  )
+      .toList();
+}
+
+List<MockMessage> generateRandomTextMessages({int count = 60}) =>
+    1
+        .to(count)
+        .map((e) => generateRandomMessage(MockMessageKind.text))
+        .toList();
 
 MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   final user = MockChatUser.randomUser;
@@ -50,18 +70,19 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
         messageKind: MessageKind.carousel(
           List.generate(
             1 + Random().nextInt(3),
-                (index) => EKCarouselItem(
-              title: 'Title $index',
-              subtitle: faker.lorem.sentence(),
-              imageURL: 'https://picsum.photos/300/200',
-              buttons: [
-                CarouselButtonItem(
-                  title: 'Select',
-                  url: 'url',
-                  payload: 'payload',
-                )
-              ],
-            ),
+                (index) =>
+                EKCarouselItem(
+                  title: 'Title $index',
+                  subtitle: faker.lorem.sentence(),
+                  imageURL: 'https://picsum.photos/300/200',
+                  buttons: [
+                    CarouselButtonItem(
+                      title: 'Select',
+                      url: 'url',
+                      payload: 'payload',
+                    )
+                  ],
+                ),
           ),
         ),
       );
@@ -82,18 +103,19 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   }
 }
 
-List<MockMessage> generateRandomMessages({int count = 80}) => 1.to(count).map(
-      (idx) {
-    if (idx % 7 == 0) {
-      return generateRandomMessage(MockMessageKind.image);
-    } else if (idx % 13 == 0) {
-      return generateRandomMessage(MockMessageKind.quickReply);
-    } else if (idx % 23 == 0) {
-      return generateRandomMessage(MockMessageKind.carousel);
-    } else if (idx == 17) {
-      return generateRandomMessage(MockMessageKind.html);
-    } else {
-      return generateRandomMessage(MockMessageKind.text);
-    }
-  },
-).toList();
+List<MockMessage> generateRandomMessages({int count = 80}) =>
+    1.to(count).map(
+          (idx) {
+        if (idx % 7 == 0) {
+          return generateRandomMessage(MockMessageKind.image);
+        } else if (idx % 13 == 0) {
+          return generateRandomMessage(MockMessageKind.quickReply);
+        } else if (idx % 23 == 0) {
+          return generateRandomMessage(MockMessageKind.carousel);
+        } else if (idx == 17) {
+          return generateRandomMessage(MockMessageKind.html);
+        } else {
+          return generateRandomMessage(MockMessageKind.text);
+        }
+      },
+    ).toList();
