@@ -5,8 +5,6 @@ import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
-import 'util/util.dart';
-
 class CustomBindings extends AutomatedTestWidgetsFlutterBinding {
   @override
   bool get overrideHttpClient => false;
@@ -44,10 +42,9 @@ void main() {
       const messageCount = 10;
       assert(messageCount > 5);
       final messages = generateRandomTextMessagesWithName(
-              (index) => "Item $index",
-              count: messageCount)
-          .reversed
-          .toList();
+        (index) => "Item $index",
+        count: messageCount,
+      ).reversed.toList();
       await tester.pumpWidget(
         _appContainer(
           Chat(
@@ -64,10 +61,9 @@ void main() {
     testWidgets("ListView Should be scrollable", (tester) async {
       const messageCount = 100;
       final messages = generateRandomTextMessagesWithName(
-              (index) => "Item $index",
-              count: messageCount)
-          .reversed
-          .toList();
+        (index) => "Item $index",
+        count: messageCount,
+      ).reversed.toList();
       await tester.pumpWidget(
         _appContainer(
           Chat(
@@ -85,7 +81,7 @@ void main() {
 
     testWidgets("ListView Should show newly added message", (tester) async {
       late final Chat chatView;
-      final messages = generateRandomMessages();
+      final messages = generateRandomMessages().reversed.toList();
       void messageSendAction(String msg) {
         final message = MockMessage(
           user: MockChatUser.outgoingUser,
@@ -109,7 +105,6 @@ void main() {
 
       final chatState = tester.state(find.byType(Chat)) as ChatState;
       chatState.setState(() {});
-
       await tester.pump(const Duration(milliseconds: 500));
 
       // Check if message displayed on List.
@@ -121,7 +116,7 @@ void main() {
     });
 
     testWidgets("ListView Should scroll to the bottom", (tester) async {
-      final messages = generateRandomMessages();
+      final messages = generateRandomMessages().reversed.toList();
       final chatView = Chat(
         messages: messages,
         chatMessageInputField: _messageInputField((_) {}),
@@ -131,7 +126,8 @@ void main() {
 
       final listView = find.byType(ListView);
       final listViewWidget = tester.widget<ListView>(listView);
-      final currentOffset = listViewWidget.controller?.offset ?? 0;
+      final scrollController = listViewWidget.controller;
+      final currentOffset = scrollController?.offset ?? 0;
       expect(
         currentOffset == 0,
         true,
@@ -143,35 +139,168 @@ void main() {
       await tester.pumpAndSettle(const Duration(seconds: 10));
 
       // Bottom of the listView
-      final minOffset =
-          listViewWidget.controller?.position.minScrollExtent ?? 0;
-      final scrolledOffset = listViewWidget.controller?.offset ?? 0;
-      expect(scrolledOffset == minOffset, false,
-          reason: 'List could not scrolled properly.');
+      final minOffset = scrollController?.position.minScrollExtent ?? 0;
+      final scrolledOffset = scrollController?.offset ?? 0;
+      expect(
+        scrolledOffset == minOffset,
+        false,
+        reason: 'List could not scrolled properly.',
+      );
 
       chatView.scrollToBottom();
-      await tester.pump(const Duration(milliseconds: 1000));
+      await tester.pump(const Duration(milliseconds: 2000));
       expect(
-        listViewWidget.controller?.offset ?? 0 == minOffset,
+        scrolledOffset == minOffset,
         true,
         reason:
             'List could not scrolled to bottom properly, check Chat.scrollToBottom method.',
       );
     });
 
-    testWidgets(
-        "Quick Reply Item Should respond to button events", (tester) async {
-      final messages = generateRandomMessages(count: 120);
-      final chatView = Chat(
+    testWidgets("Quick Reply Item Should respond to button events",
+        (tester) async {
+      const quickReplyOption1Title = "MyOption 1";
+      const quickReplyOption2Title = "MyOption 2";
+      late final Chat chatView;
+      final messages = generateRandomTextMessages().reversed.toList()
+        ..insert(
+          0,
+          MockMessage(
+            user: MockChatUser.incomingUser,
+            id: DateTime.now().toString(),
+            isMe: true,
+            messageKind: MessageKind.quickReply([
+              MockQuickReplyItem(title: quickReplyOption1Title),
+              MockQuickReplyItem(title: quickReplyOption2Title),
+            ]),
+          ),
+        );
+      void quickReplyItemPressedAction(QuickReplyItem item) {
+        final message = MockMessage(
+          user: MockChatUser.outgoingUser,
+          id: DateTime.now().toString(),
+          isMe: false,
+          messageKind: MessageKind.text("${item.title}_pressed"),
+        );
+        messages.insert(0, message);
+        chatView.scrollToBottom();
+      }
+
+      chatView = Chat(
         messages: messages,
         chatMessageInputField: _messageInputField((_) {}),
-      );
+      ).setOnQuickReplyItemPressed(quickReplyItemPressedAction);
+
       await tester.pumpWidget(_appContainer(chatView));
+
+      final quickReplyOption1 = find.text(quickReplyOption1Title);
+      await tester.tap(quickReplyOption1);
       await tester.pump();
+
+      final chatState = tester.state(find.byType(Chat)) as ChatState;
+      chatState.setState(() {});
+      await tester.pump(const Duration(milliseconds: 500));
+
+      expect(
+        find.text("${quickReplyOption1Title}_pressed"),
+        findsOneWidget,
+        reason: 'setOnQuickReplyItemPressed not implemented properly in Chat',
+      );
     });
 
-    testWidgets(
-        "Carousel Item Should respond to button events", (tester) async {});
+    testWidgets("Carousel Item Should respond to button events",
+        (tester) async {
+      const carouselOption1Title = "MyOption 1";
+      const carouselOption2Title = "MyOption 2";
+      late final Chat chatView;
+      final messages = generateRandomTextMessages().reversed.toList()
+        ..insert(
+          0,
+          MockMessage(
+            user: MockChatUser.incomingUser,
+            id: DateTime.now().toString(),
+            isMe: false,
+            messageKind: MessageKind.carousel([
+              MockCarouselItem(
+                  title: 'title1',
+                  subtitle: 'subtitle1',
+                  buttons: [
+                    CarouselButtonItem(
+                        title: carouselOption1Title,
+                        url: 'url1',
+                        payload: 'payload2')
+                  ]),
+              MockCarouselItem(
+                  title: 'title2',
+                  subtitle: 'subtitle2',
+                  buttons: [
+                    CarouselButtonItem(
+                        title: carouselOption2Title,
+                        url: 'url2',
+                        payload: 'payload2')
+                  ]),
+            ]),
+          ),
+        );
+      void carouselItemPressedAction(CarouselButtonItem item) {
+        final message = MockMessage(
+          user: MockChatUser.outgoingUser,
+          id: DateTime.now().toString(),
+          isMe: true,
+          messageKind: MessageKind.text("${item.title}_pressed"),
+        );
+        messages.insert(0, message);
+        chatView.scrollToBottom();
+      }
+
+      chatView = Chat(
+        messages: messages,
+        chatMessageInputField: _messageInputField((_) {}),
+      ).setOnCarouselItemButtonPressed(carouselItemPressedAction);
+
+      await tester.pumpWidget(_appContainer(chatView));
+
+      final carouselOption1 = find.text(carouselOption1Title);
+      await tester.tap(carouselOption1);
+      await tester.pump();
+
+      final chatState = tester.state(find.byType(Chat)) as ChatState;
+      chatState.setState(() {});
+      await tester.pump(const Duration(milliseconds: 500));
+
+      expect(
+        find.text("${carouselOption1Title}_pressed"),
+        findsOneWidget,
+        reason: 'setOnQuickReplyItemPressed not implemented properly in Chat',
+      );
+    });
+
+    testWidgets('HTML MessageKind should respond some events', (tester) async {
+      late final Chat chatView;
+      final messages = generateRandomTextMessages().reversed.toList()
+        ..insert(
+          0,
+          generateRandomMessage(MockMessageKind.html),
+        );
+
+      chatView = Chat(
+        messages: messages,
+        chatMessageInputField: _messageInputField((_) {}),
+      ).setOnHTMLWidgetPressed(
+              () => {
+            "onLinkTap": (url, _, __, ___) {
+              expect(url == htmlDataMockLinkPayload, true);
+            },
+            "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src")
+          }
+      );
+
+      await tester.pumpWidget(_appContainer(chatView));
+      // TODO: Can't get the text inside HTML widget.
+      final websiteLink = find.text(htmlDataMockLinkTitle);
+      await tester.tap(websiteLink);
+      await tester.pump();
+    });
   });
 }
 

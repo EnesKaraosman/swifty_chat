@@ -2,13 +2,13 @@ import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import './mock_carousel_item.dart';
 
-class EKCarouselItem extends CarouselItem {
+class MockCarouselItem extends CarouselItem {
   final String title;
   final String subtitle;
   final String? imageURL;
   final List<CarouselButtonItem> buttons;
 
-  const EKCarouselItem({
+  const MockCarouselItem({
     required this.title,
     required this.subtitle,
     this.imageURL,

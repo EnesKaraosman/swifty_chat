@@ -71,7 +71,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
           List.generate(
             1 + Random().nextInt(3),
                 (index) =>
-                EKCarouselItem(
+                MockCarouselItem(
                   title: 'Title $index',
                   subtitle: faker.lorem.sentence(),
                   imageURL: 'https://picsum.photos/300/200',
