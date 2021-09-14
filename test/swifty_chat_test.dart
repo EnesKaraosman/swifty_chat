@@ -139,18 +139,16 @@ void main() {
       await tester.pumpAndSettle(const Duration(seconds: 10));
 
       // Bottom of the listView
-      final minOffset = scrollController?.position.minScrollExtent ?? 0;
-      final scrolledOffset = scrollController?.offset ?? 0;
       expect(
-        scrolledOffset == minOffset,
+        (scrollController?.offset ?? 0) == (scrollController?.position.minScrollExtent ?? 0),
         false,
         reason: 'List could not scrolled properly.',
       );
 
-      chatView.scrollToBottom();
-      await tester.pump(const Duration(milliseconds: 2000));
+      chatView.scrollToBottom(); // Does the trick.
+      await tester.pumpAndSettle(const Duration(seconds: 10));
       expect(
-        scrolledOffset == minOffset,
+        (scrollController?.offset ?? 0) == (scrollController?.position.minScrollExtent ?? 0),
         true,
         reason:
             'List could not scrolled to bottom properly, check Chat.scrollToBottom method.',
@@ -286,14 +284,12 @@ void main() {
       chatView = Chat(
         messages: messages,
         chatMessageInputField: _messageInputField((_) {}),
-      ).setOnHTMLWidgetPressed(
-              () => {
+      ).setOnHTMLWidgetPressed(() => {
             "onLinkTap": (url, _, __, ___) {
               expect(url == htmlDataMockLinkPayload, true);
             },
             "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src")
-          }
-      );
+          });
 
       await tester.pumpWidget(_appContainer(chatView));
       // TODO: Can't get the text inside HTML widget.
