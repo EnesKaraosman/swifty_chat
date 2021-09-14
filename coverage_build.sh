@@ -2,5 +2,4 @@
 set -e
 
 flutter test --coverage
-lcov --remove coverage/lcov.info "**/*.g.dart" -o coverage/lcov_cleaned.info
-genhtml coverage/lcov_cleaned.info -o coverage/html
+genhtml coverage/lcov.info -o coverage/html
