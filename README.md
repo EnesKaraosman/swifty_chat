@@ -6,6 +6,7 @@ Supported Message types;
 - Text
 - Image
 - Html
+  - [flutter_html](https://pub.dev/packages/flutter_html) package is used for displaying HTMLs, so we have support what package supports.
 - QuickReply
 - Carousel
 
@@ -16,7 +17,7 @@ Other;
 
 ### Usage
 
-TLDR;
+TL;DR <br>
 See the example app in the `example` folder. It contains `BasicChat` & `AdvancedChat` pages.
 * BasicChat contains only text messages, it's good to see minimum requirements to have package up & running.
 * AdvancedChat sample contains all the supported message kinds and related action events like quick reply button tap event, also scrolling to bottom is activated.
