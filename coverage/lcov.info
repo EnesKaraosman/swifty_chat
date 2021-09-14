@@ -42,6 +42,11 @@ DA:119,1
 LF:40
 LH:38
 end_of_record
+SF:lib/src/theme/chat_theme.dart
+DA:32,2
+LF:1
+LH:1
+end_of_record
 SF:lib/src/chat-message-list-items/carousel_widget.dart
 DA:14,1
 DA:16,4
@@ -225,11 +230,6 @@ DA:20,1
 DA:22,5
 LF:6
 LH:6
-end_of_record
-SF:lib/src/theme/chat_theme.dart
-DA:32,2
-LF:1
-LH:1
 end_of_record
 SF:lib/src/theme/default_theme.dart
 DA:7,2
