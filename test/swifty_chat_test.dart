@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swifty_chat/src/chat.dart';
 
@@ -141,6 +142,8 @@ void main() {
       // Bottom of the listView
       expect(
         (scrollController?.offset ?? 0) == (scrollController?.position.minScrollExtent ?? 0),
+        (scrollController?.offset ?? 0) ==
+            (scrollController?.position.minScrollExtent ?? 0),
         false,
         reason: 'List could not scrolled properly.',
       );
@@ -149,6 +152,8 @@ void main() {
       await tester.pumpAndSettle(const Duration(seconds: 10));
       expect(
         (scrollController?.offset ?? 0) == (scrollController?.position.minScrollExtent ?? 0),
+        (scrollController?.offset ?? 0) ==
+            (scrollController?.position.minScrollExtent ?? 0),
         true,
         reason:
             'List could not scrolled to bottom properly, check Chat.scrollToBottom method.',
@@ -274,11 +279,18 @@ void main() {
     });
 
     testWidgets('HTML MessageKind should respond some events', (tester) async {
+    testWidgets('HTML MessageKind should contain link & image', (tester) async {
       late final Chat chatView;
       final messages = generateRandomTextMessages().reversed.toList()
         ..insert(
           0,
           generateRandomMessage(MockMessageKind.html),
+          MockMessage(
+            user: MockChatUser.incomingUser,
+            id: DateTime.now().toString(),
+            isMe: false,
+            messageKind: MessageKind.html(htmlData),
+          ),
         );
 
       chatView = Chat(
@@ -288,6 +300,7 @@ void main() {
             "onLinkTap": (url, _, __, ___) {
               expect(url == htmlDataMockLinkPayload, true);
             },
+            "onLinkTap": (url, _, __, ___) => debugPrint("onLinkTap: $url"),
             "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src")
           });
 
@@ -296,6 +309,15 @@ void main() {
       final websiteLink = find.text(htmlDataMockLinkTitle);
       await tester.tap(websiteLink);
       await tester.pump();
+
+      final html = tester.widget<Html>(find.byType(Html));
+      final parsedHTML = HtmlParser.parseHTML(html.data!);
+      final aNode = parsedHTML.getElementsByTagName("a")[1];
+      expect(aNode.attributes.values.first == htmlDataMockLinkPayload, true);
+
+      final imageNode = parsedHTML.getElementsByTagName("img").last;
+      expect(imageNode.attributes.values.first == "Flutter", true); // alt="Flutter"
+      // TODO: Tap elements inside HTML widget, test setOnHTMLWidgetPressed flow.
     });
   });
 
