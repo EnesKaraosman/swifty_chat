@@ -68,6 +68,12 @@ class DefaultChatTheme extends ChatTheme {
           const TextStyle(fontWeight: FontWeight.bold),
         ),
       );
+
+  @override
+  Color get htmlTextColor => NEUTRAL_0;
+
+  @override
+  String? get htmlTextFontFamily => 'Avenir';
 }
 
 /// Dark chat theme which extends [ChatTheme]
@@ -137,4 +143,10 @@ class DarkChatTheme extends ChatTheme {
           const TextStyle(fontWeight: FontWeight.bold),
         ),
       );
+
+  @override
+  Color get htmlTextColor => NEUTRAL_7;
+
+  @override
+  String? get htmlTextFontFamily => 'Avenir';
 }

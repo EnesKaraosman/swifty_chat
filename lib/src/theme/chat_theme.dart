@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 /// Dark
 const DARK = Color(0xff1f1c38);
@@ -70,4 +71,11 @@ abstract class ChatTheme {
   // Quick Reply Message Style
   /// Button style used on QuickReply widget
   ButtonStyle get quickReplyButtonStyle;
+
+  // HTML Message Style
+  /// Color on p, h1, h2, h3, h4, h5 elements.
+  Color get htmlTextColor;
+
+  /// FontFamily on p, h1, h2, h3, h4, h5 elements.
+  String? get htmlTextFontFamily;
 }

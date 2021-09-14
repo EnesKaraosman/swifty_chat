@@ -13,16 +13,34 @@ class HTMLWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final functions = ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
+    final functions =
+        ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
     final OnTap? onImageTap = functions?["onImageTap"];
+    final Color htmlTextColor = context.theme.htmlTextColor;
+    final String? htmlTextFontFamily = context.theme.htmlTextFontFamily;
     return Container(
       color: context.theme.secondaryColor,
       child: Html(
         data: chatMessage.messageKind.htmlData,
         onLinkTap: onLinkTap,
         onImageTap: onImageTap,
+        style: {
+          "p": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
+          "h1": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
+          "h2": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
+          "h3": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
+          "h4": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
+          "h5": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
+        },
       ).padding(all: context.theme.textMessagePadding),
     );
+  }
+
+  Style styleFrom({
+    required Color color,
+    String? fontFamily,
+  }) {
+    return Style(color: color, fontFamily: fontFamily);
   }
 }
