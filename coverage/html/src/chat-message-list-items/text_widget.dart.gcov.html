@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-09-13 15:14:15</td>
+            <td class="headerValue">2021-09-14 10:15:55</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -113,7 +113,7 @@
 <a name="51"><span class="lineNum">      51 </span><span class="lineCov">          1 :       child: ClipRRect(</span></a>
 <a name="52"><span class="lineNum">      52 </span>            :         borderRadius: _borderRadius,</a>
 <a name="53"><span class="lineNum">      53 </span><span class="lineCov">          1 :         child: Text(</span></a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          3 :           _chatMessage.messageKind.text!,</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          3 :           message.messageKind.text!,</span></a>
 <a name="55"><span class="lineNum">      55 </span>            :           softWrap: true,</a>
 <a name="56"><span class="lineNum">      56 </span><span class="lineCov">          2 :           style: message.isMe</span></a>
 <a name="57"><span class="lineNum">      57 </span><span class="lineCov">          1 :               ? _theme.outgoingMessageBodyTextStyle</span></a>
@@ -124,7 +124,7 @@
 <a name="62"><span class="lineNum">      62 </span>            :   }</a>
 <a name="63"><span class="lineNum">      63 </span>            : </a>
 <a name="64"><span class="lineNum">      64 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          2 :   Widget build(BuildContext context) =&gt; _chatMessage.isMe</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          2 :   Widget build(BuildContext context) =&gt; message.isMe</span></a>
 <a name="66"><span class="lineNum">      66 </span><span class="lineCov">          1 :       ? outgoingMessageWidget(context)</span></a>
 <a name="67"><span class="lineNum">      67 </span><span class="lineCov">          1 :       : incomingMessageWidget(context);</span></a>
 <a name="68"><span class="lineNum">      68 </span>            : </a>

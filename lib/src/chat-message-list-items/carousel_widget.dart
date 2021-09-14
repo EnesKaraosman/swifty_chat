@@ -13,7 +13,7 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
 
   const CarouselWidget(this.chatMessage);
 
-  List<CarouselItem> get items => chatMessage.messageKind.carouselItems;
+  List<CarouselItem> get items => message.messageKind.carouselItems;
 
   @override
   Message get message => chatMessage;

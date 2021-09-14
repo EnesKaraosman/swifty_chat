@@ -51,7 +51,7 @@ class TextMessageWidget extends StatelessWidget
       child: ClipRRect(
         borderRadius: _borderRadius,
         child: Text(
-          _chatMessage.messageKind.text!,
+          message.messageKind.text!,
           softWrap: true,
           style: message.isMe
               ? _theme.outgoingMessageBodyTextStyle
@@ -62,7 +62,7 @@ class TextMessageWidget extends StatelessWidget
   }
 
   @override
-  Widget build(BuildContext context) => _chatMessage.isMe
+  Widget build(BuildContext context) => message.isMe
       ? outgoingMessageWidget(context)
       : incomingMessageWidget(context);
 

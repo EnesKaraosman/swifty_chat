@@ -302,6 +302,31 @@ void main() {
       await tester.pump();
     });
   });
+
+  group('Chat Theme', () {
+    testWidgets('Should reflect Light Theme', (tester) async {
+      await tester.pumpWidget(
+        _appContainer(
+          Chat(
+            theme: const DefaultChatTheme(),
+            messages: generateRandomMessages(),
+            chatMessageInputField: _messageInputField((_) {}),
+          ),
+        ),
+      );
+    });
+    testWidgets('Should reflect Dark Theme', (tester) async {
+      await tester.pumpWidget(
+        _appContainer(
+          Chat(
+            theme: const DarkChatTheme(),
+            messages: generateRandomMessages(),
+            chatMessageInputField: _messageInputField((_) {}),
+          ),
+        ),
+      );
+    });
+  });
 }
 
 Widget _appContainer(Widget child) => MaterialApp(
@@ -337,27 +362,4 @@ Future<void> _addMessageToChatList(WidgetTester tester, String message) async {
   await tester.tap(messageSendButton);
   await tester.pump();
   tester.printToConsole('messageSendButton tapped');
-}
-
-class StatefulContainer extends StatefulWidget {
-  final Widget child;
-
-  const StatefulContainer({
-    required this.child,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _StatefulContainerState createState() => _StatefulContainerState();
-}
-
-class _StatefulContainerState extends State<StatefulContainer> {
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
-
-  void refresh() {
-    setState(() {});
-  }
 }

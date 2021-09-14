@@ -31,13 +31,13 @@ class ImageMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoin
       );
 
   Widget imageContainer(BuildContext context) => Image(
-        image: NetworkImage(_chatMessage.messageKind.imageURL!),
+        image: NetworkImage(message.messageKind.imageURL!),
         width: _imageWidth(context),
       );
 
   @override
   Widget build(BuildContext context) =>
-      _chatMessage.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);
+      message.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);
 
   double _imageWidth(BuildContext context) {
     return ChatStateContainer.of(context)

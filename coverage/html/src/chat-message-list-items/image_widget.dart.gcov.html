@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2021-09-13 15:14:15</td>
+            <td class="headerValue">2021-09-14 10:15:55</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -93,13 +93,13 @@
 <a name="31"><span class="lineNum">      31 </span>            :       );</a>
 <a name="32"><span class="lineNum">      32 </span>            : </a>
 <a name="33"><span class="lineNum">      33 </span><span class="lineCov">          2 :   Widget imageContainer(BuildContext context) =&gt; Image(</span></a>
-<a name="34"><span class="lineNum">      34 </span><span class="lineCov">          4 :         image: NetworkImage(_chatMessage.messageKind.imageURL!),</span></a>
+<a name="34"><span class="lineNum">      34 </span><span class="lineCov">          4 :         image: NetworkImage(message.messageKind.imageURL!),</span></a>
 <a name="35"><span class="lineNum">      35 </span><span class="lineCov">          1 :         width: _imageWidth(context),</span></a>
 <a name="36"><span class="lineNum">      36 </span>            :       );</a>
 <a name="37"><span class="lineNum">      37 </span>            : </a>
 <a name="38"><span class="lineNum">      38 </span><span class="lineCov">          1 :   @override</span></a>
 <a name="39"><span class="lineNum">      39 </span>            :   Widget build(BuildContext context) =&gt;</a>
-<a name="40"><span class="lineNum">      40 </span><span class="lineCov">          4 :       _chatMessage.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);</span></a>
+<a name="40"><span class="lineNum">      40 </span><span class="lineCov">          4 :       message.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);</span></a>
 <a name="41"><span class="lineNum">      41 </span>            : </a>
 <a name="42"><span class="lineNum">      42 </span><span class="lineCov">          1 :   double _imageWidth(BuildContext context) {</span></a>
 <a name="43"><span class="lineNum">      43 </span><span class="lineCov">          1 :     return ChatStateContainer.of(context)</span></a>
