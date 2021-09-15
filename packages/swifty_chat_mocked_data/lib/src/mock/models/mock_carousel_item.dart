@@ -1,7 +1,5 @@
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
-import './mock_carousel_item.dart';
-
 class MockCarouselItem extends CarouselItem {
   final String title;
   final String subtitle;

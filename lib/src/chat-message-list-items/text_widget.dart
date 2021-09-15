@@ -46,7 +46,7 @@ class TextMessageWidget extends StatelessWidget
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
         borderRadius: _borderRadius,
-        color: message.isMe ? _theme.primaryColor : _theme.secondaryColor
+        color: message.isMe ? _theme.primaryColor : _theme.secondaryColor,
       ),
       child: ClipRRect(
         borderRadius: _borderRadius,

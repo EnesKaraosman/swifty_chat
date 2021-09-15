@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 /// Dark
-const DARK = Color(0xff1f1c38);
+const dark = Color(0xff1f1c38);
 
 /// N0
-const NEUTRAL_0 = Color(0xff1d1c21);
+const neutral0 = Color(0xff1d1c21);
 
 /// N2
-const NEUTRAL_2 = Color(0xff9e9cab);
+const neutral2 = Color(0xff9e9cab);
 
 /// N7
-const NEUTRAL_7 = Color(0xffffffff);
+const neutral7 = Color(0xffffffff);
 
 /// N7 with opacity
-const NEUTRAL_7_WITH_OPACITY = Color(0x80ffffff);
+const neutral7WithOpacity = Color(0x80ffffff);
 
 /// Primary
-const PRIMARY = Color(0xff6f61e8);
+const primary = Color(0xff6f61e8);
 
 /// Secondary
-const SECONDARY = Color(0xfff5f5f7);
+const secondary = Color(0xfff5f5f7);
 
 /// Secondary dark
-const SECONDARY_DARK = Color(0xff2b4250);
+const secondaryDark = Color(0xff2b4250);
 
 /// Base chat theme containing all required properties to make a theme.
 /// Extend this class if you want to create a custom theme.

@@ -11,14 +11,14 @@ import '../src/chat_list_item.dart';
 import '../src/message_cell_size_configurator.dart';
 
 class ChatStateContainer extends InheritedWidget {
-  Key? key;
+  final Key? key;
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
   final void Function(QuickReplyItem)? onQuickReplyItemPressed;
   final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
   final Map<String, OnTap> Function()? onHtmlWidgetPressed;
   final Widget child;
 
-  ChatStateContainer({
+  const ChatStateContainer({
     this.key,
     this.onHtmlWidgetPressed,
     this.onQuickReplyItemPressed,
@@ -40,8 +40,8 @@ class ChatStateContainer extends InheritedWidget {
 
 class Chat extends StatefulWidget {
   List<Message> messages = [];
-  ChatTheme theme;
-  Widget chatMessageInputField;
+  final ChatTheme theme;
+  final Widget chatMessageInputField;
 
   MessageCellSizeConfigurator? messageCellSizeConfigurator;
 

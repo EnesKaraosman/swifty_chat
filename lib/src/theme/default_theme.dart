@@ -7,7 +7,7 @@ class DefaultChatTheme extends ChatTheme {
   const DefaultChatTheme() : super();
 
   @override
-  Color get backgroundColor => NEUTRAL_7;
+  Color get backgroundColor => neutral7;
 
   @override
   double get messageBorderRadius => 20;
@@ -16,11 +16,11 @@ class DefaultChatTheme extends ChatTheme {
   double get textMessagePadding => 12;
 
   @override
-  Color get primaryColor => PRIMARY;
+  Color get primaryColor => primary;
 
   @override
   TextStyle get incomingMessageBodyTextStyle => const TextStyle(
-        color: NEUTRAL_0,
+        color: neutral0,
         fontFamily: 'Avenir',
         fontSize: 16,
         fontWeight: FontWeight.w500,
@@ -29,7 +29,7 @@ class DefaultChatTheme extends ChatTheme {
 
   @override
   TextStyle get outgoingMessageBodyTextStyle => const TextStyle(
-        color: NEUTRAL_7,
+        color: neutral7,
         fontFamily: 'Avenir',
         fontSize: 16,
         fontWeight: FontWeight.w500,
@@ -37,14 +37,14 @@ class DefaultChatTheme extends ChatTheme {
       );
 
   @override
-  Color get secondaryColor => SECONDARY;
+  Color get secondaryColor => secondary;
 
   @override
   EdgeInsets get messageInset => const EdgeInsets.symmetric(vertical: 8);
 
   @override
   TextStyle get carouselTitleTextStyle => const TextStyle(
-        color: NEUTRAL_0,
+        color: neutral0,
         fontSize: 19,
         fontFamily: 'Avenir',
         fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class DefaultChatTheme extends ChatTheme {
 
   @override
   TextStyle get carouselSubtitleTextStyle => const TextStyle(
-        color: NEUTRAL_0,
+        color: neutral0,
         fontSize: 16,
         fontFamily: 'Avenir',
       );
@@ -62,15 +62,15 @@ class DefaultChatTheme extends ChatTheme {
 
   @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(NEUTRAL_2),
-        foregroundColor: MaterialStateProperty.all<Color>(NEUTRAL_0),
+        backgroundColor: MaterialStateProperty.all<Color>(neutral2),
+        foregroundColor: MaterialStateProperty.all<Color>(neutral0),
         textStyle: MaterialStateProperty.all<TextStyle>(
           const TextStyle(fontWeight: FontWeight.bold),
         ),
       );
 
   @override
-  Color get htmlTextColor => NEUTRAL_0;
+  Color get htmlTextColor => neutral0;
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
@@ -82,7 +82,7 @@ class DarkChatTheme extends ChatTheme {
   const DarkChatTheme() : super();
 
   @override
-  Color get backgroundColor => DARK;
+  Color get backgroundColor => dark;
 
   @override
   double get messageBorderRadius => 20;
@@ -91,11 +91,11 @@ class DarkChatTheme extends ChatTheme {
   double get textMessagePadding => 12;
 
   @override
-  Color get primaryColor => PRIMARY;
+  Color get primaryColor => primary;
 
   @override
   TextStyle get incomingMessageBodyTextStyle => const TextStyle(
-        color: NEUTRAL_7,
+        color: neutral7,
         fontFamily: 'Avenir',
         fontSize: 16,
         fontWeight: FontWeight.w500,
@@ -104,7 +104,7 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   TextStyle get outgoingMessageBodyTextStyle => const TextStyle(
-        color: NEUTRAL_7,
+        color: neutral7,
         fontFamily: 'Avenir',
         fontSize: 16,
         fontWeight: FontWeight.w500,
@@ -112,14 +112,14 @@ class DarkChatTheme extends ChatTheme {
       );
 
   @override
-  Color get secondaryColor => SECONDARY_DARK;
+  Color get secondaryColor => secondaryDark;
 
   @override
   EdgeInsets get messageInset => const EdgeInsets.symmetric(vertical: 8);
 
   @override
   TextStyle get carouselTitleTextStyle => const TextStyle(
-        color: NEUTRAL_7,
+        color: neutral7,
         fontSize: 19,
         fontFamily: 'Avenir',
         fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   TextStyle get carouselSubtitleTextStyle => const TextStyle(
-        color: NEUTRAL_7,
+        color: neutral7,
         fontSize: 19,
         fontFamily: 'Avenir',
       );
@@ -137,15 +137,15 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(SECONDARY_DARK),
-        foregroundColor: MaterialStateProperty.all<Color>(SECONDARY),
+        backgroundColor: MaterialStateProperty.all<Color>(secondaryDark),
+        foregroundColor: MaterialStateProperty.all<Color>(secondary),
         textStyle: MaterialStateProperty.all<TextStyle>(
           const TextStyle(fontWeight: FontWeight.bold),
         ),
       );
 
   @override
-  Color get htmlTextColor => NEUTRAL_7;
+  Color get htmlTextColor => neutral7;
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
