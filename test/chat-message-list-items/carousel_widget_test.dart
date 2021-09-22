@@ -56,6 +56,10 @@ Future<void> testCarouselTheme({
             isMe: !isIncomingMessage,
             messageKind: MessageKind.carousel([
               MockCarouselItem(
+                imageProvider: const AssetImage(
+                  "assets/images/mock_image_1.jpg",
+                  package: 'swifty_chat_mocked_data',
+                ),
                 title: carouselMessageTitle,
                 subtitle: carouselMessageSubtitle,
                 buttons: [
