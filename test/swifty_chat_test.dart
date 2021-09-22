@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:swifty_chat/src/chat-message-list-items/text_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
@@ -35,8 +37,8 @@ void main() {
     });
 
     testWidgets("ListView Should contain n message widget", (tester) async {
-      const messageCount = 10;
-      assert(messageCount > 5);
+      const messageCount = 7;
+      assert(messageCount > 5 && messageCount < 8);
       final messages = generateRandomTextMessagesWithName(
         (index) => "Item $index",
         count: messageCount,
@@ -50,7 +52,8 @@ void main() {
         ),
       );
       await tester.pump();
-      expect(find.text("Item 0"), findsNothing);
+      final textWidgets = tester.widgetList(find.byType(TextMessageWidget));
+      expect(textWidgets.length, messages.length);
       expect(find.text("Item ${messageCount - 1}"), findsOneWidget);
     });
 
@@ -152,6 +155,77 @@ void main() {
             'List could not scrolled to bottom properly, check Chat.scrollToBottom method.',
       );
     });
+
+    testWidgets(
+      "Should close keyboard when tapped outside.",
+      (tester) async {
+        await tester.pumpWidget(
+          _appContainer(
+            Chat(
+              messages: const [],
+              chatMessageInputField: _messageInputField((_) {}),
+            ),
+          ),
+        );
+
+        final textField = tester.firstWidget<TextField>(find.byType(TextField));
+
+        final messageInputFieldWidget = find.byType(TextField);
+        expect(
+          textField.focusNode?.hasFocus,
+          false,
+          reason: 'Should have no initial focus',
+        );
+        await tester.tap(messageInputFieldWidget);
+        await tester.showKeyboard(messageInputFieldWidget);
+
+        expect(textField.focusNode?.hasFocus, true);
+
+        const msg = 'New message';
+        await tester.enterText(messageInputFieldWidget, msg);
+        expect(
+          find.text(msg),
+          findsOneWidget,
+          reason: 'Input widget does not contain the entered text',
+        );
+
+        await tester.tap(find.byType(Chat));
+        expect(
+          textField.focusNode?.hasFocus,
+          false,
+          reason: 'Should lose focus after Chat tapped',
+        );
+      },
+    );
+
+    testWidgets(
+      "Keyboard Should respond Submit button.",
+      (tester) async {
+        await tester.pumpWidget(
+          _appContainer(
+            Chat(
+              messages: const [],
+              chatMessageInputField: _messageInputField((_) {}),
+            ),
+          ),
+        );
+
+        final textField = tester.firstWidget<TextField>(find.byType(TextField));
+
+        final messageInputFieldWidget = find.byType(TextField);
+        await tester.tap(messageInputFieldWidget);
+        await tester.showKeyboard(messageInputFieldWidget);
+
+        const msg = 'New message';
+        await tester.enterText(messageInputFieldWidget, msg);
+        expect(textField.controller?.text.isEmpty, false);
+
+        await tester.testTextInput.receiveAction(TextInputAction.send);
+        await tester.pump();
+
+        expect(textField.controller?.text.isEmpty, true);
+      },
+    );
 
     testWidgets("Quick Reply Item Should respond to button events",
         (tester) async {

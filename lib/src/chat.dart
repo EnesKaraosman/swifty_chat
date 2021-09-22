@@ -11,20 +11,18 @@ import '../src/chat_list_item.dart';
 import '../src/message_cell_size_configurator.dart';
 
 class ChatStateContainer extends InheritedWidget {
-  final Key? key;
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
   final void Function(QuickReplyItem)? onQuickReplyItemPressed;
   final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
   final Map<String, OnTap> Function()? onHtmlWidgetPressed;
-  final Widget child;
 
   const ChatStateContainer({
-    this.key,
+    Key? key,
     this.onHtmlWidgetPressed,
     this.onQuickReplyItemPressed,
     this.onCarouselButtonItemPressed,
     required this.messageCellSizeConfigurator,
-    required this.child,
+    required Widget child,
   }) : super(key: key, child: child);
 
   static ChatStateContainer of(BuildContext context) {
@@ -44,10 +42,10 @@ class Chat extends StatefulWidget {
   final Widget chatMessageInputField;
 
   MessageCellSizeConfigurator? messageCellSizeConfigurator;
-
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
   void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
   Map<String, OnTap> Function()? _onHtmlWidgetPressed;
+
   final ScrollController _scrollController = ScrollController();
 
   Chat({

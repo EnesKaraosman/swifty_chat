@@ -4,7 +4,10 @@ import 'package:styled_widget/styled_widget.dart';
 import '../src/extensions/keys.dart';
 
 class MessageInputField extends StatelessWidget {
-  MessageInputField({Key? key, required this.sendButtonTapped}) : super(key: key);
+  MessageInputField({
+    Key? key,
+    required this.sendButtonTapped,
+  }) : super(key: key);
 
   final textEditingController = TextEditingController();
 
@@ -22,6 +25,7 @@ class MessageInputField extends StatelessWidget {
             child: TextField(
               key: ChatKeys.messageTextField.key,
               controller: textEditingController,
+              focusNode: FocusNode(),
               textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration.collapsed(
                 hintText: 'Write your reply...',
