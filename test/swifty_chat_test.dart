@@ -3,7 +3,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swifty_chat/src/chat-message-list-items/text_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
