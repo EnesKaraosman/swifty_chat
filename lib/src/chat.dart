@@ -42,6 +42,7 @@ class Chat extends StatefulWidget {
   final Widget chatMessageInputField;
 
   MessageCellSizeConfigurator? messageCellSizeConfigurator;
+  void Function(Message)? _onMessagePressed;
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
   void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
   Map<String, OnTap> Function()? _onHtmlWidgetPressed;
@@ -60,11 +61,13 @@ class Chat extends StatefulWidget {
   @override
   ChatState createState() => ChatState();
 
+  /// Triggered when quick reply message widget button is tapped.
   Chat setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
     _onQuickReplyItemPressed = fn;
     return this;
   }
 
+  /// Triggered when carousel message widget button is tapped.
   Chat setOnCarouselItemButtonPressed(void Function(CarouselButtonItem)? fn) {
     _onCarouselButtonItemPressed = fn;
     return this;
@@ -72,6 +75,12 @@ class Chat extends StatefulWidget {
 
   Chat setOnHTMLWidgetPressed(Map<String, OnTap> Function()? fn) {
     _onHtmlWidgetPressed = fn;
+    return this;
+  }
+
+  /// Triggered when a message widget is tapped.
+  Chat setOnMessagePressed(void Function(Message)? fn) {
+    _onMessagePressed = fn;
     return this;
   }
 
@@ -111,8 +120,10 @@ class ChatState extends State<Chat> {
           // (reverse: true) Helps to scroll content automatically when keyboard opens
           reverse: true,
           itemCount: widget.messages.length,
-          itemBuilder: (BuildContext context, int index) =>
-              ChatListItem(chatMessage: widget.messages[index]),
+          itemBuilder: (BuildContext context, int index) => GestureDetector(
+            child: ChatListItem(chatMessage: widget.messages[index]),
+            onTap: () => widget._onMessagePressed?.call(widget.messages[index])
+          ),
         ),
       ).expanded();
 }

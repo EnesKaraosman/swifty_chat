@@ -96,5 +96,9 @@ class _AdvancedChat extends State<AdvancedChat> {
           _messages.insert(0, message);
           chatView.scrollToBottom();
         },
+      ).setOnMessagePressed(
+        (message) {
+          debugPrint(message.messageKind.toString());
+        },
       );
 }
