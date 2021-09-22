@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:faker/faker.dart';
 
@@ -22,33 +23,38 @@ List<MockMessage> generateRandomTextMessagesWithName(
   return 1
       .to(count)
       .map(
-        (idx) =>
-        MockMessage(
+        (idx) => MockMessage(
           user: user,
           id: DateTime.now().toString(),
           isMe: isMe,
           messageKind: MessageKind.text(nameGenerator(idx)),
         ),
-  )
+      )
       .toList();
 }
 
-List<MockMessage> generateRandomTextMessages({int count = 60}) =>
-    1
-        .to(count)
-        .map((e) => generateRandomMessage(MockMessageKind.text))
-        .toList();
+List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
+    .to(count)
+    .map((e) => generateRandomMessage(MockMessageKind.text))
+    .toList();
 
 MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   final user = MockChatUser.randomUser;
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
   switch (ofMessageKind) {
     case MockMessageKind.image:
+      final mockImageIndex = 1 + Random().nextInt(2);
+      final mockImageName = "assets/images/mock_image_$mockImageIndex.jpg";
       return MockMessage(
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
-        messageKind: MessageKind.image('https://picsum.photos/300/200'),
+        messageKind: MessageKind.imageProvider(
+          AssetImage(
+            mockImageName,
+            package: 'swifty_chat_mocked_data',
+          ),
+        ),
       );
     case MockMessageKind.quickReply:
       return MockMessage(
@@ -58,7 +64,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
         messageKind: MessageKind.quickReply(
           List.generate(
             Random().nextInt(7),
-                (index) => MockQuickReplyItem(title: "Option $index"),
+            (index) => MockQuickReplyItem(title: "Option $index"),
           ),
         ),
       );
@@ -70,19 +76,21 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
         messageKind: MessageKind.carousel(
           List.generate(
             1 + Random().nextInt(3),
-                (index) =>
-                MockCarouselItem(
-                  title: 'Title $index',
-                  subtitle: faker.lorem.sentence(),
-                  imageURL: 'https://picsum.photos/300/200',
-                  buttons: [
-                    CarouselButtonItem(
-                      title: 'Select',
-                      url: 'url',
-                      payload: 'payload',
-                    )
-                  ],
-                ),
+            (index) => MockCarouselItem(
+              title: 'Title $index',
+              subtitle: faker.lorem.sentence(),
+              imageProvider: AssetImage(
+                "assets/images/mock_image_1.jpg",
+                package: 'swifty_chat_mocked_data',
+              ),
+              buttons: [
+                CarouselButtonItem(
+                  title: 'Select',
+                  url: 'url',
+                  payload: 'payload',
+                )
+              ],
+            ),
           ),
         ),
       );
@@ -103,9 +111,8 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   }
 }
 
-List<MockMessage> generateRandomMessages({int count = 80}) =>
-    1.to(count).map(
-          (idx) {
+List<MockMessage> generateRandomMessages({int count = 80}) => 1.to(count).map(
+      (idx) {
         if (idx % 7 == 0) {
           return generateRandomMessage(MockMessageKind.image);
         } else if (idx % 13 == 0) {

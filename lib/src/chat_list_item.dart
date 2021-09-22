@@ -27,7 +27,7 @@ class ChatListItem extends StatelessWidget {
   Widget get _messageWidget {
     if (chatMessage.messageKind.text != null) {
       return TextMessageWidget(chatMessage);
-    } else if (chatMessage.messageKind.imageURL != null) {
+    } else if (chatMessage.messageKind.imageProvider != null) {
       return ImageMessageWidget(chatMessage);
     } else if (chatMessage.messageKind.quickReplies.isNotEmpty) {
       return QuickReplyWidget(chatMessage);

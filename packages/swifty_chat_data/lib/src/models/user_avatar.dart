@@ -16,8 +16,8 @@ extension AvatarAlignment on AvatarPosition {
 }
 
 class UserAvatar {
-  /// Profile image
-  final Uri imageURL;
+  /// Profile imageProvider (Network/Asset)
+  final ImageProvider imageProvider;
 
   /// Width & Height (diameter)
   final double size;
@@ -26,7 +26,7 @@ class UserAvatar {
   final AvatarPosition position;
 
   UserAvatar({
-    required this.imageURL,
+    required this.imageProvider,
     this.size = 40,
     this.position = AvatarPosition.center,
   });

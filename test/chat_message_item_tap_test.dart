@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:swifty_chat/src/chat-message-list-items/image_widget.dart';
-import 'package:swifty_chat/src/chat-message-list-items/text_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
+import 'package:swifty_chat/src/chat_list_item.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
-import 'util/util.dart';
-
 void main() {
-  CustomBindings();
   group("Chat shall notify when MessageKind widgets tapped", () {
     testWidgets(
       "TextMessageWidget shall emit tap events with it's message",
@@ -25,8 +21,9 @@ void main() {
             ),
           ),
         );
-        await tester.tap(find.byType(TextMessageWidget));
-        await tester.pump();
+        await tester.ensureVisible(find.byType(ChatListItem));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byType(ChatListItem));
       },
     );
 
@@ -36,19 +33,19 @@ void main() {
         await tester.pumpWidget(
           _appContainer(
             Chat(
-              messages: [generateRandomMessage(MockMessageKind.image)],
+              messages: [
+                generateRandomMessage(MockMessageKind.image),
+              ],
               chatMessageInputField: _messageInputField((_) {}),
             ).setOnMessagePressed(
-              (message) => expect(
-                message.messageKind.imageURL == null,
-                false,
-                  reason: 'Could not tap image message widget'
-              ),
+              (message) => expect(message.messageKind.imageProvider == null, false,
+                  reason: 'Could not tap image message widget'),
             ),
           ),
         );
-        await tester.tap(find.byType(ImageMessageWidget));
-        await tester.pump();
+        await tester.ensureVisible(find.byType(ChatListItem));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byType(ChatListItem));
       },
     );
 

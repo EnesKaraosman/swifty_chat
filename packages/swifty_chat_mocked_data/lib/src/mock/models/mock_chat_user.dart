@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class MockChatUser extends ChatUser {
@@ -16,9 +17,15 @@ class MockChatUser extends ChatUser {
 
   static MockChatUser incomingUser = MockChatUser(
     userName: "incoming",
-    avatar: UserAvatar(imageURL: Uri.parse('https://picsum.photos/50/50')),
+    avatar: UserAvatar(
+      imageProvider: AssetImage(
+        'assets/images/mock_image_avatar.png',
+        package: 'swifty_chat_mocked_data',
+      ),
+    ),
   );
   static MockChatUser outgoingUser = MockChatUser(userName: "outgoing");
 
-  static MockChatUser get randomUser => Random().nextBool() ? incomingUser : outgoingUser;
+  static MockChatUser get randomUser =>
+      Random().nextBool() ? incomingUser : outgoingUser;
 }

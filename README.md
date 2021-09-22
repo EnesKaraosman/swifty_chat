@@ -5,6 +5,7 @@
 Supported Message types;
 - Text
 - Image
+  - `ImageProver` is required, so you can use network or assets to load images.
 - Html
   - [flutter_html](https://pub.dev/packages/flutter_html) package is used for displaying HTMLs, so we have support what package supports.
 - QuickReply
@@ -62,7 +63,7 @@ As you see above;
 ```dart
 class MessageKind {
   MessageKind.text(String text);
-  MessageKind.image(String imageURL);
+  MessageKind.imageProvider(ImageProvider imageProvider);
   MessageKind.quickReply(List<QuickReplyItem> quickReplies);
   MessageKind.carousel(List<CarouselItem> carousel);
   MessageKind.html(String html);
@@ -71,13 +72,52 @@ class MessageKind {
 
 For more, visit [BasicChat](./example/lib/basic_chat.dart) & [AdvancedChat](./example/lib/advanced_chat.dart) 
 
+### Message widget tap actions
+
+You can be notified about message widget press actions
+  
+* QuickReply 
+
+```dart
+Chat(..)
+.setOnQuickReplyItemPressed((QuickReply item) {});
+```
+
+* Carousel
+
+```dart
+Chat(..)
+.setOnCarouselItemButtonPressed((CarouselButtonItem item) {});
+```
+
+* Html
+
+```dart
+Chat(..)
+.setOnHTMLWidgetPressed(
+  () => {
+  "onLinkTap": (url, _, __, ___) =>
+    debugPrint("onLinkTapped: $url"),
+  "onImageTap": (src, _, __, ___) =>
+    debugPrint("onImageTapped: $src")
+  },
+);
+```
+
+* For rest (Image, Text)
+
+```dart
+Chat(..)
+.setOnMessagePressed((Message message) {});
+```
+
 ### Avatar
 
 To set avatar for a `ChatUser`, simply pass `avatar` parameter of the related user.
 
 ```dart
 UserAvatar({
-    required this.imageURL,
+    required this.imageProvider, // ImageProvider
     this.size = 40,
     this.position = AvatarPosition.center, // top, center, bottom
 });

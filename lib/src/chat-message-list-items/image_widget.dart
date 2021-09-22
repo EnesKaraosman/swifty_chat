@@ -6,7 +6,8 @@ import '../chat.dart';
 import '../protocols/has_avatar.dart';
 import '../protocols/incoming_outgoing_message_widgets.dart';
 
-class ImageMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoingMessageWidgets {
+class ImageMessageWidget extends StatelessWidget
+    with HasAvatar, IncomingOutgoingMessageWidgets {
   final Message _chatMessage;
 
   const ImageMessageWidget(this._chatMessage);
@@ -31,13 +32,14 @@ class ImageMessageWidget extends StatelessWidget with HasAvatar, IncomingOutgoin
       );
 
   Widget imageContainer(BuildContext context) => Image(
-        image: NetworkImage(message.messageKind.imageURL!),
-        width: _imageWidth(context),
-      );
+    width: _imageWidth(context),
+    image: message.messageKind.imageProvider!,
+  );
 
   @override
-  Widget build(BuildContext context) =>
-      message.isMe ? outgoingMessageWidget(context) : incomingMessageWidget(context);
+  Widget build(BuildContext context) => message.isMe
+      ? outgoingMessageWidget(context)
+      : incomingMessageWidget(context);
 
   double _imageWidth(BuildContext context) {
     return ChatStateContainer.of(context)

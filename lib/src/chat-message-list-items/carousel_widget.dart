@@ -36,9 +36,9 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (item.imageURL != null)
-              Image.network(
-                item.imageURL!,
+            if (item.imageProvider != null)
+              Image(
+                image: item.imageProvider!,
               ).flexible(),
             Text(
               item.title,

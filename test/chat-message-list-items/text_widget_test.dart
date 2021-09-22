@@ -5,10 +5,7 @@ import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
-import '../util/util.dart';
-
 void main() {
-  CustomBindings();
   group('Chat Text Theme', () {
     testWidgets('Should reflect Light Theme', (tester) async {
       await testTextTheme(

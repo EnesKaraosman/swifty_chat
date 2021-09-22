@@ -9,16 +9,16 @@ abstract class HasAvatar {
   AvatarPosition get avatarPosition =>
       userAvatar?.position ?? AvatarPosition.center;
 
-  Uri? get avatarUri => userAvatar?.imageURL;
+  ImageProvider? get avatarImageProvider => userAvatar?.imageProvider;
 
   double get _radius => (userAvatar?.size ?? 36) / 2;
 
   List<Widget> avatarWithPadding([double padding = 8]) => [
     SizedBox(width: padding),
-    if (avatarUri != null)
+    if (avatarImageProvider != null)
       CircleAvatar(
         radius: _radius,
-        backgroundImage: NetworkImage(avatarUri!.toString()),
+        backgroundImage: avatarImageProvider,
       ),
     SizedBox(width: padding),
   ].toList();
