@@ -15,12 +15,14 @@ class ChatStateContainer extends InheritedWidget {
   final void Function(QuickReplyItem)? onQuickReplyItemPressed;
   final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
   final Map<String, OnTap> Function()? onHtmlWidgetPressed;
+  final Widget Function(Message)? customMessageWidget;
 
   const ChatStateContainer({
     Key? key,
     this.onHtmlWidgetPressed,
     this.onQuickReplyItemPressed,
     this.onCarouselButtonItemPressed,
+    this.customMessageWidget,
     required this.messageCellSizeConfigurator,
     required Widget child,
   }) : super(key: key, child: child);
@@ -46,12 +48,14 @@ class Chat extends StatefulWidget {
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
   void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
   Map<String, OnTap> Function()? _onHtmlWidgetPressed;
+  Widget Function(Message)? customMessageWidget;
 
   final ScrollController _scrollController = ScrollController();
 
   Chat({
     required this.messages,
     required this.chatMessageInputField,
+    this.customMessageWidget,
     this.messageCellSizeConfigurator,
     this.theme = const DefaultChatTheme(),
   }) {
@@ -101,6 +105,7 @@ class ChatState extends State<Chat> {
         onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
         onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
         onCarouselButtonItemPressed: widget._onCarouselButtonItemPressed,
+        customMessageWidget: widget.customMessageWidget,
         child: InheritedChatTheme(
           theme: widget.theme,
           child: Column(

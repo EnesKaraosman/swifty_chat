@@ -9,6 +9,7 @@ class MessageKind {
   String? htmlData;
   List<QuickReplyItem> quickReplies = [];
   List<CarouselItem> carouselItems = [];
+  dynamic custom;
 
   /// Represents text on the screen.
   MessageKind.text(this.text);
@@ -24,4 +25,6 @@ class MessageKind {
 
   /// Represents carousel options on the screen.
   MessageKind.carousel(this.carouselItems);
+
+  MessageKind.custom(this.custom);
 }

@@ -1,5 +1,9 @@
 # swifty_chat
 
+| QuickReply, Text, Image      | Html  | Carousel | Custom |
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="../main/examples/assets/screenshots/kind_image_and_quick_reply_and_text.png" width="240"/> | <img src="../main/examples/assets/screenshots/kind_html.png" width="240"/> | <img src="../main/examples/assets/screenshots/kind_carousel.png" width="240"/> | <img src="../main/examples/assets/screenshots/kind_custom.png" width="240"/>
+
 ### Features
 
 Supported Message types;
@@ -10,6 +14,8 @@ Supported Message types;
   - [flutter_html](https://pub.dev/packages/flutter_html) package is used for displaying HTMLs, so we have support what package supports.
 - QuickReply
 - Carousel
+- Custom
+  - See [CustomMessage.md](CustomMessage.md) for details.
 
 Other;
 
@@ -67,6 +73,7 @@ class MessageKind {
   MessageKind.quickReply(List<QuickReplyItem> quickReplies);
   MessageKind.carousel(List<CarouselItem> carousel);
   MessageKind.html(String html);
+  MessageKind.custom(dynamic? custom);
 }
 ```
 
@@ -126,6 +133,10 @@ UserAvatar({
 ### Theming
 
 Visit [Theming.md](Theming.md) for details.
+
+### Custom Message
+
+Visit [CustomMessage.md](CustomMessage.md) for details.
 
 ### Message Cell Size Configuration
 

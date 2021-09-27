@@ -196,7 +196,7 @@ void main() {
     );
 
     testWidgets(
-      "Keyboard Should respond Submit button.",
+      "Keyboard Should respond Send button.",
       (tester) async {
         await tester.pumpWidget(
           _appContainer(
