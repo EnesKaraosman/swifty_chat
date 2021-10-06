@@ -131,9 +131,9 @@ packages:
   swifty_chat_data:
     dependency: "direct main"
     description:
-      path: "../swifty_chat_data"
-      relative: true
-    source: path
+      name: swifty_chat_data
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   term_glyph:
     dependency: transitive

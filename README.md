@@ -2,7 +2,7 @@
 
 | QuickReply, Text, Image      | Html  | Carousel | Custom |
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="../main/example/assets/screenshots/kind_image_and_quick_reply_and_text.png" width="240"/> | <img src="../main/example/assets/screenshots/kind_html.png" width="240"/> | <img src="../main/example/assets/screenshots/kind_carousel.png" width="240"/> | <img src="../main/example/assets/screenshots/kind_custom.png" width="240"/>
+<img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_image_and_quick_reply_and_text.png" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_html.png" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_carousel.png" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_custom.png" width="240"/>
 
 ### Features
 

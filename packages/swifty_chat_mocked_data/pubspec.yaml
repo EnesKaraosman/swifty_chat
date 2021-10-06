@@ -13,8 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  swifty_chat_data:
-    path: ../swifty_chat_data
+  swifty_chat_data: ^0.0.1
 
 dev_dependencies:
   flutter_test:
