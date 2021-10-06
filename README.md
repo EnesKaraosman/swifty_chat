@@ -36,7 +36,7 @@ This lib requires some abstract classes to be implemented to get started.
 * `QuickReplyItem` (if `MessageKind.quickReply` is going to be used)
 * `CarouselItem` (if `MessageKind.carousel` is going to be used)
 
-Note that `example/lib/models` folder `EK...` prefixed classes are the concrete implementation of the related abstract classes.
+Note that `packages/swifty_chat_mocked_data/lib/src/mock/models` folder contains `Mock...` prefixed classes are the concrete implementation of the related abstract classes.
 
 For a chat app, you need messages right, so here what you need to have a message;
 
@@ -48,8 +48,8 @@ abstract class Message {
   final MessageKind messageKind;
 }
 
-EKMessage(
-  user: EKChatUser(userName: "Enes"),
+MockMessage(
+  user: MockChatUser(userName: "Enes"),
   id: DateTime.now().toString(),
   isMe: true,
   messageKind: MessageKind.text("My First Message"),
@@ -57,7 +57,7 @@ EKMessage(
 ```
 
 As you see above; 
-* You need a `ChatUser` which means you need to have a class that extends from `ChatUser`, in our case its `EKChatUser`.
+* You need a `ChatUser` which means you need to have a class that extends from `ChatUser`, in our case its `MockChatUser`.
 * id to have unique messages.
 * isMe is to differentiate UI.
 * MessageKind is to determine how the message UI is going to look like.
