@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import '../chat.dart';
+import '../extensions/theme_context.dart';
 import '../protocols/has_avatar.dart';
 import '../protocols/incoming_outgoing_message_widgets.dart';
 
@@ -31,9 +32,12 @@ class ImageMessageWidget extends StatelessWidget
         ],
       );
 
-  Widget imageContainer(BuildContext context) => Image(
-    width: _imageWidth(context),
-    image: message.messageKind.imageProvider!,
+  Widget imageContainer(BuildContext context) => ClipRRect(
+    borderRadius: context.theme.imageBorderRadius,
+    child: Image(
+      width: _imageWidth(context),
+      image: message.messageKind.imageProvider!
+    ),
   );
 
   @override

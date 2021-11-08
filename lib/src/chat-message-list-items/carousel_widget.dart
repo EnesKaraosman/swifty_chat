@@ -19,10 +19,10 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
   Message get message => chatMessage;
 
   @override
-  Widget build(BuildContext context) =>
-      CarouselSlider.builder(
+  Widget build(BuildContext context) => CarouselSlider.builder(
         itemCount: items.length,
-        itemBuilder: (context, index, _) => _carouselItem(context, items[index]),
+        itemBuilder: (context, index, _) =>
+            _carouselItem(context, items[index]),
         options: CarouselOptions(
           height: _carouselItemHeight(context),
           disableCenter: true,
@@ -30,16 +30,18 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
         ),
       );
 
-  Widget _carouselItem(BuildContext context, CarouselItem item) =>
-      Container(
-        color: context.theme.secondaryColor,
+  Widget _carouselItem(BuildContext context, CarouselItem item) => Container(
+        decoration: context.theme.carouselBoxDecoration,
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             if (item.imageProvider != null)
-              Image(
-                image: item.imageProvider!,
-              ).flexible(),
+              Flexible(
+                child: Image(
+                  image: item.imageProvider!,
+                ),
+              ),
             Text(
               item.title,
               style: context.theme.carouselTitleTextStyle,
@@ -52,13 +54,14 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
             Wrap(
               children: item.buttons
                   .map(
-                    (button) =>
-                    ElevatedButton(
-                      onPressed: () => ChatStateContainer.of(context).onCarouselButtonItemPressed?.call(button),
+                    (button) => ElevatedButton(
+                      onPressed: () => ChatStateContainer.of(context)
+                          .onCarouselButtonItemPressed
+                          ?.call(button),
                       style: context.theme.carouselButtonStyle,
                       child: Text(button.title),
                     ),
-              )
+                  )
                   .toList(),
             ).padding(all: 8),
           ],
@@ -66,8 +69,7 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
       );
 
   double _carouselItemHeight(BuildContext context) {
-    final height = ChatStateContainer
-        .of(context)
+    final height = ChatStateContainer.of(context)
         .messageCellSizeConfigurator
         .carouselCellMaxHeightConfiguration(context.mq.size.height);
     return height;

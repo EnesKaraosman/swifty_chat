@@ -57,7 +57,14 @@ abstract class ChatTheme {
   /// of sent messages
   TextStyle get outgoingMessageBodyTextStyle;
 
+  // Image Message Styles
+  /// Image borderRadius
+  BorderRadius get imageBorderRadius;
+
   // Carousel Message Styles
+  /// Carousel container decoration
+  BoxDecoration get carouselBoxDecoration;
+
   /// Title text style used for displaying text on Carousel widget
   TextStyle get carouselTitleTextStyle;
 

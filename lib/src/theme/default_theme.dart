@@ -61,6 +61,15 @@ class DefaultChatTheme extends ChatTheme {
   ButtonStyle get carouselButtonStyle => const ButtonStyle();
 
   @override
+  BoxDecoration get carouselBoxDecoration => BoxDecoration(
+    borderRadius: BorderRadius.circular(16),
+    color: secondaryColor,
+  );
+
+  @override
+  BorderRadius get imageBorderRadius => BorderRadius.circular(16);
+
+  @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(neutral2),
         foregroundColor: MaterialStateProperty.all<Color>(neutral0),
@@ -134,6 +143,15 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   ButtonStyle get carouselButtonStyle => const ButtonStyle();
+
+  @override
+  BoxDecoration get carouselBoxDecoration => BoxDecoration(
+    borderRadius: BorderRadius.circular(16),
+    color: primaryColor,
+  );
+
+  @override
+  BorderRadius get imageBorderRadius => BorderRadius.circular(16);
 
   @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
