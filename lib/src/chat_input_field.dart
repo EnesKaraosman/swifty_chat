@@ -18,7 +18,16 @@ class MessageInputField extends StatelessWidget {
     return Container(
       height: 70.0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      color: Colors.white,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black26,
+                blurRadius: 2,
+                offset: Offset(2, -2)
+            )
+          ]
+      ),
       child: Row(
         children: <Widget>[
           Expanded(
