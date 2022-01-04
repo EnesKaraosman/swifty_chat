@@ -2,7 +2,7 @@ name: swifty_chat
 description: >-
   A Flutter package to quickly get started building Chat UIs
   with different kind of message kinds.
-version: 1.1.2
+version: 1.2.0
 homepage: https://github.com/EnesKaraosman/swifty_chat
 repository: https://github.com/EnesKaraosman/swifty_chat
 
