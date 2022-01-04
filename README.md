@@ -4,6 +4,11 @@
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_image_and_quick_reply_and_text.png?raw=true" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_html.png?raw=true" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_carousel.png?raw=true" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_custom.png?raw=true" width="240"/>
 
+### Platforms
+- [x] iOS, macOS
+- [x] Android
+- [x] Web
+
 ### Features
 
 Supported Message types;
