@@ -1,3 +1,8 @@
+## 1.4.1
+
+* Update swifty_chat_data package and dart version
+* Fix several lint issues
+
 ## 1.3.0
 
 * Update dart version to 2.17
