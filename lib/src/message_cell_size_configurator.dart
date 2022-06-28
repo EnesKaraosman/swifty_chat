@@ -5,7 +5,6 @@ typedef MaxHeightConfiguration = double Function(double parentHeight);
 typedef SizeConfiguration = Size Function(Size parentSize);
 
 class MessageCellSizeConfigurator {
-
   final MaxWidthConfiguration imageCellMaxWidthConfiguration;
   final MaxHeightConfiguration carouselCellMaxHeightConfiguration;
 
@@ -14,8 +13,9 @@ class MessageCellSizeConfigurator {
     required this.carouselCellMaxHeightConfiguration,
   });
 
-  static MessageCellSizeConfigurator defaultConfiguration = MessageCellSizeConfigurator(
+  static MessageCellSizeConfigurator defaultConfiguration =
+      MessageCellSizeConfigurator(
     imageCellMaxWidthConfiguration: (parentWidth) => parentWidth * 0.7,
-    carouselCellMaxHeightConfiguration: (parentHeight) => parentHeight * 0.5
+    carouselCellMaxHeightConfiguration: (parentHeight) => parentHeight * 0.5,
   );
 }

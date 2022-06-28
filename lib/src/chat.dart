@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/html_parser.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:swifty_chat/src/chat_list_item.dart';
 import 'package:swifty_chat/src/extensions/keys.dart';
 import 'package:swifty_chat/src/inherited_chat_theme.dart';
+import 'package:swifty_chat/src/message_cell_size_configurator.dart';
 import 'package:swifty_chat/src/theme/chat_theme.dart';
 import 'package:swifty_chat/src/theme/default_theme.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
-
-import '../src/chat_list_item.dart';
-import '../src/message_cell_size_configurator.dart';
 
 class ChatStateContainer extends InheritedWidget {
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
@@ -29,7 +28,7 @@ class ChatStateContainer extends InheritedWidget {
 
   static ChatStateContainer of(BuildContext context) {
     final ChatStateContainer? result =
-    context.dependOnInheritedWidgetOfExactType<ChatStateContainer>();
+        context.dependOnInheritedWidgetOfExactType<ChatStateContainer>();
     assert(result != null, 'No Chat found in context');
     return result!;
   }
@@ -39,7 +38,18 @@ class ChatStateContainer extends InheritedWidget {
 }
 
 class Chat extends StatefulWidget {
-  List<Message> messages = [];
+  Chat({
+    this.messages = const [],
+    required this.chatMessageInputField,
+    this.customMessageWidget,
+    this.messageCellSizeConfigurator,
+    this.theme = const DefaultChatTheme(),
+  }) {
+    messageCellSizeConfigurator ??=
+        MessageCellSizeConfigurator.defaultConfiguration;
+  }
+
+  final List<Message> messages;
   final ChatTheme theme;
   final Widget chatMessageInputField;
 
@@ -51,16 +61,6 @@ class Chat extends StatefulWidget {
   Widget Function(Message)? customMessageWidget;
 
   final ScrollController _scrollController = ScrollController();
-
-  Chat({
-    required this.messages,
-    required this.chatMessageInputField,
-    this.customMessageWidget,
-    this.messageCellSizeConfigurator,
-    this.theme = const DefaultChatTheme(),
-  }) {
-    messageCellSizeConfigurator ??= MessageCellSizeConfigurator.defaultConfiguration;
-  }
 
   @override
   ChatState createState() => ChatState();
@@ -99,8 +99,7 @@ class Chat extends StatefulWidget {
 
 class ChatState extends State<Chat> {
   @override
-  Widget build(BuildContext context) =>
-      ChatStateContainer(
+  Widget build(BuildContext context) => ChatStateContainer(
         messageCellSizeConfigurator: widget.messageCellSizeConfigurator!,
         onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
         onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
@@ -116,8 +115,7 @@ class ChatState extends State<Chat> {
         ),
       );
 
-  Widget _chatList() =>
-      Container(
+  Widget _chatList() => Container(
         color: widget.theme.backgroundColor,
         child: ListView.builder(
           key: ChatKeys.chatListView.key,
@@ -127,7 +125,7 @@ class ChatState extends State<Chat> {
           itemCount: widget.messages.length,
           itemBuilder: (BuildContext context, int index) => GestureDetector(
             child: ChatListItem(chatMessage: widget.messages[index]),
-            onTap: () => widget._onMessagePressed?.call(widget.messages[index])
+            onTap: () => widget._onMessagePressed?.call(widget.messages[index]),
           ),
         ),
       ).expanded();

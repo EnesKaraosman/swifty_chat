@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/chat_theme.dart';
+import 'package:swifty_chat/src/theme/chat_theme.dart';
 
 /// Default chat theme which extends [ChatTheme]
 @immutable
@@ -62,9 +62,9 @@ class DefaultChatTheme extends ChatTheme {
 
   @override
   BoxDecoration get carouselBoxDecoration => BoxDecoration(
-    borderRadius: BorderRadius.circular(16),
-    color: secondaryColor,
-  );
+        borderRadius: BorderRadius.circular(16),
+        color: secondaryColor,
+      );
 
   @override
   BorderRadius get imageBorderRadius => BorderRadius.circular(16);
@@ -146,9 +146,9 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   BoxDecoration get carouselBoxDecoration => BoxDecoration(
-    borderRadius: BorderRadius.circular(16),
-    color: primaryColor,
-  );
+        borderRadius: BorderRadius.circular(16),
+        color: primaryColor,
+      );
 
   @override
   BorderRadius get imageBorderRadius => BorderRadius.circular(16);

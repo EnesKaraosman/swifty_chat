@@ -3,8 +3,9 @@ import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
 class CustomMessageKindChat extends StatelessWidget {
-  late Chat chatView;
-  final List<MockMessage> _messages = generateRandomTextMessages(count: 5)
+  const CustomMessageKindChat(Key? key) : super(key: key);
+
+  List<MockMessage> _mockMessages() => generateRandomTextMessages(count: 5)
     ..insert(
       0,
       MockMessage(
@@ -16,14 +17,11 @@ class CustomMessageKindChat extends StatelessWidget {
       ),
     );
 
-  CustomMessageKindChat(Key? key) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    chatView = _chatWidget(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Custom Chat')),
-      body: chatView,
+      body: _chatWidget(context),
     );
   }
 
@@ -31,7 +29,7 @@ class CustomMessageKindChat extends StatelessWidget {
         customMessageWidget: (message) =>
             MyCustomMessageWidget(message: message),
         theme: const DarkChatTheme(),
-        messages: _messages,
+        messages: _mockMessages(),
         chatMessageInputField: MessageInputField(
           key: const Key('message_input_field'),
           sendButtonTapped: (msg) {},
@@ -61,5 +59,5 @@ class MyCustomMessageWidget extends StatelessWidget {
     );
   }
 
-  // You can check type with `if` in case you have different types of custom Message
+// You can check type with `if` in case you have different types of custom Message
 }

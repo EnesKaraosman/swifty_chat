@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-import '../src/extensions/keys.dart';
+import 'package:swifty_chat/src/extensions/keys.dart';
 
 class MessageInputField extends StatelessWidget {
   MessageInputField({
@@ -19,14 +19,14 @@ class MessageInputField extends StatelessWidget {
       height: 70.0,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black26,
-                blurRadius: 2,
-                offset: Offset(2, -2)
-            )
-          ]
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 2,
+            offset: Offset(2, -2),
+          )
+        ],
       ),
       child: Row(
         children: <Widget>[

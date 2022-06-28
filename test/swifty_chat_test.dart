@@ -14,7 +14,6 @@ void main() {
       await tester.pumpWidget(
         _appContainer(
           Chat(
-            messages: const [],
             chatMessageInputField: _messageInputField((_) {}),
           ),
         ),
@@ -25,7 +24,6 @@ void main() {
       await tester.pumpWidget(
         _appContainer(
           Chat(
-            messages: const [],
             chatMessageInputField: _messageInputField((_) {}),
           ),
         ),
@@ -159,7 +157,6 @@ void main() {
         await tester.pumpWidget(
           _appContainer(
             Chat(
-              messages: const [],
               chatMessageInputField: _messageInputField((_) {}),
             ),
           ),
@@ -201,7 +198,6 @@ void main() {
         await tester.pumpWidget(
           _appContainer(
             Chat(
-              messages: const [],
               chatMessageInputField: _messageInputField((_) {}),
             ),
           ),
@@ -240,10 +236,12 @@ void main() {
       chatView = Chat(
         messages: messages,
         chatMessageInputField: _messageInputField((_) {}),
-      ).setOnHTMLWidgetPressed(() => {
-            "onLinkTap": (url, _, __, ___) => debugPrint("onLinkTap: $url"),
-            "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src")
-          });
+      ).setOnHTMLWidgetPressed(
+        () => {
+          "onLinkTap": (url, _, __, ___) => debugPrint("onLinkTap: $url"),
+          "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src")
+        },
+      );
 
       await tester.pumpWidget(_appContainer(chatView));
 

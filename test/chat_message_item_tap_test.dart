@@ -16,8 +16,11 @@ void main() {
               messages: [generateRandomMessage(MockMessageKind.text)],
               chatMessageInputField: _messageInputField((_) {}),
             ).setOnMessagePressed(
-              (message) => expect(message.messageKind.text == null, false,
-                  reason: 'Could not tap text message widget'),
+              (message) => expect(
+                message.messageKind.text == null,
+                false,
+                reason: 'Could not tap text message widget',
+              ),
             ),
           ),
         );
@@ -38,8 +41,11 @@ void main() {
               ],
               chatMessageInputField: _messageInputField((_) {}),
             ).setOnMessagePressed(
-              (message) => expect(message.messageKind.imageProvider == null, false,
-                  reason: 'Could not tap image message widget'),
+              (message) => expect(
+                message.messageKind.imageProvider == null,
+                false,
+                reason: 'Could not tap image message widget',
+              ),
             ),
           ),
         );
@@ -112,26 +118,32 @@ void main() {
             user: MockChatUser.incomingUser,
             id: DateTime.now().toString(),
             isMe: false,
-            messageKind: MessageKind.carousel([
-              MockCarouselItem(
+            messageKind: MessageKind.carousel(
+              [
+                MockCarouselItem(
                   title: 'title1',
                   subtitle: 'subtitle1',
                   buttons: [
                     CarouselButtonItem(
-                        title: carouselOption1Title,
-                        url: 'url1',
-                        payload: 'payload2')
-                  ]),
-              MockCarouselItem(
+                      title: carouselOption1Title,
+                      url: 'url1',
+                      payload: 'payload2',
+                    )
+                  ],
+                ),
+                MockCarouselItem(
                   title: 'title2',
                   subtitle: 'subtitle2',
                   buttons: [
                     CarouselButtonItem(
-                        title: carouselOption2Title,
-                        url: 'url2',
-                        payload: 'payload2')
-                  ]),
-            ]),
+                      title: carouselOption2Title,
+                      url: 'url2',
+                      payload: 'payload2',
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       void carouselItemPressedAction(CarouselButtonItem item) {

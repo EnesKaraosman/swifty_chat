@@ -1,11 +1,10 @@
 import 'package:dart_extensions/dart_extensions.dart' hide Message;
 import 'package:flutter/material.dart';
+import 'package:swifty_chat/src/chat.dart';
+import 'package:swifty_chat/src/extensions/theme_context.dart';
+import 'package:swifty_chat/src/protocols/has_avatar.dart';
+import 'package:swifty_chat/src/protocols/incoming_outgoing_message_widgets.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
-
-import '../chat.dart';
-import '../extensions/theme_context.dart';
-import '../protocols/has_avatar.dart';
-import '../protocols/incoming_outgoing_message_widgets.dart';
 
 class ImageMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {
@@ -33,12 +32,12 @@ class ImageMessageWidget extends StatelessWidget
       );
 
   Widget imageContainer(BuildContext context) => ClipRRect(
-    borderRadius: context.theme.imageBorderRadius,
-    child: Image(
-      width: _imageWidth(context),
-      image: message.messageKind.imageProvider!
-    ),
-  );
+        borderRadius: context.theme.imageBorderRadius,
+        child: Image(
+          width: _imageWidth(context),
+          image: message.messageKind.imageProvider!,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) => message.isMe

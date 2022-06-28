@@ -1,6 +1,4 @@
 import 'package:example/main.dart' as app;
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:swifty_chat/swifty_chat.dart';
@@ -90,7 +88,8 @@ void main() {
         reason:
             '⚠️ Make sure to implement sendButton press action or make sure list scrolled to the bottom',
       );
-      tester.printToConsole("Message is added and scroll to bottom works as expected.");
+      tester.printToConsole(
+          "Message is added and scroll to bottom works as expected.");
       tester.printToConsole("✅ Advanced Chat Test completed..");
     });
   });

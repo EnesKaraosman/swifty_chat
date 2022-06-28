@@ -14,12 +14,12 @@ abstract class HasAvatar {
   double get _radius => (userAvatar?.size ?? 36) / 2;
 
   List<Widget> avatarWithPadding([double padding = 8]) => [
-    SizedBox(width: padding),
-    if (avatarImageProvider != null)
-      CircleAvatar(
-        radius: _radius,
-        backgroundImage: avatarImageProvider,
-      ),
-    SizedBox(width: padding),
-  ].toList();
+        SizedBox(width: padding),
+        if (avatarImageProvider != null)
+          CircleAvatar(
+            radius: _radius,
+            backgroundImage: avatarImageProvider,
+          ),
+        SizedBox(width: padding),
+      ].toList();
 }

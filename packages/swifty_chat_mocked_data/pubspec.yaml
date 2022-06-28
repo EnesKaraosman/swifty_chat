@@ -4,11 +4,11 @@ version: 0.0.2
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.3 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
-  faker:
+  faker: ^2.0.0
 
   flutter:
     sdk: flutter
