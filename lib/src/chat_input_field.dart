@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
-
-import 'package:swifty_chat/src/extensions/keys.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 
 class MessageInputField extends StatelessWidget {
   MessageInputField({
     Key? key,
     required this.sendButtonTapped,
+    this.theme,
   }) : super(key: key);
 
   final textEditingController = TextEditingController();
 
   final Function(String) sendButtonTapped;
-
+  final ChatTheme? theme;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,10 +62,7 @@ class MessageInputField extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               color: Colors.blueAccent,
             ),
-            child: const Icon(
-              Icons.send_outlined,
-              color: Colors.white70,
-            ),
+            child: theme?.sendMessageIcon,
           ).rotate(angle: 150).gestures(
             onTap: () {
               sendButtonTapped(textEditingController.text);

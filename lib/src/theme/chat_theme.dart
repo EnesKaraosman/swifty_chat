@@ -37,6 +37,14 @@ abstract class ChatTheme {
   /// Message inset, can be used to have padding between messages
   EdgeInsets get messageInset;
 
+  /// Icon widget, which can be used by rating feedback and UI side.
+
+  Widget get chatIcon;
+
+  /// Icon widget, which can be used for send message UI side.
+
+  Widget get sendMessageIcon;
+
   /// Used as a background color of a chat widget
   Color get backgroundColor;
 

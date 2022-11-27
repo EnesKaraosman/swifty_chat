@@ -83,6 +83,21 @@ class DefaultChatTheme extends ChatTheme {
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
+
+  @override
+  // TODO: implement chatIcon
+  Widget get chatIcon => const FlutterLogo();
+
+  @override
+  // TODO: implement readMoreMessageLength
+  double get readMoreMessageLength => 200;
+
+  @override
+  // TODO: implement sendMessageIcon
+  Widget get sendMessageIcon => const Icon(
+        Icons.send_outlined,
+        color: Colors.white70,
+      );
 }
 
 /// Dark chat theme which extends [ChatTheme]
@@ -167,4 +182,19 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
+
+  @override
+  // TODO: implement chatIcon
+  Widget get chatIcon => const FlutterLogo();
+
+  @override
+  // TODO: implement readMoreMessageLength
+  double get readMoreMessageLength => 200;
+
+  @override
+  // TODO: implement sendMessageIcon
+  Widget get sendMessageIcon => const Icon(
+        Icons.send_outlined,
+        color: Colors.indigo,
+      );
 }
