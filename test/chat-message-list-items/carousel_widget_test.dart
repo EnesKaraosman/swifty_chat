@@ -44,12 +44,14 @@ Future<void> testCarouselTheme({
   const carouselButtonTitle = "Carousel_Button_Title";
   final messageUser =
       isIncomingMessage ? MockChatUser.incomingUser : MockChatUser.outgoingUser;
+  final time = DateTime.now();
   await tester.pumpWidget(
     _appContainer(
       Chat(
         theme: theme,
         messages: [
           MockMessage(
+            time: time,
             user: messageUser,
             id: DateTime.now().toString(),
             isMe: !isIncomingMessage,

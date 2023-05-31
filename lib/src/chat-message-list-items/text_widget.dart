@@ -47,15 +47,32 @@ class TextMessageWidget extends StatelessWidget
         borderRadius: _borderRadius,
         color: message.isMe ? _theme.primaryColor : _theme.secondaryColor,
       ),
-      child: ClipRRect(
-        borderRadius: _borderRadius,
-        child: Text(
-          message.messageKind.text!,
-          softWrap: true,
-          style: message.isMe
-              ? _theme.outgoingMessageBodyTextStyle
-              : _theme.incomingMessageBodyTextStyle,
-        ).padding(all: _theme.textMessagePadding),
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: ClipRRect(
+              borderRadius: _borderRadius,
+              child: Text(
+                message.messageKind.text!,
+                softWrap: true,
+                style: message.isMe
+                    ? _theme.outgoingMessageBodyTextStyle
+                    : _theme.incomingMessageBodyTextStyle,
+              ).padding(all: _theme.textMessagePadding),
+            ),
+          ),
+          Positioned(
+            right: message.isMe ? 5 : 10,
+            bottom: 2,
+            child: Text(
+              "${message.time!.hour}:${message.time!.minute}",
+              style: message.isMe
+                  ? _theme.outgoingChatTextTime
+                  : _theme.incomingChatTextTime,
+            ),
+          ),
+        ],
       ),
     ).flexible();
   }

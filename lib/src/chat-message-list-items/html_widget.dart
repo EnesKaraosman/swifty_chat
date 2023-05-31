@@ -15,6 +15,7 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = context.theme;
     final functions =
         ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
@@ -37,28 +38,41 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
       crossAxisAlignment: avatarPosition.alignment,
       children: [
         ...avatarWithPadding(),
-        Container(
-          width: MediaQuery.of(context).size.width - 76,
-          decoration: BoxDecoration(
-            color: context.theme.secondaryColor,
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(context.theme.messageBorderRadius),
-              topLeft: Radius.circular(context.theme.messageBorderRadius),
-              topRight: Radius.circular(context.theme.messageBorderRadius),
+        Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width - 76,
+              decoration: BoxDecoration(
+                color: context.theme.secondaryColor,
+                borderRadius: BorderRadius.only(
+                  bottomRight:
+                      Radius.circular(context.theme.messageBorderRadius),
+                  topLeft: Radius.circular(context.theme.messageBorderRadius),
+                  topRight: Radius.circular(context.theme.messageBorderRadius),
+                ),
+              ),
+              child: Html(
+                data: chatMessage.messageKind.htmlData,
+                onImageTap: onImageTap,
+                style: htmlStyle,
+                onLinkTap: (link, _, __, ___) async {
+                  if (await canLaunchUrl(Uri.parse(link!))) {
+                    await launchUrl(
+                      Uri.parse(link),
+                    );
+                  }
+                },
+              ).padding(all: context.theme.textMessagePadding),
             ),
-          ),
-          child: Html(
-            data: chatMessage.messageKind.htmlData,
-            onImageTap: onImageTap,
-            style: htmlStyle,
-            onLinkTap: (link, _, __, ___) async {
-              if (await canLaunchUrl(Uri.parse(link!))) {
-                await launchUrl(
-                  Uri.parse(link),
-                );
-              }
-            },
-          ).padding(all: context.theme.textMessagePadding),
+            Positioned(
+              right: 10,
+              bottom: 2,
+              child: Text(
+                "${message.time!.hour}:${message.time!.minute}",
+                style: _theme.htmlWidgetTextTime,
+              ),
+            ),
+          ],
         ),
         SizedBox(width: 20),
       ],

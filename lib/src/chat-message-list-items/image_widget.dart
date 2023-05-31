@@ -31,13 +31,28 @@ class ImageMessageWidget extends StatelessWidget
         ],
       );
 
-  Widget imageContainer(BuildContext context) => ClipRRect(
-        borderRadius: context.theme.imageBorderRadius,
-        child: Image(
-          width: _imageWidth(context),
-          image: message.messageKind.imageProvider!,
-        ),
-      );
+  Widget imageContainer(BuildContext context) {
+    final _theme = context.theme;
+    return ClipRRect(
+      borderRadius: context.theme.imageBorderRadius,
+      child: Stack(
+        children: [
+          Image(
+            width: _imageWidth(context),
+            image: message.messageKind.imageProvider!,
+          ),
+          Positioned(
+            right: 10,
+            bottom: 2,
+            child: Text(
+              "${message.time!.hour}:${message.time!.minute}",
+              style: _theme.imageWidgetTextTime,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) => message.isMe

@@ -20,10 +20,12 @@ List<MockMessage> generateRandomTextMessagesWithName(
     {int count = 20}) {
   final user = MockChatUser.randomUser;
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
+  final time = DateTime.parse('1969-07-20 20:18:04Z');
   return 1
       .to(count)
       .map(
         (idx) => MockMessage(
+          time: time,
           user: user,
           id: DateTime.now().toString(),
           isMe: isMe,
@@ -41,11 +43,13 @@ List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
 MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   final user = MockChatUser.randomUser;
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
+  final time = DateTime.parse('1969-07-20 20:18:04Z');
   switch (ofMessageKind) {
     case MockMessageKind.image:
       final mockImageIndex = 1 + Random().nextInt(2);
       final mockImageName = "assets/images/mock_image_$mockImageIndex.jpg";
       return MockMessage(
+        time: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -58,6 +62,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.quickReply:
       return MockMessage(
+        time: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -70,6 +75,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.carousel:
       return MockMessage(
+        time: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -96,6 +102,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.html:
       return MockMessage(
+        time: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -103,6 +110,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.text:
       return MockMessage(
+        time: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
