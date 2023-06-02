@@ -11,6 +11,6 @@ final htmlData = """
       </p>
       <h3>Image support:</h3>
       <h3>Network png</h3>
-      
+      <img alt='Flutter' src='https://flutter.dev/assets/images/shared/brand/flutter/logo/flutter-lockup.png' />
       <p id='bottom'><a href='#top'>Scroll to top</a></p>
 """;
