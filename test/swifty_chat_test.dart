@@ -78,7 +78,6 @@ void main() {
       final messages = generateRandomMessages().reversed.toList();
       void messageSendAction(String msg) {
         final message = MockMessage(
-          time: DateTime.now(),
           user: MockChatUser.outgoingUser,
           id: DateTime.now().toString(),
           isMe: true,
@@ -227,7 +226,6 @@ void main() {
         ..insert(
           0,
           MockMessage(
-            time: DateTime.now(),
             user: MockChatUser.incomingUser,
             id: DateTime.now().toString(),
             isMe: false,

@@ -37,42 +37,6 @@ class DefaultChatTheme extends ChatTheme {
       );
 
   @override
-  TextStyle get incomingChatTextTime => const TextStyle(
-        color: neutral0,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
-
-  @override
-  TextStyle get outgoingChatTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
-
-  @override
-  TextStyle get htmlWidgetTextTime => const TextStyle(
-        color: neutral0,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
-
-  @override
-  TextStyle get imageWidgetTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
-
-  @override
   Color get secondaryColor => secondary;
 
   @override
@@ -152,42 +116,6 @@ class DarkChatTheme extends ChatTheme {
         color: neutral7,
         fontFamily: 'Avenir',
         fontSize: 16,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
-
-  @override
-  TextStyle get incomingChatTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
-
-  @override
-  TextStyle get outgoingChatTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
-
-  @override
-  TextStyle get htmlWidgetTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
-
-  @override
-  TextStyle get imageWidgetTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
         fontWeight: FontWeight.w500,
         height: 1.5,
       );

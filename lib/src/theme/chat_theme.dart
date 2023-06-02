@@ -50,14 +50,6 @@ abstract class ChatTheme {
   /// of received messages
   TextStyle get incomingMessageBodyTextStyle;
 
-  TextStyle get incomingChatTextTime;
-
-  TextStyle get outgoingChatTextTime;
-
-  TextStyle get htmlWidgetTextTime;
-
-  TextStyle get imageWidgetTextTime;
-
   /// Secondary color, used as a background of incoming messages
   Color get secondaryColor;
 

@@ -41,7 +41,6 @@ class _BasicChatState extends State<BasicChat> {
             setState(
               () {
                 final message = MockMessage(
-                  time: DateTime.now(),
                   user: MockChatUser.outgoingUser,
                   id: DateTime.now().toString(),
                   isMe: true,

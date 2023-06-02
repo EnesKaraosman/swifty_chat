@@ -64,7 +64,6 @@ void main() {
         ..insert(
           0,
           MockMessage(
-            time: DateTime.now(),
             user: MockChatUser.incomingUser,
             id: DateTime.now().toString(),
             isMe: true,
@@ -76,7 +75,6 @@ void main() {
         );
       void quickReplyItemPressedAction(QuickReplyItem item) {
         final message = MockMessage(
-          time: DateTime.now(),
           user: MockChatUser.outgoingUser,
           id: DateTime.now().toString(),
           isMe: false,
@@ -117,7 +115,6 @@ void main() {
         ..insert(
           0,
           MockMessage(
-            time: DateTime.now(),
             user: MockChatUser.incomingUser,
             id: DateTime.now().toString(),
             isMe: false,
@@ -151,7 +148,6 @@ void main() {
         );
       void carouselItemPressedAction(CarouselButtonItem item) {
         final message = MockMessage(
-          time: DateTime.now(),
           user: MockChatUser.outgoingUser,
           id: DateTime.now().toString(),
           isMe: true,
