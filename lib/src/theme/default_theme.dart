@@ -42,7 +42,7 @@ class DefaultChatTheme extends ChatTheme {
         fontFamily: 'Avenir',
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        height: 1.5,
+        height: 0.3,
       );
 
   @override
@@ -51,7 +51,7 @@ class DefaultChatTheme extends ChatTheme {
         fontFamily: 'Avenir',
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        height: 1.5,
+        height: 0.3,
       );
 
   @override
@@ -162,7 +162,7 @@ class DarkChatTheme extends ChatTheme {
         fontFamily: 'Avenir',
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        height: 1.5,
+        height: 0.3,
       );
 
   @override
@@ -171,7 +171,7 @@ class DarkChatTheme extends ChatTheme {
         fontFamily: 'Avenir',
         fontSize: 12,
         fontWeight: FontWeight.w500,
-        height: 1.5,
+        height: 0.3,
       );
 
   @override

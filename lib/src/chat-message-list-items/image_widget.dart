@@ -4,6 +4,7 @@ import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
 import 'package:swifty_chat/src/protocols/has_avatar.dart';
 import 'package:swifty_chat/src/protocols/incoming_outgoing_message_widgets.dart';
+import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class ImageMessageWidget extends StatelessWidget
@@ -33,6 +34,8 @@ class ImageMessageWidget extends StatelessWidget
 
   Widget imageContainer(BuildContext context) {
     final _theme = context.theme;
+    final String time = timeSettings(message.time!);
+
     return ClipRRect(
       borderRadius: context.theme.imageBorderRadius,
       child: Stack(
@@ -45,7 +48,7 @@ class ImageMessageWidget extends StatelessWidget
             right: 10,
             bottom: 2,
             child: Text(
-              "${message.time!.hour}:${message.time!.minute}",
+              time,
               style: _theme.imageWidgetTextTime,
             ),
           ),

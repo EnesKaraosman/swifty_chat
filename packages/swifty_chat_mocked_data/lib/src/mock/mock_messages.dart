@@ -20,7 +20,7 @@ List<MockMessage> generateRandomTextMessagesWithName(
     {int count = 20}) {
   final user = MockChatUser.randomUser;
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
-  final time = DateTime.parse('1969-07-20 20:18:04Z');
+  final time = DateTime.parse('2022-07-20 20:18:04Z');
   return 1
       .to(count)
       .map(
@@ -42,8 +42,9 @@ List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
 
 MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   final user = MockChatUser.randomUser;
+  
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
-  final time = DateTime.parse('1969-07-20 20:18:04Z');
+  final time = DateTime.parse('2023-03-01 10:05:04Z');
   switch (ofMessageKind) {
     case MockMessageKind.image:
       final mockImageIndex = 1 + Random().nextInt(2);

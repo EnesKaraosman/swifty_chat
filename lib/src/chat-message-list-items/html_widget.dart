@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
+import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat/src/theme/chat_theme.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,6 +17,7 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
   @override
   Widget build(BuildContext context) {
     final _theme = context.theme;
+    final String time = timeSettings(message.time!);
     final functions =
         ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
@@ -68,7 +70,7 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
               right: 10,
               bottom: 2,
               child: Text(
-                "${message.time!.hour}:${message.time!.minute}",
+                time,
                 style: _theme.htmlWidgetTextTime,
               ),
             ),
