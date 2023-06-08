@@ -5,7 +5,6 @@ import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
 import 'package:swifty_chat/src/protocols/has_avatar.dart';
 import 'package:swifty_chat/src/protocols/timeago_settings.dart';
-import 'package:swifty_chat/src/theme/chat_theme.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -59,13 +58,14 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
                 data: chatMessage.messageKind.htmlData,
                 onImageTap: onImageTap,
                 style: htmlStyle,
-                onLinkTap: (link, _, __, ___) async {
-                  if (await canLaunchUrl(Uri.parse(link!))) {
-                    await launchUrl(
-                      Uri.parse(link),
-                    );
-                  }
-                },
+                onLinkTap: onLinkTap ??
+                    (link, _, __, ___) async {
+                      if (await canLaunchUrl(Uri.parse(link!))) {
+                        await launchUrl(
+                          Uri.parse(link),
+                        );
+                      }
+                    },
               ).padding(all: context.theme.textMessagePadding),
             ),
             Positioned(
