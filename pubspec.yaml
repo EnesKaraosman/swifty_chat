@@ -15,12 +15,12 @@ dependencies:
   dart_extensions: ^2.2.0
   flutter:
     sdk: flutter
-
   flutter_html: ^2.2.1
   styled_widget: ^0.4.0+3
-
   swifty_chat_data: ^0.1.0
-
+  # https://pub.dev/packages/url_launcher
+  url_launcher: ^6.1.6
+  
 dev_dependencies:
   flutter_lints: ^2.0.1
 
