@@ -3,16 +3,14 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
-import 'package:swifty_chat/src/theme/chat_theme.dart';
+import 'package:swifty_chat/src/protocols/has_avatar.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:swifty_chat/src/protocols/has_avatar.dart';
 
 class HTMLWidget extends StatelessWidget with HasAvatar {
   final Message chatMessage;
-  final VoidCallback? onLinkTap;
 
-  const HTMLWidget(this.chatMessage, this.onLinkTap);
+  const HTMLWidget(this.chatMessage);
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +23,14 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
     final htmlStyle = {
       "body": Style(
         fontWeight: FontWeight.w400,
-        color: neutral0,
+        color: htmlTextColor,
+        fontFamily: htmlTextFontFamily,
         fontSize: const FontSize(16),
       ),
       "a": Style(
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 0, 40, 87),
+        fontFamily: htmlTextFontFamily,
+        color: htmlTextColor,
       )
     };
 
