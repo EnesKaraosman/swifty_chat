@@ -10,8 +10,9 @@ import 'package:swifty_chat/src/protocols/has_avatar.dart';
 
 class HTMLWidget extends StatelessWidget with HasAvatar {
   final Message chatMessage;
+  final VoidCallback? onLinkTap;
 
-  const HTMLWidget(this.chatMessage);
+  const HTMLWidget(this.chatMessage, this.onLinkTap);
 
   @override
   Widget build(BuildContext context) {
@@ -51,36 +52,19 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
             data: chatMessage.messageKind.htmlData,
             onImageTap: onImageTap,
             style: htmlStyle,
-            onLinkTap: (link, _, __, ___) async {
-              if (await canLaunchUrl(Uri.parse(link!))) {
-                await launchUrl(
-                  Uri.parse(link),
-                );
-              }
-            },
+            onLinkTap: onLinkTap ??
+                (link, _, __, ___) async {
+                  if (await canLaunchUrl(Uri.parse(link!))) {
+                    await launchUrl(
+                      Uri.parse(link),
+                    );
+                  }
+                },
           ).padding(all: context.theme.textMessagePadding),
         ),
         const SizedBox(width: 24),
       ],
     );
-
-    //   return Container(
-    //     color: context.theme.secondaryColor,
-    //     child: Html(
-    //       data: chatMessage.messageKind.htmlData,
-    //       onLinkTap: onLinkTap,
-    //       onImageTap: onImageTap,
-    //       style: {
-    //         "p": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
-    //         "h1": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
-    //         "h2": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
-    //         "h3": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
-    //         "h4": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
-    //         "h5": styleFrom(color: htmlTextColor, fontFamily: htmlTextFontFamily),
-    //       },
-    //     ).padding(all: context.theme.textMessagePadding),
-    //   );
-    // }
   }
 
   Style styleFrom({

@@ -39,6 +39,7 @@ class ChatStateContainer extends InheritedWidget {
 
 class Chat extends StatefulWidget {
   Chat({
+    this.onLinkTap,
     this.messages = const [],
     required this.chatMessageInputField,
     this.customMessageWidget,
@@ -48,7 +49,7 @@ class Chat extends StatefulWidget {
     messageCellSizeConfigurator ??=
         MessageCellSizeConfigurator.defaultConfiguration;
   }
-
+  final VoidCallback? onLinkTap;
   final List<Message> messages;
   final ChatTheme theme;
   final Widget chatMessageInputField;
@@ -124,7 +125,10 @@ class ChatState extends State<Chat> {
           reverse: true,
           itemCount: widget.messages.length,
           itemBuilder: (BuildContext context, int index) => GestureDetector(
-            child: ChatListItem(chatMessage: widget.messages[index]),
+            child: ChatListItem(
+              chatMessage: widget.messages[index],
+              onLinkTap: widget.onLinkTap,
+            ),
             onTap: () => widget._onMessagePressed?.call(widget.messages[index]),
           ),
         ),

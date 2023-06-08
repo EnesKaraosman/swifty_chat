@@ -11,9 +11,11 @@ import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class ChatListItem extends StatelessWidget {
   final Message chatMessage;
+  final VoidCallback? onLinkTap;
 
   const ChatListItem({
     required this.chatMessage,
+    this.onLinkTap,
   });
 
   @override
@@ -32,7 +34,7 @@ class ChatListItem extends StatelessWidget {
     } else if (chatMessage.messageKind.quickReplies.isNotEmpty) {
       return QuickReplyWidget(chatMessage);
     } else if (chatMessage.messageKind.htmlData != null) {
-      return HTMLWidget(chatMessage);
+      return HTMLWidget(chatMessage, onLinkTap);
     } else if (chatMessage.messageKind.carouselItems.isNotEmpty) {
       return CarouselWidget(chatMessage);
     } else if (chatMessage.messageKind.custom != null) {
