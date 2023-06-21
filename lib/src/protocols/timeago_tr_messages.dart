@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:timeago/src/messages/lookupmessages.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:timeago/timeago.dart';
 
-/// Turkish messages
+/// Custom timeago messages
 class CustomMessages implements LookupMessages {
+  const CustomMessages() : super();
   @override
   String prefixAgo() => '';
   @override

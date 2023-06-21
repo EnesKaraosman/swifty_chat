@@ -5,9 +5,11 @@ import 'package:swifty_chat/src/chat_list_item.dart';
 import 'package:swifty_chat/src/extensions/keys.dart';
 import 'package:swifty_chat/src/inherited_chat_theme.dart';
 import 'package:swifty_chat/src/message_cell_size_configurator.dart';
+import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat/src/theme/chat_theme.dart';
 import 'package:swifty_chat/src/theme/default_theme.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
+import 'package:timeago/timeago.dart';
 
 class ChatStateContainer extends InheritedWidget {
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
@@ -44,14 +46,18 @@ class Chat extends StatefulWidget {
     this.customMessageWidget,
     this.messageCellSizeConfigurator,
     this.theme = const DefaultChatTheme(),
+    this.locale = LocaleType.tr,
+    this.customLookupMessages,
   }) {
     messageCellSizeConfigurator ??=
         MessageCellSizeConfigurator.defaultConfiguration;
   }
 
   final List<Message> messages;
+  final LocaleType locale;
   final ChatTheme theme;
   final Widget chatMessageInputField;
+  final LookupMessages? customLookupMessages;
 
   MessageCellSizeConfigurator? messageCellSizeConfigurator;
   void Function(Message)? _onMessagePressed;
@@ -107,6 +113,7 @@ class ChatState extends State<Chat> {
         customMessageWidget: widget.customMessageWidget,
         child: InheritedChatTheme(
           theme: widget.theme,
+          customLookupMessages: widget.customLookupMessages,
           child: Column(
             children: [_chatList(), widget.chatMessageInputField],
           ).gestures(
@@ -124,7 +131,10 @@ class ChatState extends State<Chat> {
           reverse: true,
           itemCount: widget.messages.length,
           itemBuilder: (BuildContext context, int index) => GestureDetector(
-            child: ChatListItem(chatMessage: widget.messages[index]),
+            child: ChatListItem(
+              chatMessage: widget.messages[index],
+              locale: widget.locale,
+            ),
             onTap: () => widget._onMessagePressed?.call(widget.messages[index]),
           ),
         ),

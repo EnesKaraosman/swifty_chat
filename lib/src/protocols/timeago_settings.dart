@@ -1,9 +1,16 @@
+import 'package:dart_extensions/emum.dart';
 import 'package:flutter/material.dart';
-import 'package:swifty_chat/src/protocols/timeago_tr_messages.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-String timeSettings(DateTime time) {
-  timeago.setLocaleMessages('tr', CustomMessages());
+String timeSettings(
+  DateTime time,
+  LocaleType? locale,
+  LookupMessages? lookupMessagesContext,
+) {
+  final timeago.LookupMessages lookupMessages =
+      lookupMessagesContext ?? setLocale(locale) as timeago.LookupMessages;
+  timeago.setLocaleMessages(locale.convertToString(), lookupMessages);
   final now = DateTime.now();
   final difference = now.difference(time);
   final String date;
@@ -11,7 +18,10 @@ String timeSettings(DateTime time) {
   if (difference.inDays == 0) {
     date = clock.to24hours();
   } else {
-    date = timeago.format(now.subtract(difference), locale: "tr");
+    date = timeago.format(
+      now.subtract(difference),
+      locale: locale.convertToString(),
+    );
   }
   return date;
 }
@@ -23,3 +33,22 @@ extension TimeOfDayConverter on TimeOfDay {
     return "$hour:$min";
   }
 }
+
+timeago.LookupMessages? setLocale(LocaleType? locale) {
+  switch (locale) {
+    case LocaleType.en:
+      return timeago.EnMessages();
+    case LocaleType.tr:
+      return timeago.TrMessages();
+    case LocaleType.de:
+      return timeago.DeMessages();
+    case LocaleType.enshort:
+      return timeago.EnShortMessages();
+    case LocaleType.deshort:
+      return timeago.DeShortMessages();
+    default:
+      return timeago.TrMessages();
+  }
+}
+
+enum LocaleType { en, tr, de, enshort, deshort }

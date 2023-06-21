@@ -32,6 +32,8 @@ class _BasicChatState extends State<BasicChat> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
+        customLookupMessages: Custom1Messages(),
+        locale: LocaleType.de,
         theme: const DarkChatTheme(),
         messages: _messages,
         chatMessageInputField: MessageInputField(
@@ -54,4 +56,40 @@ class _BasicChatState extends State<BasicChat> {
           },
         ),
       );
+}
+
+class Custom1Messages implements LookupMessages {
+  const Custom1Messages() : super();
+  @override
+  String prefixAgo() => '';
+  @override
+  String prefixFromNow() => '';
+  @override
+  String suffixAgo() => 'önce';
+  @override
+  String suffixFromNow() => 'kaldı';
+  @override
+  String lessThanOneMinute(int seconds) => 'asd';
+  @override
+  String aboutAMinute(int minutes) => 'asd';
+  @override
+  String minutes(int minutes) => '$minutes asd';
+  @override
+  String aboutAnHour(int minutes) => 'asd';
+  @override
+  String hours(int hours) => '$hours asd';
+  @override
+  String aDay(int hours) => 'asd';
+  @override
+  String days(int days) => '$days ads';
+  @override
+  String aboutAMonth(int days) => 'asd';
+  @override
+  String months(int months) => '$months asd';
+  @override
+  String aboutAYear(int year) => 'bir yıl';
+  @override
+  String years(int years) => '$years yıl';
+  @override
+  String wordSeparator() => ' ';
 }
