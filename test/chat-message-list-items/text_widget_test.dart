@@ -48,7 +48,7 @@ Future<void> testTextTheme({
         theme: theme,
         messages: [
           MockMessage(
-            time: DateTime.now(),
+            date: DateTime.now(),
             user: messageUser,
             id: DateTime.now().toString(),
             isMe: !isIncomingMessage,

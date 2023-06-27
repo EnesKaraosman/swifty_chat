@@ -17,11 +17,9 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
 
   @override
   Widget build(BuildContext context) {
-    final _theme = context.theme;
-    final _lookupmessage = context.lookupMessages;
-    final String time = message.time != null
-        ? timeSettings(message.time!, locale, _lookupmessage)
-        : "";
+    final theme = context.theme;
+    final lookupMessage = context.lookupMessages;
+    final time = timeSettings(message.date, locale, lookupMessage);
     final functions =
         ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
@@ -33,7 +31,7 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
         fontWeight: FontWeight.w400,
         color: htmlTextColor,
         fontFamily: htmlTextFontFamily,
-        fontSize: const FontSize(16),
+        fontSize: FontSize(16),
       ),
       "a": Style(
         fontWeight: FontWeight.bold,
@@ -78,7 +76,7 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
               bottom: 2,
               child: Text(
                 time,
-                style: _theme.htmlWidgetTextTime,
+                style: theme.htmlWidgetTextTime,
               ),
             ),
           ],

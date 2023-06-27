@@ -48,12 +48,12 @@ Future<void> testQuickReplyTheme({
         theme: theme,
         messages: [
           MockMessage(
-            time: DateTime.now(),
+            date: DateTime.now(),
             user: messageUser,
             id: DateTime.now().toString(),
             isMe: !isIncomingMessage,
             messageKind: MessageKind.quickReply([
-              MockQuickReplyItem(title: quickReplyOptionTitle),
+              const MockQuickReplyItem(title: quickReplyOptionTitle),
             ]),
           ),
         ],

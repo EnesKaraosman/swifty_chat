@@ -36,38 +36,37 @@ class TextMessageWidget extends StatelessWidget
       );
 
   Widget textContainer(BuildContext context) {
-    final _theme = context.theme;
-    final _lookupmessage = context.lookupMessages;
+    final theme = context.theme;
+    final lookupMessage = context.lookupMessages;
 
-    final _messageBorderRadius = _theme.messageBorderRadius;
-    final String time = message.time != null
-        ? timeSettings(message.time!, locale, _lookupmessage)
-        : "";
+    final messageBorderRadius = theme.messageBorderRadius;
+    final time = timeSettings(message.date, locale, lookupMessage);
 
-    final _borderRadius = BorderRadius.only(
-      bottomLeft: Radius.circular(message.isMe ? _messageBorderRadius : 0),
-      bottomRight: Radius.circular(message.isMe ? 0 : _messageBorderRadius),
-      topLeft: Radius.circular(_messageBorderRadius),
-      topRight: Radius.circular(_messageBorderRadius),
+    final borderRadius = BorderRadius.only(
+      bottomLeft: Radius.circular(message.isMe ? messageBorderRadius : 0),
+      bottomRight: Radius.circular(message.isMe ? 0 : messageBorderRadius),
+      topLeft: Radius.circular(messageBorderRadius),
+      topRight: Radius.circular(messageBorderRadius),
     );
+
     return Container(
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
-        borderRadius: _borderRadius,
-        color: message.isMe ? _theme.primaryColor : _theme.secondaryColor,
+        borderRadius: borderRadius,
+        color: message.isMe ? theme.primaryColor : theme.secondaryColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           ClipRRect(
-            borderRadius: _borderRadius,
+            borderRadius: borderRadius,
             child: Text(
               message.messageKind.text!,
               softWrap: true,
               style: message.isMe
-                  ? _theme.outgoingMessageBodyTextStyle
-                  : _theme.incomingMessageBodyTextStyle,
-            ).padding(all: _theme.textMessagePadding),
+                  ? theme.outgoingMessageBodyTextStyle
+                  : theme.incomingMessageBodyTextStyle,
+            ).padding(all: theme.textMessagePadding),
           ),
           Padding(
             padding: message.isMe
@@ -84,8 +83,8 @@ class TextMessageWidget extends StatelessWidget
             child: Text(
               time,
               style: message.isMe
-                  ? _theme.outgoingChatTextTime
-                  : _theme.incomingChatTextTime,
+                  ? theme.outgoingChatTextTime
+                  : theme.incomingChatTextTime,
             ),
           ),
         ],

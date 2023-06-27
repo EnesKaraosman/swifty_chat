@@ -5,9 +5,9 @@ import 'package:swifty_chat/src/extensions/keys.dart';
 
 class MessageInputField extends StatelessWidget {
   MessageInputField({
-    Key? key,
     required this.sendButtonTapped,
-  }) : super(key: key);
+    super.key,
+  });
 
   final textEditingController = TextEditingController();
 

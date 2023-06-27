@@ -1,13 +1,14 @@
 import 'dart:math';
+
+import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
-import 'package:faker/faker.dart';
 
+import './mock_message_kind.dart';
+import './models/mock_carousel_item.dart';
 import './models/mock_chat_user.dart';
 import './models/mock_message.dart';
-import './models/mock_carousel_item.dart';
 import './models/mock_quick_reply_item.dart';
-import './mock_message_kind.dart';
 import 'mock_html.dart';
 
 extension RangeExtension on int {
@@ -16,16 +17,18 @@ extension RangeExtension on int {
 }
 
 List<MockMessage> generateRandomTextMessagesWithName(
-    String Function(int index) nameGenerator,
-    {int count = 20}) {
+  String Function(int index) nameGenerator, {
+  int count = 20,
+}) {
   final user = MockChatUser.randomUser;
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
   final time = DateTime.parse('2022-07-20 20:18:04Z');
+
   return 1
       .to(count)
       .map(
         (idx) => MockMessage(
-          time: time,
+          date: time,
           user: user,
           id: DateTime.now().toString(),
           isMe: isMe,
@@ -42,7 +45,7 @@ List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
 
 MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
   final user = MockChatUser.randomUser;
-  
+
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
   final time = DateTime.parse('2023-03-01 10:05:04Z');
   switch (ofMessageKind) {
@@ -50,7 +53,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       final mockImageIndex = 1 + Random().nextInt(2);
       final mockImageName = "assets/images/mock_image_$mockImageIndex.jpg";
       return MockMessage(
-        time: time,
+        date: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -63,7 +66,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.quickReply:
       return MockMessage(
-        time: time,
+        date: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -76,7 +79,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.carousel:
       return MockMessage(
-        time: time,
+        date: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -86,7 +89,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
             (index) => MockCarouselItem(
               title: 'Title $index',
               subtitle: faker.lorem.sentence(),
-              imageProvider: AssetImage(
+              imageProvider: const AssetImage(
                 "assets/images/mock_image_1.jpg",
                 package: 'swifty_chat_mocked_data',
               ),
@@ -103,7 +106,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.html:
       return MockMessage(
-        time: time,
+        date: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
@@ -111,7 +114,7 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
       );
     case MockMessageKind.text:
       return MockMessage(
-        time: time,
+        date: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,

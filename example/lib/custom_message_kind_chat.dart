@@ -3,13 +3,13 @@ import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
 class CustomMessageKindChat extends StatelessWidget {
-  const CustomMessageKindChat(Key? key) : super(key: key);
+  const CustomMessageKindChat({super.key});
 
   List<MockMessage> _mockMessages() => generateRandomTextMessages(count: 5)
     ..insert(
       0,
       MockMessage(
-        time: DateTime.now(),
+        date: DateTime.now(),
         user: MockChatUser.incomingUser,
         id: DateTime.now().toString(),
         isMe: false,

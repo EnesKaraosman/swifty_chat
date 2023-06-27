@@ -35,12 +35,10 @@ class ImageMessageWidget extends StatelessWidget
       );
 
   Widget imageContainer(BuildContext context) {
-    final _theme = context.theme;
-    final _lookupmessage = context.lookupMessages;
+    final theme = context.theme;
+    final lookupMessage = context.lookupMessages;
 
-    final String time = message.time != null
-        ? timeSettings(message.time!, locale, _lookupmessage)
-        : "";
+    final time = timeSettings(message.date, locale, lookupMessage);
 
     return ClipRRect(
       borderRadius: context.theme.imageBorderRadius,
@@ -55,7 +53,7 @@ class ImageMessageWidget extends StatelessWidget
             bottom: 2,
             child: Text(
               time,
-              style: _theme.imageWidgetTextTime,
+              style: theme.imageWidgetTextTime,
             ),
           ),
         ],

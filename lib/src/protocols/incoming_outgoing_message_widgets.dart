@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class IncomingOutgoingMessageWidgets {
+mixin IncomingOutgoingMessageWidgets {
   Widget incomingMessageWidget(BuildContext context);
 
   Widget outgoingMessageWidget(BuildContext context);

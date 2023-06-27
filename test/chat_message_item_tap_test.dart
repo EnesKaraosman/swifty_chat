@@ -64,19 +64,19 @@ void main() {
         ..insert(
           0,
           MockMessage(
-            time: DateTime.now(),
+            date: DateTime.now(),
             user: MockChatUser.incomingUser,
             id: DateTime.now().toString(),
             isMe: true,
             messageKind: MessageKind.quickReply([
-              MockQuickReplyItem(title: quickReplyOption1Title),
-              MockQuickReplyItem(title: quickReplyOption2Title),
+              const MockQuickReplyItem(title: quickReplyOption1Title),
+              const MockQuickReplyItem(title: quickReplyOption2Title),
             ]),
           ),
         );
       void quickReplyItemPressedAction(QuickReplyItem item) {
         final message = MockMessage(
-          time: DateTime.now(),
+          date: DateTime.now(),
           user: MockChatUser.outgoingUser,
           id: DateTime.now().toString(),
           isMe: false,
@@ -117,7 +117,7 @@ void main() {
         ..insert(
           0,
           MockMessage(
-            time: DateTime.now(),
+            date: DateTime.now(),
             user: MockChatUser.incomingUser,
             id: DateTime.now().toString(),
             isMe: false,
@@ -151,7 +151,7 @@ void main() {
         );
       void carouselItemPressedAction(CarouselButtonItem item) {
         final message = MockMessage(
-          time: DateTime.now(),
+          date: DateTime.now(),
           user: MockChatUser.outgoingUser,
           id: DateTime.now().toString(),
           isMe: true,

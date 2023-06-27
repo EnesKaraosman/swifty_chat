@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
-abstract class HasAvatar {
+mixin HasAvatar {
   Message get message;
 
   UserAvatar? get userAvatar => message.user.avatar;

@@ -18,9 +18,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (_) => const Home(),
-        '/basic-chat': (_) => const BasicChat(Key('basic_chat')),
-        '/advanced-chat': (_) => const AdvancedChat(Key('advanced_chat')),
-        '/custom-message-kind-chat': (_) => CustomMessageKindChat(Key('custom_message_kind_chat')),
+        '/basic-chat': (_) => const BasicChat(key: Key('basic_chat')),
+        '/advanced-chat': (_) => const AdvancedChat(key: Key('advanced_chat')),
+        '/custom-message-kind-chat': (_) => CustomMessageKindChat(key: Key('custom_message_kind_chat')),
       },
     );
   }

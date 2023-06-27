@@ -21,13 +21,14 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/styled_widget
-  flutter_html: ^2.2.1
+#  flutter_html: ^3.0.0-beta.2
+  flutter_html: 3.0.0-alpha.6
 
   # https://pub.dev/packages/styled_widget
   styled_widget: ^0.4.1
 
   # https://pub.dev/packages/swifty_chat_data
-  swifty_chat_data: ^0.1.0
+  swifty_chat_data: ^0.1.1
 
   # https://pub.dev/packages/timeago
   timeago: ^3.4.0

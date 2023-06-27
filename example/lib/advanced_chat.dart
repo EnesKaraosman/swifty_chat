@@ -3,7 +3,7 @@ import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
 class AdvancedChat extends StatefulWidget {
-  const AdvancedChat(Key? key) : super(key: key);
+  const AdvancedChat({super.key});
 
   @override
   _AdvancedChat createState() => _AdvancedChat();
@@ -64,7 +64,7 @@ class _AdvancedChat extends State<AdvancedChat> {
             setState(
               () {
                 final message = MockMessage(
-                  time: DateTime.now(),
+                  date: DateTime.now(),
                   user: MockChatUser.outgoingUser,
                   id: DateTime.now().toString(),
                   isMe: true,
@@ -89,7 +89,7 @@ class _AdvancedChat extends State<AdvancedChat> {
         (item) {
           debugPrint(item.title);
           final message = MockMessage(
-            time: DateTime.now(),
+            date: DateTime.now(),
             user: MockChatUser.outgoingUser,
             id: DateTime.now().toString(),
             isMe: true,

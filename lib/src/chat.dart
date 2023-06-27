@@ -19,14 +19,14 @@ class ChatStateContainer extends InheritedWidget {
   final Widget Function(Message)? customMessageWidget;
 
   const ChatStateContainer({
-    Key? key,
+    super.key,
     this.onHtmlWidgetPressed,
     this.onQuickReplyItemPressed,
     this.onCarouselButtonItemPressed,
     this.customMessageWidget,
     required this.messageCellSizeConfigurator,
-    required Widget child,
-  }) : super(key: key, child: child);
+    required super.child,
+  });
 
   static ChatStateContainer of(BuildContext context) {
     final ChatStateContainer? result =

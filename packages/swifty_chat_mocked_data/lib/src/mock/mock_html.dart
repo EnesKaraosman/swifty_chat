@@ -1,6 +1,6 @@
 const htmlDataMockLinkPayload = 'https://github.com/EnesKaraosman';
 const htmlDataMockLinkTitle = 'websites';
-final htmlData = """
+const htmlData = """
 <p id='top'><a href='#bottom'>Scroll to bottom</a></p>
       <h1>Header 1</h1>
       <h3>Header 3</h3>
