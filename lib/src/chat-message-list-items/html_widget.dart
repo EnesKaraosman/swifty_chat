@@ -3,17 +3,25 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
+import 'package:swifty_chat/src/extensions/timeago_message_context.dart';
 import 'package:swifty_chat/src/protocols/has_avatar.dart';
+import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HTMLWidget extends StatelessWidget with HasAvatar {
   final Message chatMessage;
+  final LocaleType? locale;
 
-  const HTMLWidget(this.chatMessage);
+  const HTMLWidget(this.chatMessage, this.locale);
 
   @override
   Widget build(BuildContext context) {
+    final _theme = context.theme;
+    final _lookupmessage = context.lookupMessages;
+    final String time = message.time != null
+        ? timeSettings(message.time!, locale, _lookupmessage)
+        : "";
     final functions =
         ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
@@ -38,31 +46,44 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
       crossAxisAlignment: avatarPosition.alignment,
       children: [
         ...avatarWithPadding(),
-        Container(
-          width: MediaQuery.of(context).size.width - 80,
-          decoration: BoxDecoration(
-            color: context.theme.secondaryColor,
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(context.theme.messageBorderRadius),
-              topLeft: Radius.circular(context.theme.messageBorderRadius),
-              topRight: Radius.circular(context.theme.messageBorderRadius),
+        Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width - 76,
+              decoration: BoxDecoration(
+                color: context.theme.secondaryColor,
+                borderRadius: BorderRadius.only(
+                  bottomRight:
+                      Radius.circular(context.theme.messageBorderRadius),
+                  topLeft: Radius.circular(context.theme.messageBorderRadius),
+                  topRight: Radius.circular(context.theme.messageBorderRadius),
+                ),
+              ),
+              child: Html(
+                data: chatMessage.messageKind.htmlData,
+                onImageTap: onImageTap,
+                style: htmlStyle,
+                onLinkTap: onLinkTap ??
+                    (link, _, __, ___) async {
+                      if (await canLaunchUrl(Uri.parse(link!))) {
+                        await launchUrl(
+                          Uri.parse(link),
+                        );
+                      }
+                    },
+              ).padding(all: context.theme.textMessagePadding),
             ),
-          ),
-          child: Html(
-            data: chatMessage.messageKind.htmlData,
-            onImageTap: onImageTap,
-            style: htmlStyle,
-            onLinkTap: onLinkTap ??
-                (link, _, __, ___) async {
-                  if (await canLaunchUrl(Uri.parse(link!))) {
-                    await launchUrl(
-                      Uri.parse(link),
-                    );
-                  }
-                },
-          ).padding(all: context.theme.textMessagePadding),
+            Positioned(
+              right: 10,
+              bottom: 2,
+              child: Text(
+                time,
+                style: _theme.htmlWidgetTextTime,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 24),
+        const SizedBox(width: 20),
       ],
     );
   }

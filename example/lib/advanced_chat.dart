@@ -64,6 +64,7 @@ class _AdvancedChat extends State<AdvancedChat> {
             setState(
               () {
                 final message = MockMessage(
+                  time: DateTime.now(),
                   user: MockChatUser.outgoingUser,
                   id: DateTime.now().toString(),
                   isMe: true,
@@ -88,6 +89,7 @@ class _AdvancedChat extends State<AdvancedChat> {
         (item) {
           debugPrint(item.title);
           final message = MockMessage(
+            time: DateTime.now(),
             user: MockChatUser.outgoingUser,
             id: DateTime.now().toString(),
             isMe: true,

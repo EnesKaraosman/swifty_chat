@@ -9,6 +9,7 @@ class CustomMessageKindChat extends StatelessWidget {
     ..insert(
       0,
       MockMessage(
+        time: DateTime.now(),
         user: MockChatUser.incomingUser,
         id: DateTime.now().toString(),
         isMe: false,

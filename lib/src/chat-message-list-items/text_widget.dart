@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
+import 'package:swifty_chat/src/extensions/timeago_message_context.dart';
 import 'package:swifty_chat/src/protocols/has_avatar.dart';
 import 'package:swifty_chat/src/protocols/incoming_outgoing_message_widgets.dart';
+import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class TextMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {
   final Message _chatMessage;
+  final LocaleType? locale;
 
-  const TextMessageWidget(this._chatMessage);
+  TextMessageWidget(this._chatMessage, this.locale);
 
   @override
   Widget incomingMessageWidget(BuildContext context) => Row(
@@ -34,7 +37,13 @@ class TextMessageWidget extends StatelessWidget
 
   Widget textContainer(BuildContext context) {
     final _theme = context.theme;
+    final _lookupmessage = context.lookupMessages;
+
     final _messageBorderRadius = _theme.messageBorderRadius;
+    final String time = message.time != null
+        ? timeSettings(message.time!, locale, _lookupmessage)
+        : "";
+
     final _borderRadius = BorderRadius.only(
       bottomLeft: Radius.circular(message.isMe ? _messageBorderRadius : 0),
       bottomRight: Radius.circular(message.isMe ? 0 : _messageBorderRadius),
@@ -47,15 +56,39 @@ class TextMessageWidget extends StatelessWidget
         borderRadius: _borderRadius,
         color: message.isMe ? _theme.primaryColor : _theme.secondaryColor,
       ),
-      child: ClipRRect(
-        borderRadius: _borderRadius,
-        child: Text(
-          message.messageKind.text!,
-          softWrap: true,
-          style: message.isMe
-              ? _theme.outgoingMessageBodyTextStyle
-              : _theme.incomingMessageBodyTextStyle,
-        ).padding(all: _theme.textMessagePadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          ClipRRect(
+            borderRadius: _borderRadius,
+            child: Text(
+              message.messageKind.text!,
+              softWrap: true,
+              style: message.isMe
+                  ? _theme.outgoingMessageBodyTextStyle
+                  : _theme.incomingMessageBodyTextStyle,
+            ).padding(all: _theme.textMessagePadding),
+          ),
+          Padding(
+            padding: message.isMe
+                ? const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    bottom: 5,
+                  )
+                : const EdgeInsets.only(
+                    left: 10,
+                    right: 15,
+                    bottom: 5,
+                  ),
+            child: Text(
+              time,
+              style: message.isMe
+                  ? _theme.outgoingChatTextTime
+                  : _theme.incomingChatTextTime,
+            ),
+          ),
+        ],
       ),
     ).flexible();
   }

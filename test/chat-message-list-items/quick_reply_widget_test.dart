@@ -48,6 +48,7 @@ Future<void> testQuickReplyTheme({
         theme: theme,
         messages: [
           MockMessage(
+            time: DateTime.now(),
             user: messageUser,
             id: DateTime.now().toString(),
             isMe: !isIncomingMessage,
