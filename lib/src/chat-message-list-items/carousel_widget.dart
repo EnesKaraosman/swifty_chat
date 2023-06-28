@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dart_extensions/dart_extensions.dart' hide Message;
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
@@ -68,9 +67,10 @@ class CarouselWidget extends StatelessWidget with HasAvatar {
       );
 
   double _carouselItemHeight(BuildContext context) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
     final height = ChatStateContainer.of(context)
         .messageCellSizeConfigurator
-        .carouselCellMaxHeightConfiguration(context.mq.size.height);
+        .carouselCellMaxHeightConfiguration(screenHeight);
     return height;
   }
 }

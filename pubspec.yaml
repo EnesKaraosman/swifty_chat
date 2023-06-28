@@ -14,9 +14,6 @@ dependencies:
   # https://pub.dev/packages/carousel_slider
   carousel_slider: ^4.2.1
 
-  # https://pub.dev/packages/dart_extensions
-  dart_extensions: ^2.2.2
-
   flutter:
     sdk: flutter
 

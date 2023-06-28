@@ -1,4 +1,3 @@
-import 'package:dart_extensions/emum.dart';
 import 'package:flutter/material.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -10,7 +9,7 @@ String timeSettings(
 ) {
   final timeago.LookupMessages lookupMessages =
       lookupMessagesContext ?? setLocale(locale) as timeago.LookupMessages;
-  timeago.setLocaleMessages(locale.convertToString(), lookupMessages);
+  timeago.setLocaleMessages(locale.toString(), lookupMessages);
   final now = DateTime.now();
   final difference = now.difference(time);
   final String date;
@@ -20,7 +19,7 @@ String timeSettings(
   } else {
     date = timeago.format(
       now.subtract(difference),
-      locale: locale.convertToString(),
+      locale: locale?.toString(),
     );
   }
   return date;

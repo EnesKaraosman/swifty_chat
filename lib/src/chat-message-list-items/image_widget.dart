@@ -1,4 +1,3 @@
-import 'package:dart_extensions/dart_extensions.dart' hide Message;
 import 'package:flutter/material.dart';
 import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
@@ -67,9 +66,10 @@ class ImageMessageWidget extends StatelessWidget
       : incomingMessageWidget(context);
 
   double _imageWidth(BuildContext context) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
     return ChatStateContainer.of(context)
         .messageCellSizeConfigurator
-        .imageCellMaxWidthConfiguration(context.mq.size.width);
+        .imageCellMaxWidthConfiguration(screenHeight);
   }
 
   @override
