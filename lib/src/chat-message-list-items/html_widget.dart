@@ -86,13 +86,6 @@ class HTMLWidget extends StatelessWidget with HasAvatar {
     );
   }
 
-  Style styleFrom({
-    required Color color,
-    String? fontFamily,
-  }) {
-    return Style(color: color, fontFamily: fontFamily);
-  }
-
   @override
   Message get message => chatMessage;
 }
