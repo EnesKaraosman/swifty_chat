@@ -32,7 +32,6 @@ class _BasicChatState extends State<BasicChat> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-        locale: LocaleType.tr,
         theme: const DarkChatTheme(),
         messages: _messages,
         chatMessageInputField: MessageInputField(

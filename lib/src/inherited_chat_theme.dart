@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:swifty_chat/src/theme/chat_theme.dart';
-import 'package:timeago/timeago.dart';
 
 /// Used to make provided [ChatTheme] class available through the whole package
 class InheritedChatTheme extends InheritedWidget {
@@ -9,12 +8,10 @@ class InheritedChatTheme extends InheritedWidget {
     required super.child,
     super.key,
     required this.theme,
-    this.customLookupMessages,
   });
 
   /// Represents chat theme
   final ChatTheme theme;
-  final LookupMessages? customLookupMessages;
 
   static InheritedChatTheme of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<InheritedChatTheme>()!;

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:swifty_chat/src/extensions/date_extensions.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
-import 'package:swifty_chat/src/extensions/timeago_message_context.dart';
 import 'package:swifty_chat/src/protocols/has_avatar.dart';
 import 'package:swifty_chat/src/protocols/incoming_outgoing_message_widgets.dart';
-import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class TextMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {
-  final Message _chatMessage;
-  final LocaleType? locale;
+  TextMessageWidget(this._chatMessage);
 
-  TextMessageWidget(this._chatMessage, this.locale);
+  final Message _chatMessage;
 
   @override
   Widget incomingMessageWidget(BuildContext context) => Row(
@@ -37,10 +35,8 @@ class TextMessageWidget extends StatelessWidget
 
   Widget textContainer(BuildContext context) {
     final theme = context.theme;
-    final lookupMessage = context.lookupMessages;
 
     final messageBorderRadius = theme.messageBorderRadius;
-    final time = timeSettings(message.date, locale, lookupMessage);
 
     final borderRadius = BorderRadius.only(
       bottomLeft: Radius.circular(message.isMe ? messageBorderRadius : 0),
@@ -81,7 +77,7 @@ class TextMessageWidget extends StatelessWidget
                     bottom: 5,
                   ),
             child: Text(
-              time,
+              message.date.relativeTimeFromNow(),
               style: message.isMe
                   ? theme.outgoingChatTextTime
                   : theme.incomingChatTextTime,

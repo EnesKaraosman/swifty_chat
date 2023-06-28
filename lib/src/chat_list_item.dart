@@ -7,14 +7,12 @@ import 'package:swifty_chat/src/chat-message-list-items/quick_reply_widget.dart'
 import 'package:swifty_chat/src/chat-message-list-items/text_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
-import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class ChatListItem extends StatelessWidget {
-  final Message chatMessage;
-  final LocaleType? locale;
+  const ChatListItem({required this.chatMessage});
 
-  const ChatListItem({required this.chatMessage, this.locale});
+  final Message chatMessage;
 
   @override
   Widget build(BuildContext context) => _messageWidget(context).padding(
@@ -26,13 +24,13 @@ class ChatListItem extends StatelessWidget {
 
   Widget _messageWidget(BuildContext context) {
     if (chatMessage.messageKind.text != null) {
-      return TextMessageWidget(chatMessage, locale);
+      return TextMessageWidget(chatMessage);
     } else if (chatMessage.messageKind.imageProvider != null) {
-      return ImageMessageWidget(chatMessage, locale);
+      return ImageMessageWidget(chatMessage);
     } else if (chatMessage.messageKind.quickReplies.isNotEmpty) {
       return QuickReplyWidget(chatMessage);
     } else if (chatMessage.messageKind.htmlData != null) {
-      return HTMLWidget(chatMessage, locale);
+      return HTMLWidget(chatMessage);
     } else if (chatMessage.messageKind.carouselItems.isNotEmpty) {
       return CarouselWidget(chatMessage);
     } else if (chatMessage.messageKind.custom != null) {

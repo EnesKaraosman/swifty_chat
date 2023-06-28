@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 class MockCarouselItem extends CarouselItem {
