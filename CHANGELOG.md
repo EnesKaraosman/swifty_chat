@@ -1,3 +1,7 @@
+## 1.6.1
+
+* fix: remove .md extension from LICENSE file to allow pub.dev publishing
+
 ## 1.6.0
 
 * refactor: replace timeago package with jiffy
