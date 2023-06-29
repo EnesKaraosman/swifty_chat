@@ -9,7 +9,7 @@ import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
-class ChatListItem extends StatelessWidget {
+final class ChatListItem extends StatelessWidget {
   const ChatListItem({required this.chatMessage});
 
   final Message chatMessage;

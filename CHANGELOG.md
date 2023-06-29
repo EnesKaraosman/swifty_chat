@@ -1,3 +1,14 @@
+## 1.6.0
+
+* refactor: replace timeago package with jiffy
+* feat: upgrade to dart 3 syntax
+* chore: improve internal dart code based on best practices 
+* fix: resolve several lint issues
+
+## 1.5.0
+
+* Feat: integrate timeago package to present message dates
+
 ## 1.4.1
 
 * Update swifty_chat_data package and dart version

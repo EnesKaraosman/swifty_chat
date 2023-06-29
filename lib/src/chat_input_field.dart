@@ -3,15 +3,20 @@ import 'package:styled_widget/styled_widget.dart';
 
 import 'package:swifty_chat/src/extensions/keys.dart';
 
-class MessageInputField extends StatelessWidget {
-  MessageInputField({
+final class MessageInputField extends StatefulWidget {
+  const MessageInputField({
     required this.sendButtonTapped,
     super.key,
   });
 
-  final textEditingController = TextEditingController();
-
   final Function(String) sendButtonTapped;
+
+  @override
+  State<MessageInputField> createState() => _MessageInputFieldState();
+}
+
+final class _MessageInputFieldState extends State<MessageInputField> {
+  final textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +54,7 @@ class MessageInputField extends StatelessWidget {
                 color: Colors.black,
               ),
               onSubmitted: (_) {
-                sendButtonTapped(textEditingController.text);
+                widget.sendButtonTapped(textEditingController.text);
                 textEditingController.text = "";
               },
             ),
@@ -68,7 +73,7 @@ class MessageInputField extends StatelessWidget {
             ),
           ).rotate(angle: 150).gestures(
             onTap: () {
-              sendButtonTapped(textEditingController.text);
+              widget.sendButtonTapped(textEditingController.text);
               textEditingController.text = "";
             },
           )

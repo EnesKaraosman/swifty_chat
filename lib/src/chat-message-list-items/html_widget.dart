@@ -68,8 +68,8 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
               ).padding(all: context.theme.textMessagePadding),
             ),
             Positioned(
-              right: 10,
-              bottom: 2,
+              right: 12,
+              bottom: 6,
               child: Text(
                 chatMessage.date.relativeTimeFromNow(),
                 style: theme.htmlWidgetTextTime,

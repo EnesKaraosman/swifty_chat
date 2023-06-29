@@ -35,7 +35,7 @@ final class ImageMessageWidget extends StatelessWidget
     final theme = context.theme;
 
     return ClipRRect(
-      borderRadius: context.theme.imageBorderRadius,
+      borderRadius: theme.imageBorderRadius,
       child: Stack(
         children: [
           Image(
@@ -43,8 +43,8 @@ final class ImageMessageWidget extends StatelessWidget
             image: message.messageKind.imageProvider!,
           ),
           Positioned(
-            right: 10,
-            bottom: 2,
+            right: 12,
+            bottom: 6,
             child: Text(
               message.date.relativeTimeFromNow(),
               style: theme.imageWidgetTextTime,
@@ -61,7 +61,7 @@ final class ImageMessageWidget extends StatelessWidget
       : incomingMessageWidget(context);
 
   double _imageWidth(BuildContext context) {
-    final screenHeight = MediaQuery.sizeOf(context).height;
+    final screenHeight = MediaQuery.sizeOf(context).width;
     return ChatStateContainer.of(context)
         .messageCellSizeConfigurator
         .imageCellMaxWidthConfiguration(screenHeight);

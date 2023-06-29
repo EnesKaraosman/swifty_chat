@@ -4,7 +4,7 @@ import 'package:swifty_chat/src/chat.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
-class QuickReplyWidget extends StatelessWidget {
+final class QuickReplyWidget extends StatelessWidget {
   const QuickReplyWidget(this.chatMessage);
 
   final Message chatMessage;
