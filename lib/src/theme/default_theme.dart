@@ -3,7 +3,7 @@ import 'package:swifty_chat/src/theme/chat_theme.dart';
 
 /// Default chat theme which extends [ChatTheme]
 @immutable
-class DefaultChatTheme extends ChatTheme {
+final class DefaultChatTheme extends ChatTheme {
   const DefaultChatTheme() : super();
 
   @override

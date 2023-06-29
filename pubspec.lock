@@ -65,14 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.3"
-  dart_extensions:
-    dependency: "direct main"
-    description:
-      name: dart_extensions
-      sha256: b2312b71ba1836eb619efe6fc9c8dc14d8fc9cc83fc812afa37ae4ccb349b3a9
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.2"
   equatable:
     dependency: transitive
     description:
@@ -136,22 +128,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.4"
-  http:
-    dependency: transitive
-    description:
-      name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.13.6"
-  http_parser:
-    dependency: transitive
-    description:
-      name: http_parser
-      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.2"
   intl:
     dependency: transitive
     description:
@@ -160,6 +136,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.18.1"
+  jiffy:
+    dependency: "direct main"
+    description:
+      name: jiffy
+      sha256: cc1d4b75016a9156c29b5d61f0c9176c3e0fb0580cc5a0e0422b5d2cab3fbfff
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.1"
   js:
     dependency: transitive
     description:
@@ -232,14 +216,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -299,7 +275,7 @@ packages:
       path: "packages/swifty_chat_mocked_data"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   term_glyph:
     dependency: transitive
     description:
@@ -316,14 +292,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  timeago:
-    dependency: "direct main"
-    description:
-      name: timeago
-      sha256: a415b9a05ef64b845c859a91161fc9f689f88eaaa4c04759517d201891b99e90
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.4.0"
   typed_data:
     dependency: transitive
     description:

@@ -22,7 +22,7 @@ List<MockMessage> generateRandomTextMessagesWithName(
 }) {
   final user = MockChatUser.randomUser;
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
-  final time = DateTime.parse('2022-07-20 20:18:04Z');
+  final time = DateTime.now();
 
   return 1
       .to(count)
@@ -40,27 +40,33 @@ List<MockMessage> generateRandomTextMessagesWithName(
 
 List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
     .to(count)
-    .map((e) => generateRandomMessage(MockMessageKind.text))
+    .map((e) => generateRandomMessage(MockMessageKind.text, index: e))
     .toList();
 
-MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
+MockMessage generateRandomMessage(
+  MockMessageKind ofMessageKind, {
+  int? index,
+}) {
   final user = MockChatUser.randomUser;
 
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
-  final time = DateTime.parse('2023-03-01 10:05:04Z');
+  final indexOffset = (index ?? 0) - 2;
+  final dayOffset = max(0, indexOffset);
+  final time = index == null
+      ? DateTime.now()
+      : DateTime.now().subtract(Duration(days: dayOffset));
+
   switch (ofMessageKind) {
     case MockMessageKind.image:
-      final mockImageIndex = 1 + Random().nextInt(2);
-      final mockImageName = "assets/images/mock_image_$mockImageIndex.jpg";
+      final mockId = 1 + Random().nextInt(100);
       return MockMessage(
         date: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
         messageKind: MessageKind.imageProvider(
-          AssetImage(
-            mockImageName,
-            package: 'swifty_chat_mocked_data',
+          NetworkImage(
+            'https://picsum.photos/id/$mockId/300',
           ),
         ),
       );
@@ -126,15 +132,30 @@ MockMessage generateRandomMessage(MockMessageKind ofMessageKind) {
 List<MockMessage> generateRandomMessages({int count = 80}) => 1.to(count).map(
       (idx) {
         if (idx % 7 == 0) {
-          return generateRandomMessage(MockMessageKind.image);
+          return generateRandomMessage(
+            MockMessageKind.image,
+            index: idx,
+          );
         } else if (idx % 13 == 0) {
-          return generateRandomMessage(MockMessageKind.quickReply);
+          return generateRandomMessage(
+            MockMessageKind.quickReply,
+            index: idx,
+          );
         } else if (idx % 23 == 0) {
-          return generateRandomMessage(MockMessageKind.carousel);
+          return generateRandomMessage(
+            MockMessageKind.carousel,
+            index: idx,
+          );
         } else if (idx == 17) {
-          return generateRandomMessage(MockMessageKind.html);
+          return generateRandomMessage(
+            MockMessageKind.html,
+            index: idx,
+          );
         } else {
-          return generateRandomMessage(MockMessageKind.text);
+          return generateRandomMessage(
+            MockMessageKind.text,
+            index: idx,
+          );
         }
       },
     ).toList();

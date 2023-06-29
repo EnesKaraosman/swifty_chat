@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
+import 'package:swifty_chat/src/extensions/date_extensions.dart';
 import 'package:swifty_chat/src/extensions/theme_context.dart';
-import 'package:swifty_chat/src/extensions/timeago_message_context.dart';
 import 'package:swifty_chat/src/protocols/has_avatar.dart';
 import 'package:swifty_chat/src/protocols/incoming_outgoing_message_widgets.dart';
-import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
-class TextMessageWidget extends StatelessWidget
+final class TextMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {
-  final Message _chatMessage;
-  final LocaleType? locale;
+  TextMessageWidget(this._chatMessage);
 
-  TextMessageWidget(this._chatMessage, this.locale);
+  final Message _chatMessage;
 
   @override
   Widget incomingMessageWidget(BuildContext context) => Row(
         crossAxisAlignment: avatarPosition.alignment,
         children: [
           ...avatarWithPadding(),
-          textContainer(context),
+          _DecoratedText(message: message).flexible(),
           const SizedBox(width: 24)
         ],
       );
@@ -30,17 +28,30 @@ class TextMessageWidget extends StatelessWidget
         crossAxisAlignment: avatarPosition.alignment,
         children: [
           const SizedBox(width: 24),
-          textContainer(context),
+          _DecoratedText(message: message).flexible(),
           ...avatarWithPadding(),
         ],
       );
 
-  Widget textContainer(BuildContext context) {
+  @override
+  Widget build(BuildContext context) => message.isMe
+      ? outgoingMessageWidget(context)
+      : incomingMessageWidget(context);
+
+  @override
+  Message get message => _chatMessage;
+}
+
+final class _DecoratedText extends StatelessWidget {
+  const _DecoratedText({required this.message});
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
     final theme = context.theme;
-    final lookupMessage = context.lookupMessages;
 
     final messageBorderRadius = theme.messageBorderRadius;
-    final time = timeSettings(message.date, locale, lookupMessage);
 
     final borderRadius = BorderRadius.only(
       bottomLeft: Radius.circular(message.isMe ? messageBorderRadius : 0),
@@ -49,8 +60,7 @@ class TextMessageWidget extends StatelessWidget
       topRight: Radius.circular(messageBorderRadius),
     );
 
-    return Container(
-      padding: EdgeInsets.zero,
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: borderRadius,
         color: message.isMe ? theme.primaryColor : theme.secondaryColor,
@@ -69,19 +79,12 @@ class TextMessageWidget extends StatelessWidget
             ).padding(all: theme.textMessagePadding),
           ),
           Padding(
-            padding: message.isMe
-                ? const EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    bottom: 5,
-                  )
-                : const EdgeInsets.only(
-                    left: 10,
-                    right: 15,
-                    bottom: 5,
-                  ),
+            padding: const EdgeInsets.only(
+              right: 12,
+              bottom: 6,
+            ),
             child: Text(
-              time,
+              message.date.relativeTimeFromNow(),
               style: message.isMe
                   ? theme.outgoingChatTextTime
                   : theme.incomingChatTextTime,
@@ -89,14 +92,6 @@ class TextMessageWidget extends StatelessWidget
           ),
         ],
       ),
-    ).flexible();
+    );
   }
-
-  @override
-  Widget build(BuildContext context) => message.isMe
-      ? outgoingMessageWidget(context)
-      : incomingMessageWidget(context);
-
-  @override
-  Message get message => _chatMessage;
 }

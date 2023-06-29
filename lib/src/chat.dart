@@ -5,28 +5,26 @@ import 'package:swifty_chat/src/chat_list_item.dart';
 import 'package:swifty_chat/src/extensions/keys.dart';
 import 'package:swifty_chat/src/inherited_chat_theme.dart';
 import 'package:swifty_chat/src/message_cell_size_configurator.dart';
-import 'package:swifty_chat/src/protocols/timeago_settings.dart';
 import 'package:swifty_chat/src/theme/chat_theme.dart';
 import 'package:swifty_chat/src/theme/default_theme.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
-import 'package:timeago/timeago.dart';
 
-class ChatStateContainer extends InheritedWidget {
-  final MessageCellSizeConfigurator messageCellSizeConfigurator;
-  final void Function(QuickReplyItem)? onQuickReplyItemPressed;
-  final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
-  final Map<String, OnTap> Function()? onHtmlWidgetPressed;
-  final Widget Function(Message)? customMessageWidget;
-
+final class ChatStateContainer extends InheritedWidget {
   const ChatStateContainer({
+    required this.messageCellSizeConfigurator,
+    required super.child,
     super.key,
     this.onHtmlWidgetPressed,
     this.onQuickReplyItemPressed,
     this.onCarouselButtonItemPressed,
     this.customMessageWidget,
-    required this.messageCellSizeConfigurator,
-    required super.child,
   });
+
+  final MessageCellSizeConfigurator messageCellSizeConfigurator;
+  final void Function(QuickReplyItem)? onQuickReplyItemPressed;
+  final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
+  final Map<String, OnTap> Function()? onHtmlWidgetPressed;
+  final Widget Function(Message)? customMessageWidget;
 
   static ChatStateContainer of(BuildContext context) {
     final ChatStateContainer? result =
@@ -39,32 +37,25 @@ class ChatStateContainer extends InheritedWidget {
   bool updateShouldNotify(ChatStateContainer oldWidget) => false;
 }
 
-class Chat extends StatefulWidget {
+final class Chat extends StatefulWidget {
   Chat({
-    this.messages = const [],
     required this.chatMessageInputField,
+    this.messages = const [],
     this.customMessageWidget,
     this.messageCellSizeConfigurator,
     this.theme = const DefaultChatTheme(),
-    this.locale = LocaleType.tr,
-    this.customLookupMessages,
-  }) {
-    messageCellSizeConfigurator ??=
-        MessageCellSizeConfigurator.defaultConfiguration;
-  }
+  });
 
-  final List<Message> messages;
-  final LocaleType locale;
-  final ChatTheme theme;
   final Widget chatMessageInputField;
-  final LookupMessages? customLookupMessages;
+  final List<Message> messages;
+  final Widget Function(Message)? customMessageWidget;
+  final ChatTheme theme;
+  final MessageCellSizeConfigurator? messageCellSizeConfigurator;
 
-  MessageCellSizeConfigurator? messageCellSizeConfigurator;
   void Function(Message)? _onMessagePressed;
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
   void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
   Map<String, OnTap> Function()? _onHtmlWidgetPressed;
-  Widget Function(Message)? customMessageWidget;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -103,40 +94,62 @@ class Chat extends StatefulWidget {
   }
 }
 
-class ChatState extends State<Chat> {
+final class ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) => ChatStateContainer(
-        messageCellSizeConfigurator: widget.messageCellSizeConfigurator!,
+        messageCellSizeConfigurator: widget.messageCellSizeConfigurator ??
+            MessageCellSizeConfigurator.defaultConfiguration(),
         onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
         onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
         onCarouselButtonItemPressed: widget._onCarouselButtonItemPressed,
         customMessageWidget: widget.customMessageWidget,
         child: InheritedChatTheme(
           theme: widget.theme,
-          customLookupMessages: widget.customLookupMessages,
           child: Column(
-            children: [_chatList(), widget.chatMessageInputField],
+            children: [
+              _ChatMessages(
+                backgroundColor: widget.theme.backgroundColor,
+                scrollController: widget._scrollController,
+                messages: widget.messages,
+                onMessagePressed: widget._onMessagePressed,
+              ),
+              widget.chatMessageInputField,
+            ],
           ).gestures(
             onTap: () => FocusScope.of(context).unfocus(),
           ),
         ),
       );
+}
 
-  Widget _chatList() => Container(
-        color: widget.theme.backgroundColor,
-        child: ListView.builder(
-          key: ChatKeys.chatListView.key,
-          controller: widget._scrollController,
-          // (reverse: true) Helps to scroll content automatically when keyboard opens
-          reverse: true,
-          itemCount: widget.messages.length,
-          itemBuilder: (BuildContext context, int index) => GestureDetector(
-            child: ChatListItem(
-              chatMessage: widget.messages[index],
-              locale: widget.locale,
-            ),
-            onTap: () => widget._onMessagePressed?.call(widget.messages[index]),
-          ),
+final class _ChatMessages extends StatelessWidget {
+  const _ChatMessages({
+    required this.messages,
+    required this.backgroundColor,
+    required this.scrollController,
+    this.onMessagePressed,
+  });
+
+  final List<Message> messages;
+  final Color backgroundColor;
+  final ScrollController scrollController;
+  final void Function(Message)? onMessagePressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: backgroundColor,
+      child: ListView.builder(
+        key: ChatKeys.chatListView.key,
+        controller: scrollController,
+        // (reverse: true) Helps to scroll content automatically when keyboard opens
+        reverse: true,
+        itemCount: messages.length,
+        itemBuilder: (BuildContext context, int index) => GestureDetector(
+          child: ChatListItem(chatMessage: messages[index]),
+          onTap: () => onMessagePressed?.call(messages[index]),
         ),
-      ).expanded();
+      ),
+    ).expanded();
+  }
 }
