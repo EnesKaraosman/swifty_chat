@@ -61,10 +61,10 @@ final class ImageMessageWidget extends StatelessWidget
       : incomingMessageWidget(context);
 
   double _imageWidth(BuildContext context) {
-    final screenHeight = MediaQuery.sizeOf(context).width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
     return ChatStateContainer.of(context)
         .messageCellSizeConfigurator
-        .imageCellMaxWidthConfiguration(screenHeight);
+        .imageCellMaxWidthConfiguration(screenWidth);
   }
 
   @override
