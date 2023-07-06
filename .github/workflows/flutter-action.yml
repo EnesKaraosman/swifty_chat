@@ -24,8 +24,5 @@ jobs:
           cache: 'gradle'
         id: java
       - name: 🤖🔨 Build Android app
-        run: |
-          pushd app/
-          flutter build appbundle --debug
-          popd
+        run: flutter build apk
         shell: bash
