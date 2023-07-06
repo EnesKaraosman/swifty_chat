@@ -1,5 +1,5 @@
-name: Flutter action
-on: [push]
+name: Flutter build android action
+on: [pull_request]
 jobs:
   build:
     name: Build Android
