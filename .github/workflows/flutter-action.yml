@@ -23,6 +23,6 @@ jobs:
           java-version: "12.x"
           cache: 'gradle'
         id: java
-      - name: 🤖🔨 Build Android app
-        run: flutter build apk
+      - name: 🔨 Build Android app
+        run: flutter build apk -t example/lib/main.dart
         shell: bash
