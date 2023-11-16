@@ -119,6 +119,15 @@ final class DefaultChatTheme extends ChatTheme {
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
+
+  @override
+  Color get appBarBackgroundColor => primary;
+
+  @override
+  Icon get appBarRefreshIcon => const Icon(Icons.refresh);
+
+  @override
+  Widget? get appBarTitle => const Text("Chatbot");
 }
 
 /// Dark chat theme which extends [ChatTheme]
@@ -239,4 +248,13 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   String? get htmlTextFontFamily => 'Avenir';
+
+  @override
+  Color get appBarBackgroundColor => secondary;
+
+  @override
+  Icon get appBarRefreshIcon => const Icon(Icons.refresh);
+
+  @override
+  Widget? get appBarTitle => const Text("Chatbot");
 }
