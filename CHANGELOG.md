@@ -1,3 +1,7 @@
+## 1.6.2
+
+* chore: upgrade internal dependencies
+
 ## 1.6.1
 
 * fix: remove .md extension from LICENSE file to allow pub.dev publishing
