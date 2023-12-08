@@ -18,7 +18,7 @@ final class TextMessageWidget extends StatelessWidget
         children: [
           ...avatarWithPadding(),
           _DecoratedText(message: message).flexible(),
-          const SizedBox(width: 24)
+          const SizedBox(width: 24),
         ],
       );
 

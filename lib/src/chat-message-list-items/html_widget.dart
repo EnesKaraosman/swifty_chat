@@ -33,7 +33,7 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
         fontWeight: FontWeight.bold,
         fontFamily: htmlTextFontFamily,
         color: htmlTextColor,
-      )
+      ),
     };
 
     return Row(

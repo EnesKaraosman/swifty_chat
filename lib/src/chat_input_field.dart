@@ -30,7 +30,7 @@ final class _MessageInputFieldState extends State<MessageInputField> {
             color: Colors.black26,
             blurRadius: 2,
             offset: Offset(2, -2),
-          )
+          ),
         ],
       ),
       child: Row(
@@ -76,7 +76,7 @@ final class _MessageInputFieldState extends State<MessageInputField> {
               widget.sendButtonTapped(textEditingController.text);
               textEditingController.text = "";
             },
-          )
+          ),
         ],
       ),
     );

@@ -131,7 +131,7 @@ void main() {
                       title: carouselOption1Title,
                       url: 'url1',
                       payload: 'payload2',
-                    )
+                    ),
                   ],
                 ),
                 MockCarouselItem(
@@ -142,7 +142,7 @@ void main() {
                       title: carouselOption2Title,
                       url: 'url2',
                       payload: 'payload2',
-                    )
+                    ),
                   ],
                 ),
               ],

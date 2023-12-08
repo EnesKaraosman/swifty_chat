@@ -241,7 +241,7 @@ void main() {
       ).setOnHTMLWidgetPressed(
         () => {
           "onLinkTap": (url, _, __, ___) => debugPrint("onLinkTap: $url"),
-          "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src")
+          "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src"),
         },
       );
 

@@ -67,9 +67,9 @@ Future<void> testCarouselTheme({
                     title: carouselButtonTitle,
                     url: "url",
                     payload: "payload",
-                  )
+                  ),
                 ],
-              )
+              ),
             ]),
           ),
         ],
