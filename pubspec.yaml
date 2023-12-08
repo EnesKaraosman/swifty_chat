@@ -7,8 +7,8 @@ homepage: https://github.com/EnesKaraosman/swifty_chat
 repository: https://github.com/EnesKaraosman/swifty_chat
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: ">=3.1.0 <4.0.0"
+  flutter: ">=3.13.0"
 
 dependencies:
   # https://pub.dev/packages/carousel_slider
@@ -30,11 +30,11 @@ dependencies:
   swifty_chat_data: ^0.1.1
 
   # https://pub.dev/packages/url_launcher
-  url_launcher: ^6.1.11
+  url_launcher: ^6.2.1
 
 dev_dependencies:
   # https://pub.dev/packages/flutter_lints
-  flutter_lints: ^3.0.0
+  flutter_lints: ^3.0.1
 
   flutter_test:
     sdk: flutter
