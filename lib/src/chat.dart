@@ -37,6 +37,7 @@ final class ChatStateContainer extends InheritedWidget {
   bool updateShouldNotify(ChatStateContainer oldWidget) => false;
 }
 
+// ignore: must_be_immutable
 final class Chat extends StatefulWidget {
   Chat({
     required this.chatMessageInputField,
@@ -57,7 +58,7 @@ final class Chat extends StatefulWidget {
   void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
   Map<String, OnTap> Function()? _onHtmlWidgetPressed;
 
-  final ScrollController _scrollController = ScrollController();
+  final _scrollController = ScrollController();
 
   @override
   ChatState createState() => ChatState();

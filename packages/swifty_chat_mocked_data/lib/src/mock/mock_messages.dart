@@ -58,15 +58,16 @@ MockMessage generateRandomMessage(
 
   switch (ofMessageKind) {
     case MockMessageKind.image:
-      final mockId = 1 + Random().nextInt(100);
+      final mockId = 1 + Random().nextInt(1);
       return MockMessage(
         date: time,
         user: user,
         id: DateTime.now().toString(),
         isMe: isMe,
         messageKind: MessageKind.imageProvider(
-          NetworkImage(
-            'https://picsum.photos/id/$mockId/300',
+          AssetImage(
+            'assets/images/mock_image_$mockId.jpg',
+            package: 'swifty_chat_mocked_data',
           ),
         ),
       );
