@@ -3,10 +3,13 @@ import 'package:example/basic_chat.dart';
 import 'package:example/custom_message_kind_chat.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
@@ -20,7 +23,8 @@ class _MyAppState extends State<MyApp> {
         '/': (_) => const Home(),
         '/basic-chat': (_) => const BasicChat(key: Key('basic_chat')),
         '/advanced-chat': (_) => const AdvancedChat(key: Key('advanced_chat')),
-        '/custom-message-kind-chat': (_) => CustomMessageKindChat(key: Key('custom_message_kind_chat')),
+        '/custom-message-kind-chat': (_) =>
+            const CustomMessageKindChat(key: Key('custom_message_kind_chat')),
       },
     );
   }
@@ -53,7 +57,8 @@ final class Home extends StatelessWidget {
             key: const Key('custom_message_chat_item'),
             title: const Text('Custom Message Chat'),
             trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-            onTap: () => Navigator.of(context).pushNamed('/custom-message-kind-chat'),
+            onTap: () =>
+                Navigator.of(context).pushNamed('/custom-message-kind-chat'),
           ),
         ],
       ),
