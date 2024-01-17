@@ -1,0 +1,16 @@
+name: Flutter Auto Tag Workflow
+on:
+  push:
+    branches: [main]
+
+jobs:
+  create_tag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+      - uses: eneskaraosman/action-autotag@3afa05f57ac051e8ffda3453790a71e68fce53ee # v4.0.4
+        with:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          include_build_number: false

@@ -1,3 +1,8 @@
+## 1.6.5
+
+* ci: add auto tag workflow
+* chore: upgrade internal dependencies
+
 ## 1.6.4
 
 * chore: resolve several lint issues
