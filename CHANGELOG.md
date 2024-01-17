@@ -1,3 +1,7 @@
+## 1.6.4
+
+* chore: resolve several lint issues
+
 ## 1.6.3
 
 * chore: resolve several lint issues
