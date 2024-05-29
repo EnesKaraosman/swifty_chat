@@ -105,7 +105,7 @@ MockMessage generateRandomMessage(
                   title: 'Select',
                   url: 'url',
                   payload: 'payload',
-                )
+                ),
               ],
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:swifty_chat/src/theme/chat_theme.dart';
+import 'theme/chat_theme.dart';
 
 /// Used to make provided [ChatTheme] class available through the whole package
 final class InheritedChatTheme extends InheritedWidget {

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_chat/src/chat.dart';
-import 'package:swifty_chat/src/extensions/date_extensions.dart';
-import 'package:swifty_chat/src/extensions/theme_context.dart';
-import 'package:swifty_chat/src/protocols/has_avatar.dart';
-import 'package:swifty_chat/src/protocols/incoming_outgoing_message_widgets.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
+
+import '../chat.dart';
+import '../extensions/date_extensions.dart';
+import '../extensions/theme_context.dart';
+import '../protocols/has_avatar.dart';
+import '../protocols/incoming_outgoing_message_widgets.dart';
 
 final class ImageMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {

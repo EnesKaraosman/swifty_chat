@@ -1,5 +1,9 @@
 ## 1.6.5
 
+* fix: resolve flutter 3.22.1 issues
+
+## 1.6.5
+
 * ci: add auto tag workflow
 * chore: upgrade internal dependencies
 

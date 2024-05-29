@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_chat/src/theme/chat_theme.dart';
+import 'chat_theme.dart';
 
 /// Default chat theme which extends [ChatTheme]
 @immutable
@@ -107,9 +107,9 @@ final class DefaultChatTheme extends ChatTheme {
 
   @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(neutral2),
-        foregroundColor: MaterialStateProperty.all<Color>(neutral0),
-        textStyle: MaterialStateProperty.all<TextStyle>(
+        backgroundColor: WidgetStateProperty.all<Color>(neutral2),
+        foregroundColor: WidgetStateProperty.all<Color>(neutral0),
+        textStyle: WidgetStateProperty.all<TextStyle>(
           const TextStyle(fontWeight: FontWeight.bold),
         ),
       );
@@ -227,9 +227,9 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(secondaryDark),
-        foregroundColor: MaterialStateProperty.all<Color>(secondary),
-        textStyle: MaterialStateProperty.all<TextStyle>(
+        backgroundColor: WidgetStateProperty.all<Color>(secondaryDark),
+        foregroundColor: WidgetStateProperty.all<Color>(secondary),
+        textStyle: WidgetStateProperty.all<TextStyle>(
           const TextStyle(fontWeight: FontWeight.bold),
         ),
       );

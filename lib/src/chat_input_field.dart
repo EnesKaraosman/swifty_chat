@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-import 'package:swifty_chat/src/extensions/keys.dart';
+import 'extensions/keys.dart';
 
 final class MessageInputField extends StatefulWidget {
   const MessageInputField({

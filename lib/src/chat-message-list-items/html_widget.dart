@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:swifty_chat/src/chat.dart';
-import 'package:swifty_chat/src/extensions/date_extensions.dart';
-import 'package:swifty_chat/src/extensions/theme_context.dart';
-import 'package:swifty_chat/src/protocols/has_avatar.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../chat.dart';
+import '../extensions/date_extensions.dart';
+import '../extensions/theme_context.dart';
+import '../protocols/has_avatar.dart';
 
 final class HTMLWidget extends StatelessWidget with HasAvatar {
   const HTMLWidget(this.chatMessage);
@@ -19,7 +20,6 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
     final functions =
         ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
-    final OnTap? onImageTap = functions?["onImageTap"];
     final Color htmlTextColor = context.theme.htmlTextColor;
     final String? htmlTextFontFamily = context.theme.htmlTextFontFamily;
     final htmlStyle = {
@@ -55,10 +55,9 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
               ),
               child: Html(
                 data: chatMessage.messageKind.htmlData,
-                onImageTap: onImageTap,
                 style: htmlStyle,
                 onLinkTap: onLinkTap ??
-                    (link, _, __, ___) async {
+                    (link, _, __) async {
                       if (await canLaunchUrl(Uri.parse(link!))) {
                         await launchUrl(
                           Uri.parse(link),

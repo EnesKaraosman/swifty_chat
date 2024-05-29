@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/html_parser.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:swifty_chat/src/chat_list_item.dart';
-import 'package:swifty_chat/src/extensions/keys.dart';
-import 'package:swifty_chat/src/inherited_chat_theme.dart';
-import 'package:swifty_chat/src/message_cell_size_configurator.dart';
-import 'package:swifty_chat/src/theme/chat_theme.dart';
-import 'package:swifty_chat/src/theme/default_theme.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
+
+import 'chat_list_item.dart';
+import 'extensions/keys.dart';
+import 'inherited_chat_theme.dart';
+import 'message_cell_size_configurator.dart';
+import 'theme/chat_theme.dart';
+import 'theme/default_theme.dart';
 
 final class ChatStateContainer extends InheritedWidget {
   const ChatStateContainer({

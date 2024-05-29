@@ -242,8 +242,8 @@ void main() {
         chatMessageInputField: _messageInputField((_) {}),
       ).setOnHTMLWidgetPressed(
         () => {
-          "onLinkTap": (url, _, __, ___) => debugPrint("onLinkTap: $url"),
-          "onImageTap": (src, _, __, ___) => debugPrint("onImageTapped: $src"),
+          "onLinkTap": (url, _, __) => debugPrint("onLinkTap: $url"),
+          "onImageTap": (src, _, __) => debugPrint("onImageTapped: $src"),
         },
       );
 
