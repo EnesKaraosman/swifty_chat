@@ -12,7 +12,7 @@ environment:
 
 dependencies:
   # https://pub.dev/packages/carousel_slider
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
 
   flutter:
     sdk: flutter
