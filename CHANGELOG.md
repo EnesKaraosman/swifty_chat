@@ -1,3 +1,7 @@
+## 1.7.0
+
+* chore(deps): upgrade flutter and android gradle deps
+
 ## 1.6.5
 
 * fix: resolve flutter 3.22.1 issues
