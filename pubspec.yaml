@@ -12,7 +12,7 @@ environment:
 
 dependencies:
   # https://pub.dev/packages/carousel_slider
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
 
   flutter:
     sdk: flutter
@@ -30,10 +30,10 @@ dependencies:
   swifty_chat_data: ^0.1.1
 
   # https://pub.dev/packages/url_launcher
-  url_launcher: ^6.2.6
+  url_launcher: ^6.3.0
 
 dev_dependencies:
-  faker: any
+  faker: ^2.2.0
 
   # https://pub.dev/packages/flutter_lints
   flutter_lints: ^4.0.0
