@@ -36,7 +36,7 @@ dev_dependencies:
   faker: ^2.2.0
 
   # https://pub.dev/packages/flutter_lints
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
   flutter_test:
     sdk: flutter
