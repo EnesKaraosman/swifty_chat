@@ -28,28 +28,21 @@ class _AdvancedChat extends State<AdvancedChat> {
   @override
   Widget build(BuildContext context) {
     chatView = _chatWidget(context);
-    return MaterialApp(
-      title: 'Flutter Chat',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Advanced Chat'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  isLightThemeActive = !isLightThemeActive;
-                });
-              },
-              child: const Text(
-                'Change Theme',
-                style: TextStyle(color: Colors.white),
-              ),
-            )
-          ],
-        ),
-        body: chatView,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Advanced Chat'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                isLightThemeActive = !isLightThemeActive;
+              });
+            },
+            child: const Text('Change Theme'),
+          )
+        ],
       ),
+      body: chatView,
     );
   }
 

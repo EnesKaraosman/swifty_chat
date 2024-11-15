@@ -1,3 +1,7 @@
+## 1.7.1
+
+* chore(deps): upgrade deps
+
 ## 1.7.0
 
 * chore(deps): upgrade flutter and android gradle deps

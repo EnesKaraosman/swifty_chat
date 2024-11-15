@@ -30,7 +30,7 @@ dependencies:
   swifty_chat_data: ^0.1.1
 
   # https://pub.dev/packages/url_launcher
-  url_launcher: ^6.3.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   faker: ^2.2.0
