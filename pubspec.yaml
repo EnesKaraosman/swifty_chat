@@ -18,7 +18,7 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/flutter_html
-  flutter_html: 3.0.0-beta.2
+  flutter_html: 3.0.0
 
   # https://pub.dev/packages/jiffy
   jiffy: ^6.3.1
