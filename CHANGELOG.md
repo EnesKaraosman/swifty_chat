@@ -1,3 +1,12 @@
+
+## 1.8.0
+
+* chore(deps): upgrade dependencies
+	- carousel_slider to ^5.1.1
+	- jiffy to ^6.4.3
+	- url_launcher to ^6.3.2
+* chore: Removed CocoaPods files from example/ios (Podfile, Podfile.lock)
+
 ## 1.7.1
 
 * chore(deps): upgrade deps
