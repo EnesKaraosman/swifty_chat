@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: ⬇️ Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - uses: eneskaraosman/action-autotag@3afa05f57ac051e8ffda3453790a71e68fce53ee # v4.0.4
         with:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
