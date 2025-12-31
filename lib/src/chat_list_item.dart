@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import 'chat-message-list-items/carousel_widget.dart';
 import 'chat-message-list-items/html_widget.dart';
@@ -9,6 +8,8 @@ import 'chat-message-list-items/quick_reply_widget.dart';
 import 'chat-message-list-items/text_widget.dart';
 import 'chat.dart';
 import 'extensions/theme_context.dart';
+import 'models/message.dart';
+import 'models/message_kind.dart';
 
 final class ChatListItem extends StatelessWidget {
   const ChatListItem({required this.chatMessage});
@@ -27,24 +28,17 @@ final class ChatListItem extends StatelessWidget {
       );
 
   Widget _messageWidget(BuildContext context) {
-    if (chatMessage.messageKind.text != null) {
-      return TextMessageWidget(chatMessage);
-    } else if (chatMessage.messageKind.imageProvider != null) {
-      return ImageMessageWidget(chatMessage);
-    } else if (chatMessage.messageKind.quickReplies.isNotEmpty) {
-      return QuickReplyWidget(chatMessage);
-    } else if (chatMessage.messageKind.htmlData != null) {
-      return HTMLWidget(chatMessage);
-    } else if (chatMessage.messageKind.carouselItems.isNotEmpty) {
-      return CarouselWidget(chatMessage);
-    } else if (chatMessage.messageKind.custom != null) {
-      return ChatStateContainer.of(context)
-              .customMessageWidget
-              ?.call(chatMessage) ??
-          const Text(
-            'You must implement customMessageWidget parameter in case you want to you MessageKind.custom',
-          );
-    }
-    return const Text('Undetermined MessageKind');
+    return switch (chatMessage.messageKind) {
+      TextMessageKind() => TextMessageWidget(chatMessage),
+      ImageMessageKind() => ImageMessageWidget(chatMessage),
+      QuickReplyMessageKind() => QuickReplyWidget(chatMessage),
+      HtmlMessageKind() => HTMLWidget(chatMessage),
+      CarouselMessageKind() => CarouselWidget(chatMessage),
+      CustomMessageKind() =>
+        ChatStateContainer.of(context).customMessageWidget?.call(chatMessage) ??
+            const Text(
+              'You must implement customMessageWidget parameter in case you want to use MessageKind.custom',
+            ),
+    };
   }
 }

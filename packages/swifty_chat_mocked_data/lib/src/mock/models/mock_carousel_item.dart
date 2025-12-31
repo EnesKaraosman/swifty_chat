@@ -1,4 +1,4 @@
-import 'package:swifty_chat_data/swifty_chat_data.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 
 class MockCarouselItem extends CarouselItem {
   const MockCarouselItem({

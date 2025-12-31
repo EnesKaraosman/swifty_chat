@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_chat_data/swifty_chat_data.dart';
+
+import '../models/message.dart';
+import '../models/user_avatar.dart';
 
 mixin HasAvatar {
   Message get message;

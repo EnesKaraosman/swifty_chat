@@ -308,14 +308,12 @@ class _IconButton extends StatelessWidget {
     required this.icon,
     required this.color,
     this.onTap,
-    this.size = 24,
     this.semanticLabel,
   });
 
   final IconData icon;
   final Color color;
   final VoidCallback? onTap;
-  final double size;
   final String? semanticLabel;
 
   @override
@@ -328,7 +326,7 @@ class _IconButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: Icon(icon, color: color, size: size),
+          child: Icon(icon, color: color, size: 24),
         ),
       ),
     );

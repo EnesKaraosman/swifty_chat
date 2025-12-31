@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:styled_widget/styled_widget.dart';
-import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import 'chat_list_item.dart';
 import 'extensions/keys.dart';
 import 'inherited_chat_theme.dart';
 import 'message_cell_size_configurator.dart';
+import 'models/carousel_item.dart';
+import 'models/message.dart';
+import 'models/quick_reply_item.dart';
 import 'theme/chat_theme.dart';
 import 'theme/default_theme.dart';
 

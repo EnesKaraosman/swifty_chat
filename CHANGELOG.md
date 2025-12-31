@@ -1,4 +1,74 @@
 
+## 2.0.0
+
+* **BREAKING**: `MessageKind` is now a `sealed class`
+  * Enables exhaustive pattern matching with switch expressions
+  * Type-safe message handling without null checks
+  * Subclasses: `TextMessageKind`, `ImageMessageKind`, `HtmlMessageKind`, `QuickReplyMessageKind`, `CarouselMessageKind`, `CustomMessageKind`
+  * Legacy getters preserved for backward compatibility
+
+* **BREAKING**: Models consolidated into main package
+  * `swifty_chat_data` package removed - models now in `lib/src/models/`
+  * All exports still available from `package:swifty_chat/swifty_chat.dart`
+  * No external dependency changes required
+
+* **NEW**: Material 3 Design System Integration
+  * Added `Material3ChatTheme` class with full ColorScheme integration
+  * Automatic light/dark mode adaptation based on system theme
+  * Semantic color tokens for consistent theming
+  * Factory constructor `Material3ChatTheme.fromContext(context)` for easy setup
+
+* **NEW**: Responsive Design System
+  * Added `ResponsiveBreakpoints` utility class
+  * Breakpoints: mobile (<600dp), tablet (600-900dp), desktop (>900dp), largeDesktop (>1200dp)
+  * Adaptive padding, spacing, and avatar sizes
+  * `MessageCellSizeConfigurator.responsiveConfiguration(context)` for adaptive layouts
+
+* **NEW**: Accessibility Enhancements
+  * Added `AccessibilityHelpers` utility class
+  * WCAG AA/AAA contrast ratio checking and validation
+  * `ensureWCAGAA()` for automatic color adjustment
+  * Text scaling support with `getScaledFontSize()`
+  * Reduce motion detection with `shouldReduceMotion()`
+  * High contrast mode detection
+
+* **NEW**: Animation System
+  * Added `ChatAnimations` utility class with flutter_animate integration
+  * Motion-aware animations that respect reduce motion settings
+  * Entrance animations for incoming/outgoing messages
+  * Loading shimmer effects and quick reply pulse animations
+
+* **NEW**: Modern Chat Input Field
+  * Completely redesigned `MessageInputField` with Material 3 support
+  * Added `ChatInputFieldConfig` for full customization
+  * Dark mode compatible with ColorScheme integration
+  * Animated send button with scale and opacity transitions
+  * Multiline input support
+  * Haptic feedback on send
+  * Optional attachment button
+
+* **Improved**: Performance Optimizations
+  * Added `RepaintBoundary` to all message widgets
+  * Added `@immutable` annotations for better tree-shaking
+  * Optimized widget rebuilds
+
+* **Improved**: Example Project
+  * Added Material 3 Chat demo with color picker
+  * Added Accessibility demo with WCAG contrast visualization
+  * Added Responsive demo with breakpoint indicators
+  * Theme toggle (light/dark/system) support
+  * Section headers and feature cards
+
+* **Docs**: Added comprehensive Material3Design.md documentation
+
+* **Platform**: Updated macOS minimum deployment target to 10.15
+
+* **BREAKING**: `swifty_chat_data` package merged into monorepo
+  * Data models now included in `packages/swifty_chat_data/`
+  * No longer depends on external pub.dev package
+  * Version 2.0.0+ uses local path dependency
+  * Previous pub.dev package (swifty_chat_data ^0.1.1) is now deprecated
+
 ## 1.9.0
 
 * **Fixed**: Critical memory leaks

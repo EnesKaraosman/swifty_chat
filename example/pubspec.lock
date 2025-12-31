@@ -434,15 +434,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.9.0"
-  swifty_chat_data:
-    dependency: transitive
-    description:
-      name: swifty_chat_data
-      sha256: "3dfc93fcaab366b28342c0e547a7175a0b186be1959ed0f464566356569de39a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
+    version: "2.0.0"
   swifty_chat_mocked_data:
     dependency: "direct main"
     description:

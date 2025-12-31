@@ -72,14 +72,25 @@ As you see above;
 [MessageKind](packages/swifty_chat_data/lib/src/models/message_kind.dart)
 
 ```dart
-class MessageKind {
-  MessageKind.text(String text);
-  MessageKind.imageProvider(ImageProvider imageProvider);
-  MessageKind.quickReply(List<QuickReplyItem> quickReplies);
-  MessageKind.carousel(List<CarouselItem> carousel);
-  MessageKind.html(String html);
-  MessageKind.custom(dynamic? custom);
+// MessageKind is now a sealed class for type-safe pattern matching
+sealed class MessageKind {
+  factory MessageKind.text(String text);
+  factory MessageKind.imageProvider(ImageProvider imageProvider);
+  factory MessageKind.quickReply(List<QuickReplyItem> quickReplies);
+  factory MessageKind.carousel(List<CarouselItem> carousel);
+  factory MessageKind.html(String html);
+  factory MessageKind.custom(dynamic custom);
 }
+
+// Exhaustive pattern matching with switch expressions
+final widget = switch (messageKind) {
+  TextMessageKind(:final text) => Text(text),
+  ImageMessageKind(:final imageProvider) => Image(image: imageProvider),
+  HtmlMessageKind(:final htmlData) => HtmlWidget(htmlData),
+  QuickReplyMessageKind(:final quickReplies) => QuickReplyWidget(quickReplies),
+  CarouselMessageKind(:final carouselItems) => CarouselWidget(carouselItems),
+  CustomMessageKind(:final custom) => CustomWidget(custom),
+};
 ```
 
 For more, visit [BasicChat](./example/lib/basic_chat.dart) & [AdvancedChat](./example/lib/advanced_chat.dart) 

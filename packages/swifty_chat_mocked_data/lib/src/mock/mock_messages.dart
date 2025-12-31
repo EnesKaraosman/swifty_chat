@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:swifty_chat_data/swifty_chat_data.dart';
+import 'package:swifty_chat/swifty_chat.dart';
 
 import './mock_message_kind.dart';
 import './models/mock_carousel_item.dart';
