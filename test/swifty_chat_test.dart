@@ -76,7 +76,7 @@ void main() {
     });
 
     testWidgets("ListView Should show newly added message", (tester) async {
-      late final Chat chatView;
+      final chatKey = GlobalKey<ChatState>();
       final messages = generateRandomMessages().reversed.toList();
       void messageSendAction(String msg) {
         final message = MockMessage(
@@ -87,10 +87,11 @@ void main() {
           messageKind: MessageKind.text(msg),
         );
         messages.insert(0, message);
-        chatView.scrollToBottom();
+        chatKey.currentState?.scrollToBottom();
       }
 
-      chatView = Chat(
+      final chatView = Chat(
+        key: chatKey,
         messages: messages,
         chatMessageInputField: _messageInputField(messageSendAction),
       );
@@ -100,7 +101,7 @@ void main() {
       const newMessage = "What's up";
       await _addMessageToChatList(tester, newMessage);
 
-      final chatState = tester.state(find.byType(Chat)) as ChatState;
+      final chatState = chatKey.currentState!;
       chatState.setState(() {});
       await tester.pump(const Duration(milliseconds: 500));
 
@@ -113,8 +114,10 @@ void main() {
     });
 
     testWidgets("ListView Should scroll to the bottom", (tester) async {
+      final chatKey = GlobalKey<ChatState>();
       final messages = generateRandomMessages().reversed.toList();
       final chatView = Chat(
+        key: chatKey,
         messages: messages,
         chatMessageInputField: _messageInputField((_) {}),
       );
@@ -143,7 +146,7 @@ void main() {
         reason: 'List could not scrolled properly.',
       );
 
-      chatView.scrollToBottom(); // Does the trick.
+      chatKey.currentState?.scrollToBottom(); // Does the trick.
       await tester.pumpAndSettle(const Duration(seconds: 10));
       expect(
         (scrollController?.offset ?? 0) ==

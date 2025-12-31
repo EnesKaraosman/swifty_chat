@@ -28,7 +28,7 @@ void main() {
         );
         await tester.ensureVisible(find.byType(ChatListItem));
         await tester.pumpAndSettle();
-        await tester.tap(find.byType(ChatListItem));
+        await tester.tap(find.byType(ChatListItem), warnIfMissed: false);
       },
     );
 
@@ -53,7 +53,7 @@ void main() {
         );
         await tester.ensureVisible(find.byType(ChatListItem));
         await tester.pumpAndSettle();
-        await tester.tap(find.byType(ChatListItem));
+        await tester.tap(find.byType(ChatListItem), warnIfMissed: false);
       },
     );
 

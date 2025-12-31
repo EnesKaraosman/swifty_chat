@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
@@ -14,24 +15,32 @@ final class TextMessageWidget extends StatelessWidget
   final Message _chatMessage;
 
   @override
-  Widget incomingMessageWidget(BuildContext context) => Row(
-        crossAxisAlignment: avatarPosition.alignment,
-        children: [
-          ...avatarWithPadding(),
-          _DecoratedText(message: message).flexible(),
-          const SizedBox(width: 24),
-        ],
+  Widget incomingMessageWidget(BuildContext context) => Semantics(
+        label:
+            '${message.user.userName} said: ${message.messageKind.text} at ${Jiffy.parseFromDateTime(message.date).fromNow()}',
+        child: Row(
+          crossAxisAlignment: avatarPosition.alignment,
+          children: [
+            ...avatarWithPadding(),
+            _DecoratedText(message: message).flexible(),
+            const SizedBox(width: 24),
+          ],
+        ),
       );
 
   @override
-  Widget outgoingMessageWidget(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: avatarPosition.alignment,
-        children: [
-          const SizedBox(width: 24),
-          _DecoratedText(message: message).flexible(),
-          ...avatarWithPadding(),
-        ],
+  Widget outgoingMessageWidget(BuildContext context) => Semantics(
+        label:
+            'You said: ${message.messageKind.text} at ${Jiffy.parseFromDateTime(message.date).fromNow()}',
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: avatarPosition.alignment,
+          children: [
+            const SizedBox(width: 24),
+            _DecoratedText(message: message).flexible(),
+            ...avatarWithPadding(),
+          ],
+        ),
       );
 
   @override

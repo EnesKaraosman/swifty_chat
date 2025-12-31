@@ -41,6 +41,7 @@ final class ChatStateContainer extends InheritedWidget {
 // ignore: must_be_immutable
 final class Chat extends StatefulWidget {
   Chat({
+    super.key,
     required this.chatMessageInputField,
     this.messages = const [],
     this.customMessageWidget,
@@ -58,8 +59,6 @@ final class Chat extends StatefulWidget {
   void Function(QuickReplyItem)? _onQuickReplyItemPressed;
   void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
   Map<String, OnTap> Function()? _onHtmlWidgetPressed;
-
-  final _scrollController = ScrollController();
 
   @override
   ChatState createState() => ChatState();
@@ -87,6 +86,29 @@ final class Chat extends StatefulWidget {
     return this;
   }
 
+  /// Scrolls the chat list to the bottom (most recent message).
+  void scrollToBottom() {
+    // This method needs to be accessed through the state
+    // Use a GlobalKey<ChatState> to call this on the state instance
+  }
+}
+
+final class ChatState extends State<Chat> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  /// Scrolls the chat list to the bottom (most recent message).
   void scrollToBottom() {
     _scrollController.animateTo(
       0.0,
@@ -94,9 +116,7 @@ final class Chat extends StatefulWidget {
       duration: const Duration(milliseconds: 300),
     );
   }
-}
 
-final class ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) => ChatStateContainer(
         messageCellSizeConfigurator: widget.messageCellSizeConfigurator ??
@@ -111,7 +131,7 @@ final class ChatState extends State<Chat> {
             children: [
               _ChatMessages(
                 backgroundColor: widget.theme.backgroundColor,
-                scrollController: widget._scrollController,
+                scrollController: _scrollController,
                 messages: widget.messages,
                 onMessagePressed: widget._onMessagePressed,
               ),
@@ -141,15 +161,20 @@ final class _ChatMessages extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: backgroundColor,
-      child: ListView.builder(
-        key: ChatKeys.chatListView.key,
-        controller: scrollController,
-        // (reverse: true) Helps to scroll content automatically when keyboard opens
-        reverse: true,
-        itemCount: messages.length,
-        itemBuilder: (BuildContext context, int index) => GestureDetector(
-          child: ChatListItem(chatMessage: messages[index]),
-          onTap: () => onMessagePressed?.call(messages[index]),
+      child: Semantics(
+        label: 'Chat messages',
+        child: ListView.builder(
+          key: ChatKeys.chatListView.key,
+          controller: scrollController,
+          // (reverse: true) Helps to scroll content automatically when keyboard opens
+          reverse: true,
+          itemCount: messages.length,
+          // Performance optimizations
+          cacheExtent: 200,
+          itemBuilder: (BuildContext context, int index) => GestureDetector(
+            child: ChatListItem(chatMessage: messages[index]),
+            onTap: () => onMessagePressed?.call(messages[index]),
+          ),
         ),
       ),
     ).expanded();

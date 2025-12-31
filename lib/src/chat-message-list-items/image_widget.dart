@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import '../chat.dart';
@@ -14,22 +15,32 @@ final class ImageMessageWidget extends StatelessWidget
   final Message _chatMessage;
 
   @override
-  Widget incomingMessageWidget(BuildContext context) => Row(
-        crossAxisAlignment: avatarPosition.alignment,
-        children: [
-          ...avatarWithPadding(),
-          imageContainer(context),
-        ],
+  Widget incomingMessageWidget(BuildContext context) => Semantics(
+        label:
+            'Image from ${message.user.userName} sent ${Jiffy.parseFromDateTime(message.date).fromNow()}',
+        image: true,
+        child: Row(
+          crossAxisAlignment: avatarPosition.alignment,
+          children: [
+            ...avatarWithPadding(),
+            imageContainer(context),
+          ],
+        ),
       );
 
   @override
-  Widget outgoingMessageWidget(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: avatarPosition.alignment,
-        children: [
-          imageContainer(context),
-          ...avatarWithPadding(),
-        ],
+  Widget outgoingMessageWidget(BuildContext context) => Semantics(
+        label:
+            'Image you sent ${Jiffy.parseFromDateTime(message.date).fromNow()}',
+        image: true,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: avatarPosition.alignment,
+          children: [
+            imageContainer(context),
+            ...avatarWithPadding(),
+          ],
+        ),
       );
 
   Widget imageContainer(BuildContext context) {
@@ -42,6 +53,40 @@ final class ImageMessageWidget extends StatelessWidget
           Image(
             width: _imageWidth(context),
             image: message.messageKind.imageProvider!,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Container(
+                width: _imageWidth(context),
+                height: 200,
+                color: Colors.grey[200],
+                child: Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                ),
+              );
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                width: _imageWidth(context),
+                height: 200,
+                color: Colors.grey[200],
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.broken_image, size: 48, color: Colors.grey),
+                    SizedBox(height: 8),
+                    Text(
+                      'Failed to load image',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
           Positioned(
             right: 12,

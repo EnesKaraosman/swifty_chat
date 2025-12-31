@@ -16,11 +16,14 @@ final class ChatListItem extends StatelessWidget {
   final Message chatMessage;
 
   @override
-  Widget build(BuildContext context) => _messageWidget(context).padding(
-        top: context.theme.messageInset.top,
-        left: context.theme.messageInset.left,
-        right: context.theme.messageInset.right,
-        bottom: context.theme.messageInset.bottom,
+  Widget build(BuildContext context) => Semantics(
+        label: 'Message',
+        child: _messageWidget(context).padding(
+          top: context.theme.messageInset.top,
+          left: context.theme.messageInset.left,
+          right: context.theme.messageInset.right,
+          bottom: context.theme.messageInset.bottom,
+        ),
       );
 
   Widget _messageWidget(BuildContext context) {
@@ -38,7 +41,6 @@ final class ChatListItem extends StatelessWidget {
       return ChatStateContainer.of(context)
               .customMessageWidget
               ?.call(chatMessage) ??
-          // TODO: Throw here!
           const Text(
             'You must implement customMessageWidget parameter in case you want to you MessageKind.custom',
           );

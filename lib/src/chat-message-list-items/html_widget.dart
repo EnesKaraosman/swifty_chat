@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:swifty_chat_data/swifty_chat_data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,48 +37,53 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
       ),
     };
 
-    return Row(
-      crossAxisAlignment: avatarPosition.alignment,
-      children: [
-        ...avatarWithPadding(),
-        Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width - 76,
-              decoration: BoxDecoration(
-                color: context.theme.secondaryColor,
-                borderRadius: BorderRadius.only(
-                  bottomRight:
-                      Radius.circular(context.theme.messageBorderRadius),
-                  topLeft: Radius.circular(context.theme.messageBorderRadius),
-                  topRight: Radius.circular(context.theme.messageBorderRadius),
+    return Semantics(
+      label:
+          'HTML message from ${chatMessage.user.userName} sent ${Jiffy.parseFromDateTime(chatMessage.date).fromNow()}',
+      child: Row(
+        crossAxisAlignment: avatarPosition.alignment,
+        children: [
+          ...avatarWithPadding(),
+          Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width - 76,
+                decoration: BoxDecoration(
+                  color: context.theme.secondaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomRight:
+                        Radius.circular(context.theme.messageBorderRadius),
+                    topLeft: Radius.circular(context.theme.messageBorderRadius),
+                    topRight:
+                        Radius.circular(context.theme.messageBorderRadius),
+                  ),
+                ),
+                child: Html(
+                  data: chatMessage.messageKind.htmlData,
+                  style: htmlStyle,
+                  onLinkTap: onLinkTap ??
+                      (link, _, __) async {
+                        if (await canLaunchUrl(Uri.parse(link!))) {
+                          await launchUrl(
+                            Uri.parse(link),
+                          );
+                        }
+                      },
+                ).padding(all: context.theme.textMessagePadding),
+              ),
+              Positioned(
+                right: 12,
+                bottom: 6,
+                child: Text(
+                  chatMessage.date.relativeTimeFromNow(),
+                  style: theme.htmlWidgetTextTime,
                 ),
               ),
-              child: Html(
-                data: chatMessage.messageKind.htmlData,
-                style: htmlStyle,
-                onLinkTap: onLinkTap ??
-                    (link, _, __) async {
-                      if (await canLaunchUrl(Uri.parse(link!))) {
-                        await launchUrl(
-                          Uri.parse(link),
-                        );
-                      }
-                    },
-              ).padding(all: context.theme.textMessagePadding),
-            ),
-            Positioned(
-              right: 12,
-              bottom: 6,
-              child: Text(
-                chatMessage.date.relativeTimeFromNow(),
-                style: theme.htmlWidgetTextTime,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(width: 20),
-      ],
+            ],
+          ),
+          const SizedBox(width: 20),
+        ],
+      ),
     );
   }
 

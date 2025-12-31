@@ -17,6 +17,14 @@ final class MessageInputField extends StatefulWidget {
 
 final class _MessageInputFieldState extends State<MessageInputField> {
   final textEditingController = TextEditingController();
+  final focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,46 +44,54 @@ final class _MessageInputFieldState extends State<MessageInputField> {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: TextField(
-              key: ChatKeys.messageTextField.key,
-              controller: textEditingController,
-              focusNode: FocusNode(),
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration.collapsed(
-                hintText: 'Write your reply...',
-                hintStyle: TextStyle(
-                  fontSize: 16.0,
-                  color: Color(0xffAEA4A3),
+            child: Semantics(
+              textField: true,
+              label: 'Type your message',
+              child: TextField(
+                key: ChatKeys.messageTextField.key,
+                controller: textEditingController,
+                focusNode: focusNode,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: const InputDecoration.collapsed(
+                  hintText: 'Write your reply...',
+                  hintStyle: TextStyle(
+                    fontSize: 16.0,
+                    color: Color(0xffAEA4A3),
+                  ),
                 ),
+                textInputAction: TextInputAction.send,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
+                ),
+                onSubmitted: (_) {
+                  widget.sendButtonTapped(textEditingController.text);
+                  textEditingController.text = "";
+                },
               ),
-              textInputAction: TextInputAction.send,
-              style: const TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
+            ),
+          ),
+          Semantics(
+            button: true,
+            label: 'Send message',
+            child: Container(
+              key: ChatKeys.messageSendButton.key,
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.blueAccent,
               ),
-              onSubmitted: (_) {
+              child: const Icon(
+                Icons.send_outlined,
+                color: Colors.white70,
+              ),
+            ).rotate(angle: 150).gestures(
+              onTap: () {
                 widget.sendButtonTapped(textEditingController.text);
                 textEditingController.text = "";
               },
             ),
-          ),
-          Container(
-            key: ChatKeys.messageSendButton.key,
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.blueAccent,
-            ),
-            child: const Icon(
-              Icons.send_outlined,
-              color: Colors.white70,
-            ),
-          ).rotate(angle: 150).gestures(
-            onTap: () {
-              widget.sendButtonTapped(textEditingController.text);
-              textEditingController.text = "";
-            },
           ),
         ],
       ),
