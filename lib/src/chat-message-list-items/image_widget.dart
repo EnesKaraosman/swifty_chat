@@ -7,7 +7,9 @@ import '../extensions/date_extensions.dart';
 import '../extensions/theme_context.dart';
 import '../protocols/has_avatar.dart';
 import '../protocols/incoming_outgoing_message_widgets.dart';
+import '../utils/accessibility_helpers.dart';
 
+@immutable
 final class ImageMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {
   const ImageMessageWidget(this._chatMessage);
@@ -15,31 +17,39 @@ final class ImageMessageWidget extends StatelessWidget
   final Message _chatMessage;
 
   @override
-  Widget incomingMessageWidget(BuildContext context) => Semantics(
-        label:
-            'Image from ${message.user.userName} sent ${Jiffy.parseFromDateTime(message.date).fromNow()}',
-        image: true,
-        child: Row(
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            ...avatarWithPadding(),
-            imageContainer(context),
-          ],
+  Widget incomingMessageWidget(BuildContext context) => RepaintBoundary(
+        child: Semantics(
+          label: AccessibilityHelpers.createImageSemanticLabel(
+            userName: message.user.userName,
+            timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+          ),
+          image: true,
+          child: Row(
+            crossAxisAlignment: avatarPosition.alignment,
+            children: [
+              ...avatarWithPadding(),
+              imageContainer(context),
+            ],
+          ),
         ),
       );
 
   @override
-  Widget outgoingMessageWidget(BuildContext context) => Semantics(
-        label:
-            'Image you sent ${Jiffy.parseFromDateTime(message.date).fromNow()}',
-        image: true,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            imageContainer(context),
-            ...avatarWithPadding(),
-          ],
+  Widget outgoingMessageWidget(BuildContext context) => RepaintBoundary(
+        child: Semantics(
+          label: AccessibilityHelpers.createImageSemanticLabel(
+            userName: 'You',
+            timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+          ),
+          image: true,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: avatarPosition.alignment,
+            children: [
+              imageContainer(context),
+              ...avatarWithPadding(),
+            ],
+          ),
         ),
       );
 

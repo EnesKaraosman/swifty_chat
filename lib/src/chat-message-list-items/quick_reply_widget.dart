@@ -4,7 +4,9 @@ import 'package:swifty_chat_data/swifty_chat_data.dart';
 
 import '../chat.dart';
 import '../extensions/theme_context.dart';
+import '../utils/accessibility_helpers.dart';
 
+@immutable
 final class QuickReplyWidget extends StatelessWidget {
   const QuickReplyWidget(this.chatMessage);
 
@@ -12,12 +14,14 @@ final class QuickReplyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: 'Quick reply options',
-      child: Wrap(
-        spacing: 8,
-        children: _buttons(context),
-      ).padding(all: 8),
+    return RepaintBoundary(
+      child: Semantics(
+        label: 'Quick reply options',
+        child: Wrap(
+          spacing: 8,
+          children: _buttons(context),
+        ).padding(all: 8),
+      ),
     );
   }
 
@@ -26,7 +30,7 @@ final class QuickReplyWidget extends StatelessWidget {
         .map(
           (qr) => Semantics(
             button: true,
-            label: 'Quick reply: ${qr.title}',
+            label: AccessibilityHelpers.createQuickReplySemanticLabel(qr.title),
             child: OutlinedButton(
               style: context.theme.quickReplyButtonStyle,
               onPressed: () => ChatStateContainer.of(context)

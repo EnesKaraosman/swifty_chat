@@ -7,39 +7,53 @@ import '../extensions/date_extensions.dart';
 import '../extensions/theme_context.dart';
 import '../protocols/has_avatar.dart';
 import '../protocols/incoming_outgoing_message_widgets.dart';
+import '../utils/accessibility_helpers.dart';
 
+@immutable
 final class TextMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {
-  TextMessageWidget(this._chatMessage);
+  const TextMessageWidget(this._chatMessage);
 
   final Message _chatMessage;
 
   @override
-  Widget incomingMessageWidget(BuildContext context) => Semantics(
-        label:
-            '${message.user.userName} said: ${message.messageKind.text} at ${Jiffy.parseFromDateTime(message.date).fromNow()}',
-        child: Row(
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            ...avatarWithPadding(),
-            _DecoratedText(message: message).flexible(),
-            const SizedBox(width: 24),
-          ],
+  Widget incomingMessageWidget(BuildContext context) => RepaintBoundary(
+        child: Semantics(
+          label: AccessibilityHelpers.createMessageSemanticLabel(
+            userName: message.user.userName,
+            message: message.messageKind.text ?? '',
+            timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+            isOutgoing: false,
+          ),
+          child: Row(
+            crossAxisAlignment: avatarPosition.alignment,
+            children: [
+              ...avatarWithPadding(),
+              _DecoratedText(message: message).flexible(),
+              const SizedBox(width: 24),
+            ],
+          ),
         ),
       );
 
   @override
-  Widget outgoingMessageWidget(BuildContext context) => Semantics(
-        label:
-            'You said: ${message.messageKind.text} at ${Jiffy.parseFromDateTime(message.date).fromNow()}',
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            const SizedBox(width: 24),
-            _DecoratedText(message: message).flexible(),
-            ...avatarWithPadding(),
-          ],
+  Widget outgoingMessageWidget(BuildContext context) => RepaintBoundary(
+        child: Semantics(
+          label: AccessibilityHelpers.createMessageSemanticLabel(
+            userName: 'You',
+            message: message.messageKind.text ?? '',
+            timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+            isOutgoing: true,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: avatarPosition.alignment,
+            children: [
+              const SizedBox(width: 24),
+              _DecoratedText(message: message).flexible(),
+              ...avatarWithPadding(),
+            ],
+          ),
         ),
       );
 

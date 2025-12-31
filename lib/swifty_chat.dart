@@ -8,3 +8,7 @@ export 'src/extensions/keys.dart';
 export 'src/message_cell_size_configurator.dart';
 export 'src/theme/chat_theme.dart';
 export 'src/theme/default_theme.dart';
+export 'src/theme/material3_chat_theme.dart';
+export 'src/utils/accessibility_helpers.dart';
+export 'src/utils/chat_animations.dart';
+export 'src/utils/responsive_breakpoints.dart';

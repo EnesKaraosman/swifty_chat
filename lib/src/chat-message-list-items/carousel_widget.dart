@@ -7,6 +7,7 @@ import '../chat.dart';
 import '../extensions/theme_context.dart';
 import '../protocols/has_avatar.dart';
 
+@immutable
 final class CarouselWidget extends StatelessWidget with HasAvatar {
   const CarouselWidget(this.chatMessage);
 
@@ -18,19 +19,21 @@ final class CarouselWidget extends StatelessWidget with HasAvatar {
   Message get message => chatMessage;
 
   @override
-  Widget build(BuildContext context) => Semantics(
-        label: 'Carousel with ${items.length} items',
-        child: CarouselSlider.builder(
-          itemCount: items.length,
-          itemBuilder: (_, index, __) => _CarouselItem(
-            item: items[index],
-            index: index,
-            total: items.length,
-          ),
-          options: CarouselOptions(
-            height: _carouselItemHeight(context),
-            disableCenter: true,
-            enableInfiniteScroll: false,
+  Widget build(BuildContext context) => RepaintBoundary(
+        child: Semantics(
+          label: 'Carousel with ${items.length} items',
+          child: CarouselSlider.builder(
+            itemCount: items.length,
+            itemBuilder: (_, index, __) => _CarouselItem(
+              item: items[index],
+              index: index,
+              total: items.length,
+            ),
+            options: CarouselOptions(
+              height: _carouselItemHeight(context),
+              disableCenter: true,
+              enableInfiniteScroll: false,
+            ),
           ),
         ),
       );
