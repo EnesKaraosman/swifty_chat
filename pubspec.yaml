@@ -15,7 +15,7 @@ dependencies:
   carousel_slider: ^5.1.1
 
   # https://pub.dev/packages/equatable
-  equatable: ^2.0.7
+  equatable: ^3.0.0
 
   flutter:
     sdk: flutter
