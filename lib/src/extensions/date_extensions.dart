@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
 extension DateX on DateTime {
   String relativeTimeFromNow() {
     final now = DateTime.now();
-    if (now.difference(this).inDays == 0) {
+    if (DateUtils.isSameDay(now, this)) {
       return hourMinute();
     }
 

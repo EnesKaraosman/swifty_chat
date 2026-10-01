@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 import 'chat-message-list-items/carousel_widget.dart';
 import 'chat-message-list-items/html_widget.dart';
@@ -19,11 +18,9 @@ final class ChatListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
         label: 'Message',
-        child: _messageWidget(context).padding(
-          top: context.theme.messageInset.top,
-          left: context.theme.messageInset.left,
-          right: context.theme.messageInset.right,
-          bottom: context.theme.messageInset.bottom,
+        child: Padding(
+          padding: context.theme.messageInset,
+          child: _messageWidget(context),
         ),
       );
 

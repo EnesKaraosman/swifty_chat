@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:styled_widget/styled_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../chat.dart';
@@ -22,6 +21,7 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
     final functions =
         ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
     final OnTap? onLinkTap = functions?["onLinkTap"];
+    final OnTap? onImageTap = functions?["onImageTap"];
     final Color htmlTextColor = context.theme.htmlTextColor;
     final String? htmlTextFontFamily = context.theme.htmlTextFontFamily;
     final htmlStyle = {
@@ -45,42 +45,51 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
         crossAxisAlignment: avatarPosition.alignment,
         children: [
           ...avatarWithPadding(),
-          Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width - 76,
-                decoration: BoxDecoration(
-                  color: context.theme.secondaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomRight:
-                        Radius.circular(context.theme.messageBorderRadius),
-                    topLeft: Radius.circular(context.theme.messageBorderRadius),
-                    topRight:
-                        Radius.circular(context.theme.messageBorderRadius),
+          Expanded(
+            child: Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: context.theme.secondaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomRight:
+                          Radius.circular(context.theme.messageBorderRadius),
+                      topLeft:
+                          Radius.circular(context.theme.messageBorderRadius),
+                      topRight:
+                          Radius.circular(context.theme.messageBorderRadius),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(context.theme.textMessagePadding),
+                    child: Html(
+                      data: chatMessage.messageKind.htmlData,
+                      style: htmlStyle,
+                      extensions: [
+                        if (onImageTap != null)
+                          OnImageTapExtension(onImageTap: onImageTap),
+                      ],
+                      onLinkTap: onLinkTap ??
+                          (link, _, __) async {
+                            final uri = Uri.tryParse(link ?? '');
+                            if (uri != null && uri.hasScheme) {
+                              await launchUrl(uri);
+                            }
+                          },
+                    ),
                   ),
                 ),
-                child: Html(
-                  data: chatMessage.messageKind.htmlData,
-                  style: htmlStyle,
-                  onLinkTap: onLinkTap ??
-                      (link, _, __) async {
-                        if (await canLaunchUrl(Uri.parse(link!))) {
-                          await launchUrl(
-                            Uri.parse(link),
-                          );
-                        }
-                      },
-                ).padding(all: context.theme.textMessagePadding),
-              ),
-              Positioned(
-                right: 12,
-                bottom: 6,
-                child: Text(
-                  chatMessage.date.relativeTimeFromNow(),
-                  style: theme.htmlWidgetTextTime,
+                Positioned(
+                  right: 12,
+                  bottom: 6,
+                  child: Text(
+                    chatMessage.date.relativeTimeFromNow(),
+                    style: theme.htmlWidgetTextTime,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(width: 20),
         ],

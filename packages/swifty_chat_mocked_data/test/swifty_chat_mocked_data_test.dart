@@ -14,4 +14,17 @@ void main() {
       'Message 3',
     ]);
   });
+
+  test('image generator uses both available assets', () {
+    final paths = List.generate(
+      100,
+      (_) => generateRandomMessage(MockMessageKind.image)
+          .messageKind
+          .imageProvider
+          .toString(),
+    );
+
+    expect(paths.any((path) => path.contains('mock_image_1.jpg')), isTrue);
+    expect(paths.any((path) => path.contains('mock_image_2.jpg')), isTrue);
+  });
 }

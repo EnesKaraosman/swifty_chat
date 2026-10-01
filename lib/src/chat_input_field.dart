@@ -105,6 +105,7 @@ final class _MessageInputFieldState extends State<MessageInputField>
   void initState() {
     super.initState();
     _textController.addListener(_onTextChanged);
+    _focusNode.addListener(_onFocusChanged);
     _sendButtonController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 150),
@@ -120,6 +121,7 @@ final class _MessageInputFieldState extends State<MessageInputField>
   @override
   void dispose() {
     _textController.removeListener(_onTextChanged);
+    _focusNode.removeListener(_onFocusChanged);
     _textController.dispose();
     _focusNode.dispose();
     _sendButtonController.dispose();
@@ -137,6 +139,8 @@ final class _MessageInputFieldState extends State<MessageInputField>
       }
     }
   }
+
+  void _onFocusChanged() => setState(() {});
 
   void _sendMessage() {
     final text = _textController.text.trim();
@@ -183,11 +187,12 @@ final class _MessageInputFieldState extends State<MessageInputField>
               children: [
                 // Attachment button (optional)
                 if (widget.showAttachmentButton) ...[
-                  _IconButton(
-                    icon: Icons.add_circle_outline,
+                  IconButton(
+                    icon: const Icon(Icons.add_circle_outline),
                     color: hintColor,
-                    onTap: widget.enabled ? widget.onAttachmentTapped : null,
-                    semanticLabel: 'Add attachment',
+                    onPressed:
+                        widget.enabled ? widget.onAttachmentTapped : null,
+                    tooltip: 'Add attachment',
                   ),
                   const SizedBox(width: 4),
                 ],
@@ -259,74 +264,24 @@ final class _MessageInputFieldState extends State<MessageInputField>
                       ),
                     );
                   },
-                  child: Semantics(
-                    button: true,
-                    label: 'Send message',
-                    enabled: _hasText && widget.enabled,
-                    child: GestureDetector(
-                      key: ChatKeys.messageSendButton.key,
-                      onTap: _hasText && widget.enabled ? _sendMessage : null,
-                      child: Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _hasText
-                              ? sendButtonColor
-                              : sendButtonColor.withValues(alpha: .5),
-                          boxShadow: _hasText
-                              ? [
-                                  BoxShadow(
-                                    color:
-                                        sendButtonColor.withValues(alpha: .3),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ]
-                              : null,
-                        ),
-                        child: Icon(
-                          Icons.send_rounded,
-                          color: sendButtonIconColor,
-                          size: 20,
-                        ),
-                      ),
+                  child: IconButton.filled(
+                    key: ChatKeys.messageSendButton.key,
+                    onPressed: _hasText && widget.enabled ? _sendMessage : null,
+                    tooltip: 'Send message',
+                    icon: const Icon(Icons.send_rounded),
+                    style: IconButton.styleFrom(
+                      backgroundColor: sendButtonColor,
+                      foregroundColor: sendButtonIconColor,
+                      disabledBackgroundColor:
+                          sendButtonColor.withValues(alpha: .5),
+                      disabledForegroundColor: sendButtonIconColor,
+                      minimumSize: const Size(48, 48),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _IconButton extends StatelessWidget {
-  const _IconButton({
-    required this.icon,
-    required this.color,
-    this.onTap,
-    this.semanticLabel,
-  });
-
-  final IconData icon;
-  final Color color;
-  final VoidCallback? onTap;
-  final String? semanticLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: semanticLabel,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Icon(icon, color: color, size: 24),
         ),
       ),
     );

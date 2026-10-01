@@ -1,5 +1,5 @@
 // Core widgets
-export 'src/chat.dart' show Chat;
+export 'src/chat.dart' show Chat, ChatController;
 export 'src/chat_input_field.dart';
 
 // Extensions

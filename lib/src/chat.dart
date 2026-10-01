@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 import 'chat_list_item.dart';
 import 'extensions/keys.dart';
@@ -37,10 +36,30 @@ final class ChatStateContainer extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(ChatStateContainer oldWidget) => false;
+  bool updateShouldNotify(ChatStateContainer oldWidget) =>
+      messageCellSizeConfigurator != oldWidget.messageCellSizeConfigurator ||
+      onHtmlWidgetPressed != oldWidget.onHtmlWidgetPressed ||
+      onQuickReplyItemPressed != oldWidget.onQuickReplyItemPressed ||
+      onCarouselButtonItemPressed != oldWidget.onCarouselButtonItemPressed ||
+      customMessageWidget != oldWidget.customMessageWidget;
 }
 
-// ignore: must_be_immutable
+final class ChatController {
+  final Set<ScrollController> _scrollControllers = {};
+
+  void scrollToBottom() {
+    for (final controller in _scrollControllers) {
+      if (controller.hasClients) {
+        controller.animateTo(
+          0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
+      }
+    }
+  }
+}
+
 final class Chat extends StatefulWidget {
   Chat({
     super.key,
@@ -49,50 +68,83 @@ final class Chat extends StatefulWidget {
     this.customMessageWidget,
     this.messageCellSizeConfigurator,
     this.theme = const DefaultChatTheme(),
-  });
+    this.onMessagePressed,
+    this.onQuickReplyItemPressed,
+    this.onCarouselButtonItemPressed,
+    this.onHtmlWidgetPressed,
+    ChatController? controller,
+  }) : controller = controller ?? ChatController();
 
   final Widget chatMessageInputField;
   final List<Message> messages;
   final Widget Function(Message)? customMessageWidget;
   final ChatTheme theme;
   final MessageCellSizeConfigurator? messageCellSizeConfigurator;
-
-  void Function(Message)? _onMessagePressed;
-  void Function(QuickReplyItem)? _onQuickReplyItemPressed;
-  void Function(CarouselButtonItem)? _onCarouselButtonItemPressed;
-  Map<String, OnTap> Function()? _onHtmlWidgetPressed;
+  final void Function(Message)? onMessagePressed;
+  final void Function(QuickReplyItem)? onQuickReplyItemPressed;
+  final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
+  final Map<String, OnTap> Function()? onHtmlWidgetPressed;
+  final ChatController controller;
 
   @override
   ChatState createState() => ChatState();
 
   /// Triggered when quick reply message widget button is tapped.
-  Chat setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) {
-    _onQuickReplyItemPressed = fn;
-    return this;
-  }
+  Chat setOnQuickReplyItemPressed(void Function(QuickReplyItem)? fn) =>
+      _withCallbacks(
+        onMessagePressed: onMessagePressed,
+        onQuickReplyItemPressed: fn,
+        onCarouselButtonItemPressed: onCarouselButtonItemPressed,
+        onHtmlWidgetPressed: onHtmlWidgetPressed,
+      );
 
   /// Triggered when carousel message widget button is tapped.
-  Chat setOnCarouselItemButtonPressed(void Function(CarouselButtonItem)? fn) {
-    _onCarouselButtonItemPressed = fn;
-    return this;
-  }
+  Chat setOnCarouselItemButtonPressed(void Function(CarouselButtonItem)? fn) =>
+      _withCallbacks(
+        onMessagePressed: onMessagePressed,
+        onQuickReplyItemPressed: onQuickReplyItemPressed,
+        onCarouselButtonItemPressed: fn,
+        onHtmlWidgetPressed: onHtmlWidgetPressed,
+      );
 
-  Chat setOnHTMLWidgetPressed(Map<String, OnTap> Function()? fn) {
-    _onHtmlWidgetPressed = fn;
-    return this;
-  }
+  Chat setOnHTMLWidgetPressed(Map<String, OnTap> Function()? fn) =>
+      _withCallbacks(
+        onMessagePressed: onMessagePressed,
+        onQuickReplyItemPressed: onQuickReplyItemPressed,
+        onCarouselButtonItemPressed: onCarouselButtonItemPressed,
+        onHtmlWidgetPressed: fn,
+      );
 
   /// Triggered when a message widget is tapped.
-  Chat setOnMessagePressed(void Function(Message)? fn) {
-    _onMessagePressed = fn;
-    return this;
-  }
+  Chat setOnMessagePressed(void Function(Message)? fn) => _withCallbacks(
+        onMessagePressed: fn,
+        onQuickReplyItemPressed: onQuickReplyItemPressed,
+        onCarouselButtonItemPressed: onCarouselButtonItemPressed,
+        onHtmlWidgetPressed: onHtmlWidgetPressed,
+      );
+
+  Chat _withCallbacks({
+    required void Function(Message)? onMessagePressed,
+    required void Function(QuickReplyItem)? onQuickReplyItemPressed,
+    required void Function(CarouselButtonItem)? onCarouselButtonItemPressed,
+    required Map<String, OnTap> Function()? onHtmlWidgetPressed,
+  }) =>
+      Chat(
+        key: key,
+        chatMessageInputField: chatMessageInputField,
+        messages: messages,
+        customMessageWidget: customMessageWidget,
+        messageCellSizeConfigurator: messageCellSizeConfigurator,
+        theme: theme,
+        onMessagePressed: onMessagePressed,
+        onQuickReplyItemPressed: onQuickReplyItemPressed,
+        onCarouselButtonItemPressed: onCarouselButtonItemPressed,
+        onHtmlWidgetPressed: onHtmlWidgetPressed,
+        controller: controller,
+      );
 
   /// Scrolls the chat list to the bottom (most recent message).
-  void scrollToBottom() {
-    // This method needs to be accessed through the state
-    // Use a GlobalKey<ChatState> to call this on the state instance
-  }
+  void scrollToBottom() => controller.scrollToBottom();
 }
 
 final class ChatState extends State<Chat> {
@@ -102,45 +154,51 @@ final class ChatState extends State<Chat> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    widget.controller._scrollControllers.add(_scrollController);
+  }
+
+  @override
+  void didUpdateWidget(Chat oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      oldWidget.controller._scrollControllers.remove(_scrollController);
+      widget.controller._scrollControllers.add(_scrollController);
+    }
   }
 
   @override
   void dispose() {
+    widget.controller._scrollControllers.remove(_scrollController);
     _scrollController.dispose();
     super.dispose();
   }
 
   /// Scrolls the chat list to the bottom (most recent message).
-  void scrollToBottom() {
-    _scrollController.animateTo(
-      0.0,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
-  }
+  void scrollToBottom() => widget.controller.scrollToBottom();
 
   @override
   Widget build(BuildContext context) => ChatStateContainer(
         messageCellSizeConfigurator: widget.messageCellSizeConfigurator ??
             MessageCellSizeConfigurator.defaultConfiguration(),
-        onHtmlWidgetPressed: widget._onHtmlWidgetPressed,
-        onQuickReplyItemPressed: widget._onQuickReplyItemPressed,
-        onCarouselButtonItemPressed: widget._onCarouselButtonItemPressed,
+        onHtmlWidgetPressed: widget.onHtmlWidgetPressed,
+        onQuickReplyItemPressed: widget.onQuickReplyItemPressed,
+        onCarouselButtonItemPressed: widget.onCarouselButtonItemPressed,
         customMessageWidget: widget.customMessageWidget,
         child: InheritedChatTheme(
           theme: widget.theme,
-          child: Column(
-            children: [
-              _ChatMessages(
-                backgroundColor: widget.theme.backgroundColor,
-                scrollController: _scrollController,
-                messages: widget.messages,
-                onMessagePressed: widget._onMessagePressed,
-              ),
-              widget.chatMessageInputField,
-            ],
-          ).gestures(
+          child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              children: [
+                _ChatMessages(
+                  backgroundColor: widget.theme.backgroundColor,
+                  scrollController: _scrollController,
+                  messages: widget.messages,
+                  onMessagePressed: widget.onMessagePressed,
+                ),
+                widget.chatMessageInputField,
+              ],
+            ),
           ),
         ),
       );
@@ -161,26 +219,31 @@ final class _ChatMessages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: backgroundColor,
-      child: Semantics(
-        label: 'Chat messages',
-        child: ListView.builder(
-          key: ChatKeys.chatListView.key,
-          controller: scrollController,
-          // (reverse: true) Helps to scroll content automatically when keyboard opens
-          reverse: true,
-          itemCount: messages.length,
-          // Performance optimizations
-          // Flutter 3.27 lacks scrollCacheExtent.
-          // ignore: deprecated_member_use
-          cacheExtent: 200,
-          itemBuilder: (BuildContext context, int index) => GestureDetector(
-            child: ChatListItem(chatMessage: messages[index]),
-            onTap: () => onMessagePressed?.call(messages[index]),
+    final indices = {
+      for (var index = 0; index < messages.length; index++)
+        messages[index].id: index,
+    };
+    return Expanded(
+      child: ColoredBox(
+        color: backgroundColor,
+        child: Semantics(
+          label: 'Chat messages',
+          child: ListView.builder(
+            key: ChatKeys.chatListView.key,
+            controller: scrollController,
+            // (reverse: true) Helps to scroll content automatically when keyboard opens
+            reverse: true,
+            itemCount: messages.length,
+            findChildIndexCallback: (key) =>
+                key is ValueKey<String> ? indices[key.value] : null,
+            itemBuilder: (BuildContext context, int index) => GestureDetector(
+              key: ValueKey(messages[index].id),
+              child: ChatListItem(chatMessage: messages[index]),
+              onTap: () => onMessagePressed?.call(messages[index]),
+            ),
           ),
         ),
       ),
-    ).expanded();
+    );
   }
 }

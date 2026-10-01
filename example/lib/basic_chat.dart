@@ -12,47 +12,42 @@ class BasicChat extends StatefulWidget {
 
 class _BasicChatState extends State<BasicChat> {
   final List<MockMessage> _messages = [];
-
-  late Chat chatView;
+  final ChatController _chatController = ChatController();
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _messages.addAll(generateRandomTextMessages());
-    });
+    _messages.addAll(generateRandomTextMessages());
   }
 
   @override
   Widget build(BuildContext context) {
-    chatView = _chatWidget(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Basic Chat')),
-      body: chatView,
+      body: _chatWidget(context),
     );
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-        theme: const DarkChatTheme(),
-        messages: _messages,
-        chatMessageInputField: MessageInputField(
-          key: const Key('message_input_field'),
-          sendButtonTapped: (msg) {
-            debugPrint(msg);
-            setState(
-              () {
-                final message = MockMessage(
-                  date: DateTime.now(),
-                  user: MockChatUser.outgoingUser,
-                  id: DateTime.now().toString(),
-                  isMe: true,
-                  messageKind: MessageKind.text(msg),
-                );
-                _messages.insert(0, message);
-                chatView.scrollToBottom();
-              },
-            );
-          },
-        ),
-      );
+    controller: _chatController,
+    theme: const DarkChatTheme(),
+    messages: _messages,
+    chatMessageInputField: MessageInputField(
+      key: const Key('message_input_field'),
+      sendButtonTapped: (msg) {
+        debugPrint(msg);
+        setState(() {
+          final message = MockMessage(
+            date: DateTime.now(),
+            user: MockChatUser.outgoingUser,
+            id: DateTime.now().toString(),
+            isMe: true,
+            messageKind: MessageKind.text(msg),
+          );
+          _messages.insert(0, message);
+          _chatController.scrollToBottom();
+        });
+      },
+    ),
+  );
 }

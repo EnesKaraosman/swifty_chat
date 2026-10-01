@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
-class CustomMessageKindChat extends StatelessWidget {
+class CustomMessageKindChat extends StatefulWidget {
   const CustomMessageKindChat({super.key});
 
-  List<MockMessage> _mockMessages() => generateRandomTextMessages(count: 5)
+  @override
+  State<CustomMessageKindChat> createState() => _CustomMessageKindChatState();
+}
+
+class _CustomMessageKindChatState extends State<CustomMessageKindChat> {
+  late final List<MockMessage> _messages = generateRandomTextMessages(count: 5)
     ..insert(
       0,
       MockMessage(
@@ -13,8 +18,9 @@ class CustomMessageKindChat extends StatelessWidget {
         user: MockChatUser.incomingUser,
         id: DateTime.now().toString(),
         isMe: false,
-        messageKind:
-            MessageKind.custom("⚙️ Hey! This is my custom message!!!! ⚙️"),
+        messageKind: MessageKind.custom(
+          "⚙️ Hey! This is my custom message!!!! ⚙️",
+        ),
       ),
     );
 
@@ -27,24 +33,20 @@ class CustomMessageKindChat extends StatelessWidget {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
-        customMessageWidget: (message) =>
-            MyCustomMessageWidget(message: message),
-        theme: const DarkChatTheme(),
-        messages: _mockMessages(),
-        chatMessageInputField: MessageInputField(
-          key: const Key('message_input_field'),
-          sendButtonTapped: (msg) {},
-        ),
-      );
+    customMessageWidget: (message) => MyCustomMessageWidget(message: message),
+    theme: const DarkChatTheme(),
+    messages: _messages,
+    chatMessageInputField: MessageInputField(
+      key: const Key('message_input_field'),
+      sendButtonTapped: (msg) {},
+    ),
+  );
 }
 
 class MyCustomMessageWidget extends StatelessWidget {
   final Message message;
 
-  const MyCustomMessageWidget({
-    super.key,
-    required this.message,
-  });
+  const MyCustomMessageWidget({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +55,10 @@ class MyCustomMessageWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Text(
         message.messageKind.custom as String? ?? "Not a String",
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
+}
 
 // You can check type with `if` in case you have different types of custom Message
-}

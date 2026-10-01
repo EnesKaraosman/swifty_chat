@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
@@ -18,97 +20,105 @@ final class ImageMessageWidget extends StatelessWidget
   final Message _chatMessage;
 
   @override
-  Widget incomingMessageWidget(BuildContext context) => RepaintBoundary(
-        child: Semantics(
-          label: AccessibilityHelpers.createImageSemanticLabel(
-            userName: message.user.userName,
-            timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
-          ),
-          image: true,
-          child: Row(
-            crossAxisAlignment: avatarPosition.alignment,
-            children: [
-              ...avatarWithPadding(),
-              imageContainer(context),
-            ],
-          ),
+  Widget incomingMessageWidget(BuildContext context) => Semantics(
+        label: AccessibilityHelpers.createImageSemanticLabel(
+          userName: message.user.userName,
+          timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+        ),
+        image: true,
+        child: Row(
+          crossAxisAlignment: avatarPosition.alignment,
+          children: [
+            ...avatarWithPadding(),
+            Flexible(child: imageContainer(context)),
+          ],
         ),
       );
 
   @override
-  Widget outgoingMessageWidget(BuildContext context) => RepaintBoundary(
-        child: Semantics(
-          label: AccessibilityHelpers.createImageSemanticLabel(
-            userName: 'You',
-            timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
-          ),
-          image: true,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: avatarPosition.alignment,
-            children: [
-              imageContainer(context),
-              ...avatarWithPadding(),
-            ],
-          ),
+  Widget outgoingMessageWidget(BuildContext context) => Semantics(
+        label: AccessibilityHelpers.createImageSemanticLabel(
+          userName: 'You',
+          timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+        ),
+        image: true,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: avatarPosition.alignment,
+          children: [
+            Flexible(child: imageContainer(context)),
+            ...avatarWithPadding(),
+          ],
         ),
       );
 
   Widget imageContainer(BuildContext context) {
     final theme = context.theme;
 
-    return ClipRRect(
-      borderRadius: theme.imageBorderRadius,
-      child: Stack(
-        children: [
-          Image(
-            width: _imageWidth(context),
-            image: message.messageKind.imageProvider!,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Container(
-                width: _imageWidth(context),
-                height: 200,
-                color: Colors.grey[200],
-                child: Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = math.min(_imageWidth(context), constraints.maxWidth);
+        final cacheWidth = math.max(
+            1, (width * MediaQuery.devicePixelRatioOf(context)).ceil());
+
+        return ClipRRect(
+          borderRadius: theme.imageBorderRadius,
+          child: Stack(
+            children: [
+              Image(
+                width: width,
+                image: ResizeImage.resizeIfNeeded(
+                  cacheWidth,
+                  null,
+                  message.messageKind.imageProvider!,
                 ),
-              );
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                width: _imageWidth(context),
-                height: 200,
-                color: Colors.grey[200],
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.broken_image, size: 48, color: Colors.grey),
-                    SizedBox(height: 8),
-                    Text(
-                      'Failed to load image',
-                      style: TextStyle(color: Colors.grey),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    width: width,
+                    height: 200,
+                    color: Colors.grey[200],
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
                     ),
-                  ],
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: width,
+                    height: 200,
+                    color: Colors.grey[200],
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.broken_image, size: 48, color: Colors.grey),
+                        SizedBox(height: 8),
+                        Text(
+                          'Failed to load image',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              Positioned(
+                right: 12,
+                bottom: 6,
+                child: Text(
+                  message.date.relativeTimeFromNow(),
+                  style: theme.imageWidgetTextTime,
                 ),
-              );
-            },
+              ),
+            ],
           ),
-          Positioned(
-            right: 12,
-            bottom: 6,
-            child: Text(
-              message.date.relativeTimeFromNow(),
-              style: theme.imageWidgetTextTime,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

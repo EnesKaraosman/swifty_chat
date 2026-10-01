@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 import '../chat.dart';
 import '../extensions/theme_context.dart';
@@ -14,13 +13,14 @@ final class QuickReplyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      child: Semantics(
-        label: 'Quick reply options',
+    return Semantics(
+      label: 'Quick reply options',
+      child: Padding(
+        padding: const EdgeInsets.all(8),
         child: Wrap(
           spacing: 8,
           children: _buttons(context),
-        ).padding(all: 8),
+        ),
       ),
     );
   }

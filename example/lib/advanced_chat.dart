@@ -12,22 +12,18 @@ class AdvancedChat extends StatefulWidget {
 
 class _AdvancedChat extends State<AdvancedChat> {
   final List<MockMessage> _messages = [];
+  final ChatController _chatController = ChatController();
 
   bool isLightThemeActive = true;
-
-  late Chat chatView;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _messages.addAll(generateRandomMessages());
-    });
+    _messages.addAll(generateRandomMessages());
   }
 
   @override
   Widget build(BuildContext context) {
-    chatView = _chatWidget(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Advanced Chat'),
@@ -39,60 +35,57 @@ class _AdvancedChat extends State<AdvancedChat> {
               });
             },
             child: const Text('Change Theme'),
-          )
+          ),
         ],
       ),
-      body: chatView,
+      body: _chatWidget(context),
     );
   }
 
-  Chat _chatWidget(BuildContext context) => Chat(
-        theme: isLightThemeActive
-            ? const DefaultChatTheme()
-            : const DarkChatTheme(),
-        messages: _messages,
-        chatMessageInputField: MessageInputField(
-          key: const Key('message_input_field'),
-          sendButtonTapped: (msg) {
-            debugPrint(msg);
-            setState(
-              () {
-                final message = MockMessage(
-                  date: DateTime.now(),
-                  user: MockChatUser.outgoingUser,
-                  id: DateTime.now().toString(),
-                  isMe: true,
-                  messageKind: MessageKind.text(msg),
-                );
-                _messages.insert(0, message);
+  Chat _chatWidget(BuildContext context) =>
+      Chat(
+            controller: _chatController,
+            theme: isLightThemeActive
+                ? const DefaultChatTheme()
+                : const DarkChatTheme(),
+            messages: _messages,
+            chatMessageInputField: MessageInputField(
+              key: const Key('message_input_field'),
+              sendButtonTapped: (msg) {
+                debugPrint(msg);
+                setState(() {
+                  final message = MockMessage(
+                    date: DateTime.now(),
+                    user: MockChatUser.outgoingUser,
+                    id: DateTime.now().toString(),
+                    isMe: true,
+                    messageKind: MessageKind.text(msg),
+                  );
+                  _messages.insert(0, message);
+                });
               },
-            );
-          },
-        ),
-      )
+            ),
+          )
           .setOnHTMLWidgetPressed(
             () => {
               "onLinkTap": (url, _, _) => debugPrint("onLinkTapped: $url"),
-              "onImageTap": (src, _, _) => debugPrint("onImageTapped: $src")
+              "onImageTap": (src, _, _) => debugPrint("onImageTapped: $src"),
             },
           )
           .setOnCarouselItemButtonPressed((item) => debugPrint(item.payload))
-          .setOnQuickReplyItemPressed(
-        (item) {
-          debugPrint(item.title);
-          final message = MockMessage(
-            date: DateTime.now(),
-            user: MockChatUser.outgoingUser,
-            id: DateTime.now().toString(),
-            isMe: true,
-            messageKind: MessageKind.text(item.title),
-          );
-          _messages.insert(0, message);
-          chatView.scrollToBottom();
-        },
-      ).setOnMessagePressed(
-        (message) {
-          debugPrint(message.messageKind.toString());
-        },
-      );
+          .setOnQuickReplyItemPressed((item) {
+            debugPrint(item.title);
+            final message = MockMessage(
+              date: DateTime.now(),
+              user: MockChatUser.outgoingUser,
+              id: DateTime.now().toString(),
+              isMe: true,
+              messageKind: MessageKind.text(item.title),
+            );
+            setState(() => _messages.insert(0, message));
+            _chatController.scrollToBottom();
+          })
+          .setOnMessagePressed((message) {
+            debugPrint(message.messageKind.toString());
+          });
 }

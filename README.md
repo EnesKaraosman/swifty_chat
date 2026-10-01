@@ -14,7 +14,7 @@
 Supported Message types;
 - Text
 - Image
-  - `ImageProver` is required, so you can use network or assets to load images.
+  - An `ImageProvider` is required, so you can use network or asset images.
 - Html
   - [flutter_html](https://pub.dev/packages/flutter_html) package is used for displaying HTMLs, so we have support what package supports.
 - QuickReply
@@ -25,7 +25,7 @@ Supported Message types;
 Other;
 
 - Scroll to bottom
-  + use `scrollToBottom` method on `Chat`
+  + Pass a `ChatController` to `Chat`, then call `controller.scrollToBottom()`.
 
 ### Usage
 
@@ -69,7 +69,7 @@ As you see above;
 
 *What kind of message kind exists?*
 
-[MessageKind](packages/swifty_chat_data/lib/src/models/message_kind.dart)
+[MessageKind](lib/src/models/message_kind.dart)
 
 ```dart
 // MessageKind is now a sealed class for type-safe pattern matching

@@ -1,6 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
-import 'package:styled_widget/styled_widget.dart';
 
 import '../chat.dart';
 import '../extensions/theme_context.dart';
@@ -20,20 +20,21 @@ final class CarouselWidget extends StatelessWidget with HasAvatar {
   Message get message => chatMessage;
 
   @override
-  Widget build(BuildContext context) => RepaintBoundary(
-        child: Semantics(
-          label: 'Carousel with ${items.length} items',
-          child: CarouselSlider.builder(
-            itemCount: items.length,
-            itemBuilder: (_, index, __) => _CarouselItem(
-              item: items[index],
-              index: index,
-              total: items.length,
-            ),
-            options: CarouselOptions(
-              height: _carouselItemHeight(context),
-              disableCenter: true,
-              enableInfiniteScroll: false,
+  Widget build(BuildContext context) => Semantics(
+        label: 'Carousel with ${items.length} items',
+        child: SizedBox(
+          height: _carouselItemHeight(context),
+          child: LayoutBuilder(
+            builder: (context, constraints) => CarouselView.builder(
+              itemExtent: constraints.maxWidth * 0.8,
+              itemCount: items.length,
+              itemSnapping: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (_, index) => _CarouselItem(
+                item: items[index],
+                index: index,
+                total: items.length,
+              ),
             ),
           ),
         ),
@@ -71,70 +72,90 @@ final class _CarouselItem extends StatelessWidget {
           children: [
             if (item.imageProvider != null)
               Flexible(
-                child: Image(
-                  image: item.imageProvider!,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      color: Colors.grey[200],
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                              : null,
+                child: LayoutBuilder(
+                  builder: (context, constraints) => Image(
+                    image: ResizeImage.resizeIfNeeded(
+                      math.max(
+                        1,
+                        (constraints.maxWidth *
+                                MediaQuery.devicePixelRatioOf(context))
+                            .ceil(),
+                      ),
+                      null,
+                      item.imageProvider!,
+                    ),
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        color: Colors.grey[200],
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: Colors.grey[200],
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.broken_image,
-                            size: 48,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Failed to load image',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey[200],
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.broken_image,
+                              size: 48,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Failed to load image',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            Text(
-              item.title,
-              style: context.theme.carouselTitleTextStyle,
-            ).padding(all: context.theme.textMessagePadding),
-            Text(
-              item.subtitle,
-              style: context.theme.carouselSubtitleTextStyle,
-              textAlign: TextAlign.center,
-            ).padding(all: context.theme.textMessagePadding),
-            Wrap(
-              children: item.buttons
-                  .map(
-                    (button) => Semantics(
-                      button: true,
-                      label: 'Carousel button: ${button.title}',
-                      child: ElevatedButton(
-                        onPressed: () => ChatStateContainer.of(context)
-                            .onCarouselButtonItemPressed
-                            ?.call(button),
-                        style: context.theme.carouselButtonStyle,
-                        child: Text(button.title),
+            Padding(
+              padding: EdgeInsets.all(context.theme.textMessagePadding),
+              child: Text(
+                item.title,
+                style: context.theme.carouselTitleTextStyle,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(context.theme.textMessagePadding),
+              child: Text(
+                item.subtitle,
+                style: context.theme.carouselSubtitleTextStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Wrap(
+                children: item.buttons
+                    .map(
+                      (button) => Semantics(
+                        button: true,
+                        label: 'Carousel button: ${button.title}',
+                        child: ElevatedButton(
+                          onPressed: () => ChatStateContainer.of(context)
+                              .onCarouselButtonItemPressed
+                              ?.call(button),
+                          style: context.theme.carouselButtonStyle,
+                          child: Text(button.title),
+                        ),
                       ),
-                    ),
-                  )
-                  .toList(),
-            ).padding(all: 8),
+                    )
+                    .toList(),
+              ),
+            ),
           ],
         ),
       ),

@@ -16,13 +16,14 @@ final class MessageCellSizeConfigurator {
 
   final MaxHeightConfiguration carouselCellMaxHeightConfiguration;
 
+  static final MessageCellSizeConfigurator _default =
+      MessageCellSizeConfigurator(
+    imageCellMaxWidthConfiguration: (parentWidth) => parentWidth * 0.7,
+    carouselCellMaxHeightConfiguration: (parentHeight) => parentHeight * 0.5,
+  );
+
   /// Creates a default configuration with responsive breakpoints
-  factory MessageCellSizeConfigurator.defaultConfiguration() {
-    return MessageCellSizeConfigurator(
-      imageCellMaxWidthConfiguration: (parentWidth) => parentWidth * 0.7,
-      carouselCellMaxHeightConfiguration: (parentHeight) => parentHeight * 0.5,
-    );
-  }
+  factory MessageCellSizeConfigurator.defaultConfiguration() => _default;
 
   /// Creates a responsive configuration that adapts to screen size
   /// Mobile: 85% width, Tablet: 75% width, Desktop: 60% width

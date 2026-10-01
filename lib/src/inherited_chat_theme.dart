@@ -19,5 +19,5 @@ final class InheritedChatTheme extends InheritedWidget {
 
   @override
   bool updateShouldNotify(InheritedChatTheme oldWidget) =>
-      theme.hashCode != oldWidget.theme.hashCode;
+      theme != oldWidget.theme;
 }

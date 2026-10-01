@@ -11,11 +11,6 @@ import './models/mock_message.dart';
 import './models/mock_quick_reply_item.dart';
 import 'mock_html.dart';
 
-extension RangeExtension on int {
-  List<int> to(int maxInclusive) =>
-      [for (int i = this; i <= maxInclusive; i++) i];
-}
-
 List<MockMessage> generateRandomTextMessagesWithName(
   String Function(int index) nameGenerator, {
   int count = 20,
@@ -24,24 +19,25 @@ List<MockMessage> generateRandomTextMessagesWithName(
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
   final time = DateTime.now();
 
-  return 1
-      .to(count)
-      .map(
-        (idx) => MockMessage(
-          date: time,
-          user: user,
-          id: DateTime.now().toString(),
-          isMe: isMe,
-          messageKind: MessageKind.text(nameGenerator(idx)),
-        ),
-      )
-      .toList();
+  return List.generate(
+    count,
+    (index) {
+      final idx = index + 1;
+      return MockMessage(
+        date: time,
+        user: user,
+        id: DateTime.now().toString(),
+        isMe: isMe,
+        messageKind: MessageKind.text(nameGenerator(idx)),
+      );
+    },
+  );
 }
 
-List<MockMessage> generateRandomTextMessages({int count = 60}) => 1
-    .to(count)
-    .map((e) => generateRandomMessage(MockMessageKind.text, index: e))
-    .toList();
+List<MockMessage> generateRandomTextMessages({int count = 60}) => List.generate(
+      count,
+      (index) => generateRandomMessage(MockMessageKind.text, index: index + 1),
+    );
 
 MockMessage generateRandomMessage(
   MockMessageKind ofMessageKind, {
@@ -58,7 +54,7 @@ MockMessage generateRandomMessage(
 
   switch (ofMessageKind) {
     case MockMessageKind.image:
-      final mockId = 1 + Random().nextInt(1);
+      final mockId = 1 + Random().nextInt(2);
       return MockMessage(
         date: time,
         user: user,
@@ -79,7 +75,7 @@ MockMessage generateRandomMessage(
         isMe: isMe,
         messageKind: MessageKind.quickReply(
           List.generate(
-            Random().nextInt(7),
+            1 + Random().nextInt(6),
             (index) => MockQuickReplyItem(title: "Option $index"),
           ),
         ),
@@ -130,8 +126,10 @@ MockMessage generateRandomMessage(
   }
 }
 
-List<MockMessage> generateRandomMessages({int count = 80}) => 1.to(count).map(
-      (idx) {
+List<MockMessage> generateRandomMessages({int count = 80}) => List.generate(
+      count,
+      (index) {
+        final idx = index + 1;
         if (idx % 7 == 0) {
           return generateRandomMessage(
             MockMessageKind.image,
@@ -159,4 +157,4 @@ List<MockMessage> generateRandomMessages({int count = 80}) => 1.to(count).map(
           );
         }
       },
-    ).toList();
+    );
