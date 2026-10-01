@@ -16,6 +16,14 @@ jobs:
           cache: true
       - name: ⚙️ Install dependencies for all packages
         run: flutter --version && flutter pub get
+      - name: 🔎 Analyze and test package
+        run: flutter analyze && flutter test
+      - name: 🔎 Analyze and test example
+        working-directory: example
+        run: flutter analyze && flutter test
+      - name: 🔎 Analyze and test mock data
+        working-directory: packages/swifty_chat_mocked_data
+        run: flutter analyze && flutter test
       - name: ⚙️ Setup Java
         uses: actions/setup-java@v6
         with:

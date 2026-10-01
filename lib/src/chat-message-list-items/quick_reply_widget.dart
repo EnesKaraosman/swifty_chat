@@ -8,7 +8,7 @@ import '../utils/accessibility_helpers.dart';
 
 @immutable
 final class QuickReplyWidget extends StatelessWidget {
-  const QuickReplyWidget(this.chatMessage);
+  const QuickReplyWidget(this.chatMessage, {super.key});
 
   final Message chatMessage;
 

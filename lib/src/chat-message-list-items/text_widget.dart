@@ -13,7 +13,7 @@ import '../utils/accessibility_helpers.dart';
 @immutable
 final class TextMessageWidget extends StatelessWidget
     with HasAvatar, IncomingOutgoingMessageWidgets {
-  const TextMessageWidget(this._chatMessage);
+  const TextMessageWidget(this._chatMessage, {super.key});
 
   final Message _chatMessage;
 

@@ -172,6 +172,8 @@ final class _ChatMessages extends StatelessWidget {
           reverse: true,
           itemCount: messages.length,
           // Performance optimizations
+          // Flutter 3.27 lacks scrollCacheExtent.
+          // ignore: deprecated_member_use
           cacheExtent: 200,
           itemBuilder: (BuildContext context, int index) => GestureDetector(
             child: ChatListItem(chatMessage: messages[index]),

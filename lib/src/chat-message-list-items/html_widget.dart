@@ -12,7 +12,7 @@ import '../models/user_avatar.dart';
 import '../protocols/has_avatar.dart';
 
 final class HTMLWidget extends StatelessWidget with HasAvatar {
-  const HTMLWidget(this.chatMessage);
+  const HTMLWidget(this.chatMessage, {super.key});
 
   final Message chatMessage;
 

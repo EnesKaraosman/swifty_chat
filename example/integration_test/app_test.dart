@@ -78,7 +78,7 @@ void main() {
 
       await wait(1000);
       const testMessage = 'Test message';
-      addMessageToChatList(tester, testMessage);
+      await addMessageToChatList(tester, testMessage);
 
       // Check if message displayed on List.
       await wait(1000);

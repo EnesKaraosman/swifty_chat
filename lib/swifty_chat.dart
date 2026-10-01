@@ -1,5 +1,3 @@
-library swifty_chat;
-
 // Core widgets
 export 'src/chat.dart' show Chat;
 export 'src/chat_input_field.dart';

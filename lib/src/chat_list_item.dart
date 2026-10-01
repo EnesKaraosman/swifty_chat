@@ -12,7 +12,7 @@ import 'models/message.dart';
 import 'models/message_kind.dart';
 
 final class ChatListItem extends StatelessWidget {
-  const ChatListItem({required this.chatMessage});
+  const ChatListItem({super.key, required this.chatMessage});
 
   final Message chatMessage;
 

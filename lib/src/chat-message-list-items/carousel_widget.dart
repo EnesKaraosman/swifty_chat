@@ -10,7 +10,7 @@ import '../protocols/has_avatar.dart';
 
 @immutable
 final class CarouselWidget extends StatelessWidget with HasAvatar {
-  const CarouselWidget(this.chatMessage);
+  const CarouselWidget(this.chatMessage, {super.key});
 
   final Message chatMessage;
 

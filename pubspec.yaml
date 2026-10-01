@@ -7,15 +7,15 @@ homepage: https://github.com/EnesKaraosman/swifty_chat
 repository: https://github.com/EnesKaraosman/swifty_chat
 
 environment:
-  sdk: ">=3.1.0 <4.0.0"
-  flutter: ">=3.13.0"
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
 
 dependencies:
   # https://pub.dev/packages/carousel_slider
-  carousel_slider: ^5.1.1
+  carousel_slider: ^5.1.2
 
   # https://pub.dev/packages/equatable
-  equatable: ^2.0.7
+  equatable: ^2.1.0
 
   flutter:
     sdk: flutter
@@ -26,8 +26,11 @@ dependencies:
   # https://pub.dev/packages/flutter_html
   flutter_html: ^3.0.0
 
+  # flutter_html 3.0.0 uses an API removed from html 0.15.7.
+  html: ">=0.15.5 <0.15.7"
+
   # https://pub.dev/packages/jiffy
-  jiffy: ^6.4.4
+  jiffy: ^6.4.5
 
   # https://pub.dev/packages/styled_widget
   styled_widget: ^0.4.1
@@ -36,8 +39,6 @@ dependencies:
   url_launcher: ^6.3.2
 
 dev_dependencies:
-  faker: ^2.2.0
-
   # https://pub.dev/packages/flutter_lints
   flutter_lints: ^6.0.0
 

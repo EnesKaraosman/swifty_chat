@@ -1,5 +1,5 @@
 name: example
-description: A new Flutter project.
+description: Demonstrates the swifty_chat Flutter package.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -18,15 +18,14 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
 
 dependencies:
-  cupertino_icons: ^1.0.5
+  cupertino_icons: ^2.0.0
 
   flutter:
     sdk: flutter
-
-  google_fonts:
 
   swifty_chat:
     path: ../

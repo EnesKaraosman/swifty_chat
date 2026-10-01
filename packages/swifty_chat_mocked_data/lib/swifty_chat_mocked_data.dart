@@ -1,5 +1,3 @@
-library swifty_chat_mocked_data;
-
 export './src/mock/mock_html.dart';
 export './src/mock/mock_message_kind.dart';
 export './src/mock/mock_messages.dart';
