@@ -4,22 +4,13 @@ on:
   push:
     tags:
       - '[0-9]*.[0-9]*.[0-9]*'
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: Existing release tag to publish
-        required: true
-        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: publish-${{ inputs.tag || github.ref_name }}
+  group: publish-${{ github.ref_name }}
   cancel-in-progress: false
-
-env:
-  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   minimum_flutter:
@@ -27,8 +18,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ env.RELEASE_TAG }}
       - name: Install minimum supported Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -47,8 +36,6 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ env.RELEASE_TAG }}
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -57,7 +44,7 @@ jobs:
         run: flutter pub get
       - name: Check tag matches package version
         run: |
-          test "$RELEASE_TAG" = "$(sed -n 's/^version: //p' pubspec.yaml)"
+          test "$GITHUB_REF_NAME" = "$(sed -n 's/^version: //p' pubspec.yaml)"
       - name: Analyze and test package
         run: flutter analyze && flutter test
       - name: Analyze and test example
@@ -72,3 +59,20 @@ jobs:
         uses: dart-lang/setup-dart@v1
       - name: Publish
         run: flutter pub publish --force
+
+  github_release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --repo "$GITHUB_REPOSITORY" \
+            --verify-tag \
+            --title "swifty_chat $GITHUB_REF_NAME" \
+            --generate-notes \
+            --latest
