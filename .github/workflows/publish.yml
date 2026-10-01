@@ -4,12 +4,31 @@ on:
   push:
     tags:
       - '[0-9]*.[0-9]*.[0-9]*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   minimum_flutter:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RELEASE_TAG }}
       - name: Install minimum supported Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -22,8 +41,11 @@ jobs:
   build:
     needs: minimum_flutter
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.RELEASE_TAG }}
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -32,7 +54,7 @@ jobs:
         run: flutter pub get
       - name: Check tag matches package version
         run: |
-          test "$GITHUB_REF_NAME" = "$(sed -n 's/^version: //p' pubspec.yaml)"
+          test "$RELEASE_TAG" = "$(sed -n 's/^version: //p' pubspec.yaml)"
       - name: Analyze and test package
         run: flutter analyze && flutter test
       - name: Analyze and test example
@@ -44,8 +66,13 @@ jobs:
       - name: Check Publish Warnings
         run: dart pub publish --dry-run
       - name: Publish
-        uses: k-paxian/dart-package-publisher@v1.6.1
-        with:
-          credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-          flutter: true
-          skipTests: true
+        env:
+          CREDENTIAL_JSON: ${{ secrets.CREDENTIAL_JSON }}
+        run: |
+          test -n "$CREDENTIAL_JSON"
+          install -d -m 700 "$HOME/.config/dart"
+          credential_path="$HOME/.config/dart/pub-credentials.json"
+          trap 'rm -f "$credential_path"' EXIT
+          umask 077
+          printf '%s' "$CREDENTIAL_JSON" > "$credential_path"
+          flutter pub publish --force
