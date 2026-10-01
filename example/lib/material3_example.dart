@@ -35,7 +35,8 @@ class _Material3ChatDemoState extends State<Material3ChatDemo> {
   void _onSendMessage(String message) {
     HapticFeedback.lightImpact();
     setState(() {
-      _messages.add(
+      _messages.insert(
+        0,
         MockMessage(
           id: '${_messages.length}',
           date: DateTime.now(),
@@ -236,7 +237,8 @@ class _AccessibilityDemoState extends State<AccessibilityDemo> {
                 sendButtonTapped: (message) {
                   HapticFeedback.lightImpact();
                   setState(() {
-                    _messages.add(
+                    _messages.insert(
+                      0,
                       MockMessage(
                         id: '${_messages.length}',
                         date: DateTime.now(),
@@ -515,7 +517,8 @@ class _ResponsiveDemoState extends State<ResponsiveDemo> {
               chatMessageInputField: MessageInputField(
                 sendButtonTapped: (message) {
                   setState(() {
-                    _messages.add(
+                    _messages.insert(
+                      0,
                       MockMessage(
                         id: '${_messages.length}',
                         date: DateTime.now(),

@@ -10,6 +10,7 @@ class CustomMessageKindChat extends StatefulWidget {
 }
 
 class _CustomMessageKindChatState extends State<CustomMessageKindChat> {
+  final ChatController _chatController = ChatController();
   late final List<MockMessage> _messages = generateRandomTextMessages(count: 5)
     ..insert(
       0,
@@ -33,12 +34,27 @@ class _CustomMessageKindChatState extends State<CustomMessageKindChat> {
   }
 
   Chat _chatWidget(BuildContext context) => Chat(
+    controller: _chatController,
     customMessageWidget: (message) => MyCustomMessageWidget(message: message),
     theme: const DarkChatTheme(),
     messages: _messages,
     chatMessageInputField: MessageInputField(
       key: const Key('message_input_field'),
-      sendButtonTapped: (msg) {},
+      sendButtonTapped: (msg) {
+        setState(
+          () => _messages.insert(
+            0,
+            MockMessage(
+              date: DateTime.now(),
+              user: MockChatUser.outgoingUser,
+              id: DateTime.now().toString(),
+              isMe: true,
+              messageKind: MessageKind.text(msg),
+            ),
+          ),
+        );
+        _chatController.scrollToBottom();
+      },
     ),
   );
 }

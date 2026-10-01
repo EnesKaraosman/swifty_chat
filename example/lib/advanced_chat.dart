@@ -63,6 +63,7 @@ class _AdvancedChat extends State<AdvancedChat> {
                   );
                   _messages.insert(0, message);
                 });
+                _chatController.scrollToBottom();
               },
             ),
           )
