@@ -42,6 +42,9 @@ jobs:
     needs: minimum_flutter
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -65,14 +68,7 @@ jobs:
         run: flutter analyze && flutter test
       - name: Check Publish Warnings
         run: dart pub publish --dry-run
+      - name: Configure pub.dev authentication
+        uses: dart-lang/setup-dart@v1
       - name: Publish
-        env:
-          CREDENTIAL_JSON: ${{ secrets.CREDENTIAL_JSON }}
-        run: |
-          test -n "$CREDENTIAL_JSON"
-          install -d -m 700 "$HOME/.config/dart"
-          credential_path="$HOME/.config/dart/pub-credentials.json"
-          trap 'rm -f "$credential_path"' EXIT
-          umask 077
-          printf '%s' "$CREDENTIAL_JSON" > "$credential_path"
-          flutter pub publish --force
+        run: flutter pub publish --force
