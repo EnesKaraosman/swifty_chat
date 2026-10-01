@@ -17,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  carousel_slider:
-    dependency: transitive
-    description:
-      name: carousel_slider
-      sha256: febf4b0163e0242adc13d7a863b04965351f59e7dfea56675c7c2caa7bcd7476
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.2"
   characters:
     dependency: transitive
     description:
@@ -184,14 +176,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  lint:
-    dependency: transitive
-    description:
-      name: lint
-      sha256: "4a539aa34ec5721a2c7574ae2ca0336738ea4adc2a34887d54b7596310b33c85"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.10.0"
   lints:
     dependency: transitive
     description:
@@ -293,21 +277,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
-  styled_widget:
-    dependency: transitive
-    description:
-      name: styled_widget
-      sha256: "4d439802919b6ccf10d1488798656da8804633b03012682dd1c8ca70a084aa84"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.1"
   swifty_chat:
     dependency: "direct main"
     description:
       path: "../.."
       relative: true
     source: path
-    version: "2.0.0"
+    version: "3.0.0"
   term_glyph:
     dependency: transitive
     description:

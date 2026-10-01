@@ -1,4 +1,12 @@
 
+## 3.0.0
+
+* **BREAKING**: `Chat.setOn*` methods return a new `Chat` instead of changing the existing widget. Use the returned widget, or pass callbacks to the `Chat` constructor. Calls that ignore the return value no longer register a callback.
+* **BREAKING**: Minimum Flutter version is 3.41.0, required by `CarouselView.builder`.
+* Added `ChatController` for scrolling to the latest message without accessing widget state.
+* Replaced the carousel package with Flutter's `CarouselView.builder` and removed unused dependencies.
+* Fixed sending messages in the standalone Material 3 demos and updated the quick start example.
+
 ## 2.0.0
 
 * **BREAKING**: `MessageKind` is now a `sealed class`
@@ -62,12 +70,6 @@
 * **Docs**: Added comprehensive Material3Design.md documentation
 
 * **Platform**: Updated macOS minimum deployment target to 10.15
-
-* **BREAKING**: `swifty_chat_data` package merged into monorepo
-  * Data models now included in `packages/swifty_chat_data/`
-  * No longer depends on external pub.dev package
-  * Version 2.0.0+ uses local path dependency
-  * Previous pub.dev package (swifty_chat_data ^0.1.1) is now deprecated
 
 ## 1.9.0
 

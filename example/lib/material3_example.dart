@@ -597,7 +597,8 @@ class _Material3ChatExampleState extends State<Material3ChatExample> {
 
   void _onSendMessage(String message) {
     setState(() {
-      _messages.add(
+      _messages.insert(
+        0,
         MockMessage(
           id: '${_messages.length}',
           date: DateTime.now(),
@@ -761,7 +762,18 @@ class _CustomMaterial3ChatExampleState
             MessageCellSizeConfigurator.responsiveConfiguration(context),
         chatMessageInputField: MessageInputField(
           sendButtonTapped: (message) {
-            // Handle message
+            setState(() {
+              _messages.insert(
+                0,
+                MockMessage(
+                  id: '${_messages.length}',
+                  date: DateTime.now(),
+                  user: MockChatUser.outgoingUser,
+                  isMe: true,
+                  messageKind: MessageKind.text(message),
+                ),
+              );
+            });
           },
         ),
       ),

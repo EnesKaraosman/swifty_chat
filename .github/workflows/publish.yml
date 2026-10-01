@@ -3,10 +3,24 @@ name: Publish to pub.dev
 on:
   push:
     tags:
-      - '[0-9]+.[0-9]+.[0-9]+*'
+      - '[0-9]*.[0-9]*.[0-9]*'
 
 jobs:
+  minimum_flutter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install minimum supported Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.0'
+      - name: Install package dependencies
+        run: flutter pub get --no-example
+      - name: Analyze and test package
+        run: flutter analyze --no-pub lib test && flutter test --no-pub
+
   build:
+    needs: minimum_flutter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -16,6 +30,17 @@ jobs:
           channel: stable
       - name: Install dependencies
         run: flutter pub get
+      - name: Check tag matches package version
+        run: |
+          test "$GITHUB_REF_NAME" = "$(sed -n 's/^version: //p' pubspec.yaml)"
+      - name: Analyze and test package
+        run: flutter analyze && flutter test
+      - name: Analyze and test example
+        working-directory: example
+        run: flutter analyze && flutter test
+      - name: Analyze and test mock data
+        working-directory: packages/swifty_chat_mocked_data
+        run: flutter analyze && flutter test
       - name: Check Publish Warnings
         run: dart pub publish --dry-run
       - name: Publish

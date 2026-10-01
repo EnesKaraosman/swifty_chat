@@ -5,6 +5,7 @@
 <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_image_and_quick_reply_and_text.png?raw=true" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_html.png?raw=true" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_carousel.png?raw=true" width="240"/> | <img src="https://github.com/EnesKaraosman/swifty_chat/blob/main/example/assets/screenshots/kind_custom.png?raw=true" width="240"/>
 
 ### Platforms
+
 - [x] iOS, macOS
 - [x] Android
 - [x] Web
@@ -29,110 +30,75 @@ Other;
 
 ### Usage
 
-TL;DR <br>
-See the example app in the `example` folder. It contains `BasicChat` & `AdvancedChat` pages.
-* BasicChat contains only text messages, it's good to see minimum requirements to have package up & running.
-* AdvancedChat sample contains all the supported message kinds and related action events like quick reply button tap event, also scrolling to bottom is activated.
-
-
-This lib requires some abstract classes to be implemented to get started.
-* `Message` 
-* `ChatUser`
-* `QuickReplyItem` (if `MessageKind.quickReply` is going to be used)
-* `CarouselItem` (if `MessageKind.carousel` is going to be used)
-
-Note that `packages/swifty_chat_mocked_data/lib/src/mock/models` folder contains `Mock...` prefixed classes are the concrete implementation of the related abstract classes.
-
-For a chat app, you need messages right, so here what you need to have a message;
+Requires Flutter 3.41.0 or later. This example sends text messages using concrete `Message` and `ChatUser` classes:
 
 ```dart
-abstract class Message {
-  final ChatUser user;
-  final String id;
-  final bool isMe;
-  final MessageKind messageKind;
+import 'package:flutter/material.dart';
+import 'package:swifty_chat/swifty_chat.dart';
+
+void main() => runApp(const MaterialApp(home: ChatExample()));
+
+class AppUser extends ChatUser {
+  AppUser(String name) : super(userName: name);
 }
 
-MockMessage(
-  user: MockChatUser(userName: "Enes"),
-  id: DateTime.now().toString(),
-  isMe: true,
-  messageKind: MessageKind.text("My First Message"),
-)
-```
-
-As you see above; 
-* You need a `ChatUser` which means you need to have a class that extends from `ChatUser`, in our case its `MockChatUser`.
-* id to have unique messages.
-* isMe is to differentiate UI.
-* MessageKind is to determine how the message UI is going to look like.
-
-*What kind of message kind exists?*
-
-[MessageKind](lib/src/models/message_kind.dart)
-
-```dart
-// MessageKind is now a sealed class for type-safe pattern matching
-sealed class MessageKind {
-  factory MessageKind.text(String text);
-  factory MessageKind.imageProvider(ImageProvider imageProvider);
-  factory MessageKind.quickReply(List<QuickReplyItem> quickReplies);
-  factory MessageKind.carousel(List<CarouselItem> carousel);
-  factory MessageKind.html(String html);
-  factory MessageKind.custom(dynamic custom);
+class AppMessage extends Message {
+  const AppMessage({
+    required super.user,
+    required super.id,
+    required super.isMe,
+    required super.messageKind,
+    required super.date,
+  });
 }
 
-// Exhaustive pattern matching with switch expressions
-final widget = switch (messageKind) {
-  TextMessageKind(:final text) => Text(text),
-  ImageMessageKind(:final imageProvider) => Image(image: imageProvider),
-  HtmlMessageKind(:final htmlData) => HtmlWidget(htmlData),
-  QuickReplyMessageKind(:final quickReplies) => QuickReplyWidget(quickReplies),
-  CarouselMessageKind(:final carouselItems) => CarouselWidget(carouselItems),
-  CustomMessageKind(:final custom) => CustomWidget(custom),
-};
+class ChatExample extends StatefulWidget {
+  const ChatExample({super.key});
+
+  @override
+  State<ChatExample> createState() => _ChatExampleState();
+}
+
+class _ChatExampleState extends State<ChatExample> {
+  final _messages = <Message>[];
+  final _controller = ChatController();
+  final _me = AppUser('You');
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: Chat(
+      controller: _controller,
+      messages: _messages,
+      chatMessageInputField: MessageInputField(
+        sendButtonTapped: (text) {
+          final now = DateTime.now();
+          setState(
+            () => _messages.insert(
+              0,
+              AppMessage(
+                user: _me,
+                id: now.microsecondsSinceEpoch.toString(),
+                isMe: true,
+                messageKind: MessageKind.text(text),
+                date: now,
+              ),
+            ),
+          );
+          _controller.scrollToBottom();
+        },
+      ),
+    ),
+  );
+}
 ```
 
-For more, visit [BasicChat](./example/lib/basic_chat.dart) & [AdvancedChat](./example/lib/advanced_chat.dart) 
+Messages are ordered newest first. For other message kinds, see [MessageKind](lib/src/models/message_kind.dart) and the [BasicChat](example/lib/basic_chat.dart) and [AdvancedChat](example/lib/advanced_chat.dart) demos. `QuickReplyItem` and `CarouselItem` require concrete subclasses when used.
 
 ### Message widget tap actions
 
-You can be notified about message widget press actions
-  
-* QuickReply 
+Pass `onMessagePressed`, `onQuickReplyItemPressed`, `onCarouselButtonItemPressed`, or `onHtmlWidgetPressed` to the `Chat` constructor. See [AdvancedChat](example/lib/advanced_chat.dart) for all four callbacks.
 
-```dart
-Chat(..)
-.setOnQuickReplyItemPressed((QuickReply item) {});
-```
-
-* Carousel
-
-```dart
-Chat(..)
-.setOnCarouselItemButtonPressed((CarouselButtonItem item) {});
-```
-
-* Html
-
-```dart
-Chat(..)
-.setOnHTMLWidgetPressed(
-  () => {
-  "onLinkTap": (url, _, __) =>
-    debugPrint("onLinkTapped: $url"),
-  "onImageTap": (src, _, __) =>
-    debugPrint("onImageTapped: $src")
-  },
-);
-```
-
-* For rest (Image, Text)
-
-```dart
-Chat(..)
-.setOnMessagePressed((Message message) {});
-```
+When migrating from 2.x, use the widget returned by `setOn*` methods. Calling one of these methods without using its return value no longer registers the callback.
 
 ### Avatar
 
