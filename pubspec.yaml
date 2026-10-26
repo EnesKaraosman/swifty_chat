@@ -24,7 +24,7 @@ dependencies:
   flutter_html: ^3.0.0
 
   # flutter_html 3.0.0 uses an API removed from html 0.15.7.
-  html: ">=0.15.5 <0.15.7"
+  html: "<0.15.8"
 
   # https://pub.dev/packages/jiffy
   jiffy: ^6.4.5
