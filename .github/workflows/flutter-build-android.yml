@@ -1,9 +1,12 @@
 name: Flutter build android action
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches: [main]
 jobs:
   build:
     name: Build Android
-    if: github.event.pull_request.draft == false
+    if: github.event_name == 'push' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
