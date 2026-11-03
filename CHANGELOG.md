@@ -1,3 +1,9 @@
+## 4.0.0
+
+* **BREAKING**: HTML messages render with `flutter_widget_from_html_core` instead of `flutter_html`, which no longer works with the latest `html` package. `onHtmlWidgetPressed` callbacks now take only the URL: replace `(url, _, _) => ...` with `(url) => ...`.
+* Removed the `html` version pin, so apps can use `html` 0.15.7.
+* Updated `equatable` to 3.x.
+
 
 ## 3.0.0
 

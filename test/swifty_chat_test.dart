@@ -1,7 +1,8 @@
 // ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:html/parser.dart' as html_parser;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swifty_chat/src/chat-message-list-items/text_widget.dart';
 import 'package:swifty_chat/src/chat.dart';
@@ -245,15 +246,15 @@ void main() {
         chatMessageInputField: _messageInputField((_) {}),
       ).setOnHTMLWidgetPressed(
         () => {
-          "onLinkTap": (url, _, __) => debugPrint("onLinkTap: $url"),
-          "onImageTap": (src, _, __) => debugPrint("onImageTapped: $src"),
+          "onLinkTap": (url) => debugPrint("onLinkTap: $url"),
+          "onImageTap": (src) => debugPrint("onImageTapped: $src"),
         },
       );
 
       await tester.pumpWidget(_appContainer(chatView));
 
-      final html = tester.widget<Html>(find.byType(Html));
-      final parsedHTML = HtmlParser.parseHTML(html.data!);
+      final html = tester.widget<HtmlWidget>(find.byType(HtmlWidget));
+      final parsedHTML = html_parser.parse(html.html);
       final aNode = parsedHTML.getElementsByTagName("a")[1];
       expect(aNode.attributes.values.first == htmlDataMockLinkPayload, true);
 

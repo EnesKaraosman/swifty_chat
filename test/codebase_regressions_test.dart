@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swifty_chat/src/extensions/date_extensions.dart';
 import 'package:swifty_chat/swifty_chat.dart';
@@ -91,6 +91,30 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('HTML link taps reach the configured callback', (tester) async {
+    String? tappedUrl;
+    final chat = Chat(
+      messages: [
+        MockMessage(
+          id: 'html-link',
+          date: DateTime.now(),
+          user: MockChatUser.incomingUser,
+          isMe: false,
+          messageKind: MessageKind.html(
+            '<a href="https://example.com/docs">Docs</a>',
+          ),
+        ),
+      ],
+      chatMessageInputField: const SizedBox.shrink(),
+    ).setOnHTMLWidgetPressed(() => {
+          'onLinkTap': (url) => tappedUrl = url,
+        });
+
+    await tester.pumpWidget(_app(chat));
+    await tester.tapOnText(find.textRange.ofSubstring('Docs'));
+    expect(tappedUrl, 'https://example.com/docs');
+  });
+
   testWidgets('HTML image taps reach the configured callback', (tester) async {
     String? tappedSource;
     final chat = Chat(
@@ -107,12 +131,12 @@ void main() {
       ],
       chatMessageInputField: const SizedBox.shrink(),
     ).setOnHTMLWidgetPressed(() => {
-          'onImageTap': (source, _, __) => tappedSource = source,
+          'onImageTap': (source) => tappedSource = source,
         });
 
     await tester.pumpWidget(_app(chat));
     final image = find.descendant(
-      of: find.byType(Html),
+      of: find.byType(HtmlWidget),
       matching: find.byType(Image),
     );
     expect(image, findsOneWidget);

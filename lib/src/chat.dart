@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 import 'chat_list_item.dart';
 import 'extensions/keys.dart';
@@ -10,6 +9,8 @@ import 'models/message.dart';
 import 'models/quick_reply_item.dart';
 import 'theme/chat_theme.dart';
 import 'theme/default_theme.dart';
+
+typedef HtmlTapCallback = void Function(String url);
 
 final class ChatStateContainer extends InheritedWidget {
   const ChatStateContainer({
@@ -25,7 +26,7 @@ final class ChatStateContainer extends InheritedWidget {
   final MessageCellSizeConfigurator messageCellSizeConfigurator;
   final void Function(QuickReplyItem)? onQuickReplyItemPressed;
   final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
-  final Map<String, OnTap> Function()? onHtmlWidgetPressed;
+  final Map<String, HtmlTapCallback> Function()? onHtmlWidgetPressed;
   final Widget Function(Message)? customMessageWidget;
 
   static ChatStateContainer of(BuildContext context) {
@@ -83,7 +84,7 @@ final class Chat extends StatefulWidget {
   final void Function(Message)? onMessagePressed;
   final void Function(QuickReplyItem)? onQuickReplyItemPressed;
   final void Function(CarouselButtonItem)? onCarouselButtonItemPressed;
-  final Map<String, OnTap> Function()? onHtmlWidgetPressed;
+  final Map<String, HtmlTapCallback> Function()? onHtmlWidgetPressed;
   final ChatController controller;
 
   @override
@@ -107,7 +108,7 @@ final class Chat extends StatefulWidget {
         onHtmlWidgetPressed: onHtmlWidgetPressed,
       );
 
-  Chat setOnHTMLWidgetPressed(Map<String, OnTap> Function()? fn) =>
+  Chat setOnHTMLWidgetPressed(Map<String, HtmlTapCallback> Function()? fn) =>
       _withCallbacks(
         onMessagePressed: onMessagePressed,
         onQuickReplyItemPressed: onQuickReplyItemPressed,
@@ -127,7 +128,7 @@ final class Chat extends StatefulWidget {
     required void Function(Message)? onMessagePressed,
     required void Function(QuickReplyItem)? onQuickReplyItemPressed,
     required void Function(CarouselButtonItem)? onCarouselButtonItemPressed,
-    required Map<String, OnTap> Function()? onHtmlWidgetPressed,
+    required Map<String, HtmlTapCallback> Function()? onHtmlWidgetPressed,
   }) =>
       Chat(
         key: key,

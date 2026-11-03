@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,23 +20,10 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
     final theme = context.theme;
     final functions =
         ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
-    final OnTap? onLinkTap = functions?["onLinkTap"];
-    final OnTap? onImageTap = functions?["onImageTap"];
+    final onLinkTap = functions?["onLinkTap"];
+    final onImageTap = functions?["onImageTap"];
     final Color htmlTextColor = context.theme.htmlTextColor;
     final String? htmlTextFontFamily = context.theme.htmlTextFontFamily;
-    final htmlStyle = {
-      "body": Style(
-        fontWeight: FontWeight.w400,
-        color: htmlTextColor,
-        fontFamily: htmlTextFontFamily,
-        fontSize: FontSize(16),
-      ),
-      "a": Style(
-        fontWeight: FontWeight.bold,
-        fontFamily: htmlTextFontFamily,
-        color: htmlTextColor,
-      ),
-    };
 
     return Semantics(
       label:
@@ -63,20 +50,33 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(context.theme.textMessagePadding),
-                    child: Html(
-                      data: chatMessage.messageKind.htmlData,
-                      style: htmlStyle,
-                      extensions: [
-                        if (onImageTap != null)
-                          OnImageTapExtension(onImageTap: onImageTap),
-                      ],
-                      onLinkTap: onLinkTap ??
-                          (link, _, __) async {
-                            final uri = Uri.tryParse(link ?? '');
-                            if (uri != null && uri.hasScheme) {
-                              await launchUrl(uri);
+                    child: HtmlWidget(
+                      chatMessage.messageKind.htmlData ?? '',
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: htmlTextColor,
+                        fontFamily: htmlTextFontFamily,
+                        fontSize: 16,
+                      ),
+                      customStylesBuilder: (element) => element.localName == 'a'
+                          ? {
+                              'font-weight': 'bold',
+                              'color': _cssColor(htmlTextColor),
                             }
-                          },
+                          : null,
+                      onTapImage: onImageTap == null
+                          ? null
+                          : (image) => onImageTap(image.sources.first.url),
+                      onTapUrl: (url) async {
+                        if (onLinkTap != null) {
+                          onLinkTap(url);
+                          return true;
+                        }
+                        final uri = Uri.tryParse(url);
+                        return uri != null &&
+                            uri.hasScheme &&
+                            await launchUrl(uri);
+                      },
                     ),
                   ),
                 ),
@@ -100,3 +100,7 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
   @override
   Message get message => chatMessage;
 }
+
+String _cssColor(Color color) =>
+    'rgba(${(color.r * 255).round()}, ${(color.g * 255).round()}, '
+    '${(color.b * 255).round()}, ${color.a})';
