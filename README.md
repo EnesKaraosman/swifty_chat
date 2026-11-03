@@ -17,7 +17,7 @@ Supported Message types;
 - Image
   - An `ImageProvider` is required, so you can use network or asset images.
 - Html
-  - [flutter_html](https://pub.dev/packages/flutter_html) package is used for displaying HTMLs, so we have support what package supports.
+  - [flutter_widget_from_html_core](https://pub.dev/packages/flutter_widget_from_html_core) package is used for displaying HTMLs, so we have support what package supports.
 - QuickReply
 - Carousel
 - Custom
