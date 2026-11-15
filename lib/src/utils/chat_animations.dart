@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+
 import 'accessibility_helpers.dart';
 
 /// Animation configurations and helpers for chat UI
@@ -139,10 +140,7 @@ final class ChatAnimations {
     TickerProvider vsync, {
     Duration duration = const Duration(milliseconds: 300),
   }) {
-    return AnimationController(
-      vsync: vsync,
-      duration: duration,
-    );
+    return AnimationController(vsync: vsync, duration: duration);
   }
 
   /// Applies staggered animation delay based on index

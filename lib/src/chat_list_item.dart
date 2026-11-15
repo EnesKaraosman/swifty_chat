@@ -17,12 +17,12 @@ final class ChatListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-        label: 'Message',
-        child: Padding(
-          padding: context.theme.messageInset,
-          child: _messageWidget(context),
-        ),
-      );
+    label: 'Message',
+    child: Padding(
+      padding: context.theme.messageInset,
+      child: _messageWidget(context),
+    ),
+  );
 
   Widget _messageWidget(BuildContext context) {
     return switch (chatMessage.messageKind) {

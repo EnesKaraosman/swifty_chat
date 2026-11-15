@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'utils/responsive_breakpoints.dart';
 
 typedef MaxWidthConfiguration = double Function(double parentWidth);
@@ -18,9 +19,10 @@ final class MessageCellSizeConfigurator {
 
   static final MessageCellSizeConfigurator _default =
       MessageCellSizeConfigurator(
-    imageCellMaxWidthConfiguration: (parentWidth) => parentWidth * 0.7,
-    carouselCellMaxHeightConfiguration: (parentHeight) => parentHeight * 0.5,
-  );
+        imageCellMaxWidthConfiguration: (parentWidth) => parentWidth * 0.7,
+        carouselCellMaxHeightConfiguration: (parentHeight) =>
+            parentHeight * 0.5,
+      );
 
   /// Creates a default configuration with responsive breakpoints
   factory MessageCellSizeConfigurator.defaultConfiguration() => _default;

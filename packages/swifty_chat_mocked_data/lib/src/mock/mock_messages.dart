@@ -19,30 +19,24 @@ List<MockMessage> generateRandomTextMessagesWithName(
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
   final time = DateTime.now();
 
-  return List.generate(
-    count,
-    (index) {
-      final idx = index + 1;
-      return MockMessage(
-        date: time,
-        user: user,
-        id: DateTime.now().toString(),
-        isMe: isMe,
-        messageKind: MessageKind.text(nameGenerator(idx)),
-      );
-    },
-  );
+  return List.generate(count, (index) {
+    final idx = index + 1;
+    return MockMessage(
+      date: time,
+      user: user,
+      id: DateTime.now().toString(),
+      isMe: isMe,
+      messageKind: MessageKind.text(nameGenerator(idx)),
+    );
+  });
 }
 
 List<MockMessage> generateRandomTextMessages({int count = 60}) => List.generate(
-      count,
-      (index) => generateRandomMessage(MockMessageKind.text, index: index + 1),
-    );
+  count,
+  (index) => generateRandomMessage(MockMessageKind.text, index: index + 1),
+);
 
-MockMessage generateRandomMessage(
-  MockMessageKind ofMessageKind, {
-  int? index,
-}) {
+MockMessage generateRandomMessage(MockMessageKind ofMessageKind, {int? index}) {
   final user = MockChatUser.randomUser;
 
   final bool isMe = user.userName == MockChatUser.outgoingUser.userName;
@@ -126,35 +120,18 @@ MockMessage generateRandomMessage(
   }
 }
 
-List<MockMessage> generateRandomMessages({int count = 80}) => List.generate(
-      count,
-      (index) {
-        final idx = index + 1;
-        if (idx % 7 == 0) {
-          return generateRandomMessage(
-            MockMessageKind.image,
-            index: idx,
-          );
-        } else if (idx % 13 == 0) {
-          return generateRandomMessage(
-            MockMessageKind.quickReply,
-            index: idx,
-          );
-        } else if (idx % 23 == 0) {
-          return generateRandomMessage(
-            MockMessageKind.carousel,
-            index: idx,
-          );
-        } else if (idx == 17) {
-          return generateRandomMessage(
-            MockMessageKind.html,
-            index: idx,
-          );
-        } else {
-          return generateRandomMessage(
-            MockMessageKind.text,
-            index: idx,
-          );
-        }
-      },
-    );
+List<MockMessage> generateRandomMessages({int count = 80}) =>
+    List.generate(count, (index) {
+      final idx = index + 1;
+      if (idx % 7 == 0) {
+        return generateRandomMessage(MockMessageKind.image, index: idx);
+      } else if (idx % 13 == 0) {
+        return generateRandomMessage(MockMessageKind.quickReply, index: idx);
+      } else if (idx % 23 == 0) {
+        return generateRandomMessage(MockMessageKind.carousel, index: idx);
+      } else if (idx == 17) {
+        return generateRandomMessage(MockMessageKind.html, index: idx);
+      } else {
+        return generateRandomMessage(MockMessageKind.text, index: idx);
+      }
+    });

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Position of the avatar relative to the message bubble
-enum AvatarPosition {
-  top,
-  center,
-  bottom,
-}
+enum AvatarPosition { top, center, bottom }
 
 /// Extension for converting AvatarPosition to CrossAxisAlignment
 extension AvatarAlignment on AvatarPosition {

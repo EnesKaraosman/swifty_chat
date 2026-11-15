@@ -21,36 +21,36 @@ final class ImageMessageWidget extends StatelessWidget
 
   @override
   Widget incomingMessageWidget(BuildContext context) => Semantics(
-        label: AccessibilityHelpers.createImageSemanticLabel(
-          userName: message.user.userName,
-          timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
-        ),
-        image: true,
-        child: Row(
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            ...avatarWithPadding(),
-            Flexible(child: imageContainer(context)),
-          ],
-        ),
-      );
+    label: AccessibilityHelpers.createImageSemanticLabel(
+      userName: message.user.userName,
+      timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+    ),
+    image: true,
+    child: Row(
+      crossAxisAlignment: avatarPosition.alignment,
+      children: [
+        ...avatarWithPadding(),
+        Flexible(child: imageContainer(context)),
+      ],
+    ),
+  );
 
   @override
   Widget outgoingMessageWidget(BuildContext context) => Semantics(
-        label: AccessibilityHelpers.createImageSemanticLabel(
-          userName: 'You',
-          timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
-        ),
-        image: true,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            Flexible(child: imageContainer(context)),
-            ...avatarWithPadding(),
-          ],
-        ),
-      );
+    label: AccessibilityHelpers.createImageSemanticLabel(
+      userName: 'You',
+      timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+    ),
+    image: true,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: avatarPosition.alignment,
+      children: [
+        Flexible(child: imageContainer(context)),
+        ...avatarWithPadding(),
+      ],
+    ),
+  );
 
   Widget imageContainer(BuildContext context) {
     final theme = context.theme;
@@ -59,7 +59,9 @@ final class ImageMessageWidget extends StatelessWidget
       builder: (context, constraints) {
         final width = math.min(_imageWidth(context), constraints.maxWidth);
         final cacheWidth = math.max(
-            1, (width * MediaQuery.devicePixelRatioOf(context)).ceil());
+          1,
+          (width * MediaQuery.devicePixelRatioOf(context)).ceil(),
+        );
 
         return ClipRRect(
           borderRadius: theme.imageBorderRadius,
@@ -82,7 +84,7 @@ final class ImageMessageWidget extends StatelessWidget
                       child: CircularProgressIndicator(
                         value: loadingProgress.expectedTotalBytes != null
                             ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
+                                  loadingProgress.expectedTotalBytes!
                             : null,
                       ),
                     ),
@@ -129,8 +131,7 @@ final class ImageMessageWidget extends StatelessWidget
 
   double _imageWidth(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    return ChatStateContainer.of(context)
-        .messageCellSizeConfigurator
+    return ChatStateContainer.of(context).messageCellSizeConfigurator
         .imageCellMaxWidthConfiguration(screenWidth);
   }
 

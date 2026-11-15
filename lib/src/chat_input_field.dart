@@ -111,10 +111,7 @@ final class _MessageInputFieldState extends State<MessageInputField>
       duration: const Duration(milliseconds: 150),
     );
     _sendButtonScale = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _sendButtonController,
-        curve: Curves.easeOutBack,
-      ),
+      CurvedAnimation(parent: _sendButtonController, curve: Curves.easeOutBack),
     );
   }
 
@@ -190,8 +187,9 @@ final class _MessageInputFieldState extends State<MessageInputField>
                   IconButton(
                     icon: const Icon(Icons.add_circle_outline),
                     color: hintColor,
-                    onPressed:
-                        widget.enabled ? widget.onAttachmentTapped : null,
+                    onPressed: widget.enabled
+                        ? widget.onAttachmentTapped
+                        : null,
                     tooltip: 'Add attachment',
                   ),
                   const SizedBox(width: 4),
@@ -272,8 +270,9 @@ final class _MessageInputFieldState extends State<MessageInputField>
                     style: IconButton.styleFrom(
                       backgroundColor: sendButtonColor,
                       foregroundColor: sendButtonIconColor,
-                      disabledBackgroundColor:
-                          sendButtonColor.withValues(alpha: .5),
+                      disabledBackgroundColor: sendButtonColor.withValues(
+                        alpha: .5,
+                      ),
                       disabledForegroundColor: sendButtonIconColor,
                       minimumSize: const Size(48, 48),
                     ),

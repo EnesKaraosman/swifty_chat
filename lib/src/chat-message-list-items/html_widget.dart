@@ -18,8 +18,8 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    final functions =
-        ChatStateContainer.of(context).onHtmlWidgetPressed?.call();
+    final functions = ChatStateContainer.of(context).onHtmlWidgetPressed
+        ?.call();
     final onLinkTap = functions?["onLinkTap"];
     final onImageTap = functions?["onImageTap"];
     final Color htmlTextColor = context.theme.htmlTextColor;
@@ -40,12 +40,15 @@ final class HTMLWidget extends StatelessWidget with HasAvatar {
                   decoration: BoxDecoration(
                     color: context.theme.secondaryColor,
                     borderRadius: BorderRadius.only(
-                      bottomRight:
-                          Radius.circular(context.theme.messageBorderRadius),
-                      topLeft:
-                          Radius.circular(context.theme.messageBorderRadius),
-                      topRight:
-                          Radius.circular(context.theme.messageBorderRadius),
+                      bottomRight: Radius.circular(
+                        context.theme.messageBorderRadius,
+                      ),
+                      topLeft: Radius.circular(
+                        context.theme.messageBorderRadius,
+                      ),
+                      topRight: Radius.circular(
+                        context.theme.messageBorderRadius,
+                      ),
                     ),
                   ),
                   child: Padding(

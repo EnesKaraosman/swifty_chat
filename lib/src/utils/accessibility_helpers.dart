@@ -102,10 +102,7 @@ final class AccessibilityHelpers {
     double minSize = minimumTouchTargetSize,
   }) {
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        minWidth: minSize,
-        minHeight: minSize,
-      ),
+      constraints: BoxConstraints(minWidth: minSize, minHeight: minSize),
       child: child,
     );
   }

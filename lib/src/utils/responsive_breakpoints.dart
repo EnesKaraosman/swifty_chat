@@ -90,9 +90,4 @@ final class ResponsiveBreakpoints {
 }
 
 /// Screen size categories
-enum ScreenSize {
-  mobile,
-  tablet,
-  desktop,
-  largeDesktop,
-}
+enum ScreenSize { mobile, tablet, desktop, largeDesktop }

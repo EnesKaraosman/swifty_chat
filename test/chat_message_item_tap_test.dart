@@ -9,56 +9,53 @@ import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
 void main() {
   group("Chat shall notify when MessageKind widgets tapped", () {
-    testWidgets(
-      "TextMessageWidget shall emit tap events with it's message",
-      (tester) async {
-        await tester.pumpWidget(
-          _appContainer(
-            Chat(
-              messages: [generateRandomMessage(MockMessageKind.text)],
-              chatMessageInputField: _messageInputField((_) {}),
-            ).setOnMessagePressed(
-              (message) => expect(
-                message.messageKind.text == null,
-                false,
-                reason: 'Could not tap text message widget',
-              ),
+    testWidgets("TextMessageWidget shall emit tap events with it's message", (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _appContainer(
+          Chat(
+            messages: [generateRandomMessage(MockMessageKind.text)],
+            chatMessageInputField: _messageInputField((_) {}),
+          ).setOnMessagePressed(
+            (message) => expect(
+              message.messageKind.text == null,
+              false,
+              reason: 'Could not tap text message widget',
             ),
           ),
-        );
-        await tester.ensureVisible(find.byType(ChatListItem));
-        await tester.pumpAndSettle();
-        await tester.tap(find.byType(ChatListItem), warnIfMissed: false);
-      },
-    );
+        ),
+      );
+      await tester.ensureVisible(find.byType(ChatListItem));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(ChatListItem), warnIfMissed: false);
+    });
 
-    testWidgets(
-      "ImageMessageWidget shall emit tap events with it's message",
-      (tester) async {
-        await tester.pumpWidget(
-          _appContainer(
-            Chat(
-              messages: [
-                generateRandomMessage(MockMessageKind.image),
-              ],
-              chatMessageInputField: _messageInputField((_) {}),
-            ).setOnMessagePressed(
-              (message) => expect(
-                message.messageKind.imageProvider == null,
-                false,
-                reason: 'Could not tap image message widget',
-              ),
+    testWidgets("ImageMessageWidget shall emit tap events with it's message", (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        _appContainer(
+          Chat(
+            messages: [generateRandomMessage(MockMessageKind.image)],
+            chatMessageInputField: _messageInputField((_) {}),
+          ).setOnMessagePressed(
+            (message) => expect(
+              message.messageKind.imageProvider == null,
+              false,
+              reason: 'Could not tap image message widget',
             ),
           ),
-        );
-        await tester.ensureVisible(find.byType(ChatListItem));
-        await tester.pumpAndSettle();
-        await tester.tap(find.byType(ChatListItem), warnIfMissed: false);
-      },
-    );
+        ),
+      );
+      await tester.ensureVisible(find.byType(ChatListItem));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(ChatListItem), warnIfMissed: false);
+    });
 
-    testWidgets("Quick Reply Item Should respond to button events",
-        (tester) async {
+    testWidgets("Quick Reply Item Should respond to button events", (
+      tester,
+    ) async {
       const quickReplyOption1Title = "MyOption 1";
       const quickReplyOption2Title = "MyOption 2";
       late final Chat chatView;
@@ -110,8 +107,9 @@ void main() {
       );
     });
 
-    testWidgets("Carousel Item Should respond to button events",
-        (tester) async {
+    testWidgets("Carousel Item Should respond to button events", (
+      tester,
+    ) async {
       const carouselOption1Title = "MyOption 1";
       const carouselOption2Title = "MyOption 2";
       late final Chat chatView;
@@ -123,32 +121,30 @@ void main() {
             user: MockChatUser.incomingUser,
             id: DateTime.now().toString(),
             isMe: false,
-            messageKind: MessageKind.carousel(
-              [
-                MockCarouselItem(
-                  title: 'title1',
-                  subtitle: 'subtitle1',
-                  buttons: [
-                    CarouselButtonItem(
-                      title: carouselOption1Title,
-                      url: 'url1',
-                      payload: 'payload2',
-                    ),
-                  ],
-                ),
-                MockCarouselItem(
-                  title: 'title2',
-                  subtitle: 'subtitle2',
-                  buttons: [
-                    CarouselButtonItem(
-                      title: carouselOption2Title,
-                      url: 'url2',
-                      payload: 'payload2',
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            messageKind: MessageKind.carousel([
+              MockCarouselItem(
+                title: 'title1',
+                subtitle: 'subtitle1',
+                buttons: [
+                  CarouselButtonItem(
+                    title: carouselOption1Title,
+                    url: 'url1',
+                    payload: 'payload2',
+                  ),
+                ],
+              ),
+              MockCarouselItem(
+                title: 'title2',
+                subtitle: 'subtitle2',
+                buttons: [
+                  CarouselButtonItem(
+                    title: carouselOption2Title,
+                    url: 'url2',
+                    payload: 'payload2',
+                  ),
+                ],
+              ),
+            ]),
           ),
         );
       void carouselItemPressedAction(CarouselButtonItem item) {
@@ -187,11 +183,7 @@ void main() {
   });
 }
 
-Widget _appContainer(Widget child) => MaterialApp(
-      home: Scaffold(
-        body: child,
-      ),
-    );
+Widget _appContainer(Widget child) => MaterialApp(home: Scaffold(body: child));
 
 MessageInputField _messageInputField(Function(String) onSendAction) =>
     MessageInputField(

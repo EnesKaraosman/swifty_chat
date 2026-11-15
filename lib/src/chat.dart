@@ -30,8 +30,8 @@ final class ChatStateContainer extends InheritedWidget {
   final Widget Function(Message)? customMessageWidget;
 
   static ChatStateContainer of(BuildContext context) {
-    final ChatStateContainer? result =
-        context.dependOnInheritedWidgetOfExactType<ChatStateContainer>();
+    final ChatStateContainer? result = context
+        .dependOnInheritedWidgetOfExactType<ChatStateContainer>();
     assert(result != null, 'No Chat found in context');
     return result!;
   }
@@ -118,31 +118,30 @@ final class Chat extends StatefulWidget {
 
   /// Triggered when a message widget is tapped.
   Chat setOnMessagePressed(void Function(Message)? fn) => _withCallbacks(
-        onMessagePressed: fn,
-        onQuickReplyItemPressed: onQuickReplyItemPressed,
-        onCarouselButtonItemPressed: onCarouselButtonItemPressed,
-        onHtmlWidgetPressed: onHtmlWidgetPressed,
-      );
+    onMessagePressed: fn,
+    onQuickReplyItemPressed: onQuickReplyItemPressed,
+    onCarouselButtonItemPressed: onCarouselButtonItemPressed,
+    onHtmlWidgetPressed: onHtmlWidgetPressed,
+  );
 
   Chat _withCallbacks({
     required void Function(Message)? onMessagePressed,
     required void Function(QuickReplyItem)? onQuickReplyItemPressed,
     required void Function(CarouselButtonItem)? onCarouselButtonItemPressed,
     required Map<String, HtmlTapCallback> Function()? onHtmlWidgetPressed,
-  }) =>
-      Chat(
-        key: key,
-        chatMessageInputField: chatMessageInputField,
-        messages: messages,
-        customMessageWidget: customMessageWidget,
-        messageCellSizeConfigurator: messageCellSizeConfigurator,
-        theme: theme,
-        onMessagePressed: onMessagePressed,
-        onQuickReplyItemPressed: onQuickReplyItemPressed,
-        onCarouselButtonItemPressed: onCarouselButtonItemPressed,
-        onHtmlWidgetPressed: onHtmlWidgetPressed,
-        controller: controller,
-      );
+  }) => Chat(
+    key: key,
+    chatMessageInputField: chatMessageInputField,
+    messages: messages,
+    customMessageWidget: customMessageWidget,
+    messageCellSizeConfigurator: messageCellSizeConfigurator,
+    theme: theme,
+    onMessagePressed: onMessagePressed,
+    onQuickReplyItemPressed: onQuickReplyItemPressed,
+    onCarouselButtonItemPressed: onCarouselButtonItemPressed,
+    onHtmlWidgetPressed: onHtmlWidgetPressed,
+    controller: controller,
+  );
 
   /// Scrolls the chat list to the bottom (most recent message).
   void scrollToBottom() => controller.scrollToBottom();
@@ -179,30 +178,31 @@ final class ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) => ChatStateContainer(
-        messageCellSizeConfigurator: widget.messageCellSizeConfigurator ??
-            MessageCellSizeConfigurator.defaultConfiguration(),
-        onHtmlWidgetPressed: widget.onHtmlWidgetPressed,
-        onQuickReplyItemPressed: widget.onQuickReplyItemPressed,
-        onCarouselButtonItemPressed: widget.onCarouselButtonItemPressed,
-        customMessageWidget: widget.customMessageWidget,
-        child: InheritedChatTheme(
-          theme: widget.theme,
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Column(
-              children: [
-                _ChatMessages(
-                  backgroundColor: widget.theme.backgroundColor,
-                  scrollController: _scrollController,
-                  messages: widget.messages,
-                  onMessagePressed: widget.onMessagePressed,
-                ),
-                widget.chatMessageInputField,
-              ],
+    messageCellSizeConfigurator:
+        widget.messageCellSizeConfigurator ??
+        MessageCellSizeConfigurator.defaultConfiguration(),
+    onHtmlWidgetPressed: widget.onHtmlWidgetPressed,
+    onQuickReplyItemPressed: widget.onQuickReplyItemPressed,
+    onCarouselButtonItemPressed: widget.onCarouselButtonItemPressed,
+    customMessageWidget: widget.customMessageWidget,
+    child: InheritedChatTheme(
+      theme: widget.theme,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          children: [
+            _ChatMessages(
+              backgroundColor: widget.theme.backgroundColor,
+              scrollController: _scrollController,
+              messages: widget.messages,
+              onMessagePressed: widget.onMessagePressed,
             ),
-          ),
+            widget.chatMessageInputField,
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }
 
 final class _ChatMessages extends StatelessWidget {

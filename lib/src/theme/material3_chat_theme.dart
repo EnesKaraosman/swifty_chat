@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'chat_theme.dart';
 
 /// Material 3 compatible chat theme that integrates with Flutter's ColorScheme
@@ -74,96 +75,76 @@ final class Material3ChatTheme extends ChatTheme {
   // Typography using Material 3 text theme or fallback to sensible defaults
   TextStyle get _bodyMedium =>
       textTheme?.bodyMedium ??
-      const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+      const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, height: 1.5);
 
   TextStyle get _bodySmall =>
       textTheme?.bodySmall ??
-      const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+      const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, height: 1.5);
 
   TextStyle get _titleMedium =>
       textTheme?.titleMedium ??
-      const TextStyle(
-        fontSize: 19,
-        fontWeight: FontWeight.bold,
-      );
+      const TextStyle(fontSize: 19, fontWeight: FontWeight.bold);
 
   TextStyle get _titleSmall =>
       textTheme?.titleSmall ??
-      const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-      );
+      const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
   @override
-  TextStyle get incomingMessageBodyTextStyle => _bodyMedium.copyWith(
-        color: colorScheme.onSecondaryContainer,
-      );
+  TextStyle get incomingMessageBodyTextStyle =>
+      _bodyMedium.copyWith(color: colorScheme.onSecondaryContainer);
 
   @override
-  TextStyle get outgoingMessageBodyTextStyle => _bodyMedium.copyWith(
-        color: colorScheme.onPrimaryContainer,
-      );
+  TextStyle get outgoingMessageBodyTextStyle =>
+      _bodyMedium.copyWith(color: colorScheme.onPrimaryContainer);
 
   @override
   TextStyle get incomingChatTextTime => _bodySmall.copyWith(
-        color: colorScheme.onSecondaryContainer.withValues(alpha: .7),
-        height: 0.3,
-      );
+    color: colorScheme.onSecondaryContainer.withValues(alpha: .7),
+    height: 0.3,
+  );
 
   @override
   TextStyle get outgoingChatTextTime => _bodySmall.copyWith(
-        color: colorScheme.onPrimaryContainer.withValues(alpha: .7),
-        height: 0.3,
-      );
+    color: colorScheme.onPrimaryContainer.withValues(alpha: .7),
+    height: 0.3,
+  );
 
   @override
-  TextStyle get htmlWidgetTextTime => _bodySmall.copyWith(
-        color: colorScheme.onSurface,
-      );
+  TextStyle get htmlWidgetTextTime =>
+      _bodySmall.copyWith(color: colorScheme.onSurface);
 
   @override
-  TextStyle get imageWidgetTextTime => _bodySmall.copyWith(
-        color: colorScheme.onSurface,
-      );
+  TextStyle get imageWidgetTextTime =>
+      _bodySmall.copyWith(color: colorScheme.onSurface);
 
   @override
-  TextStyle get carouselTitleTextStyle => _titleMedium.copyWith(
-        color: colorScheme.onSurface,
-      );
+  TextStyle get carouselTitleTextStyle =>
+      _titleMedium.copyWith(color: colorScheme.onSurface);
 
   @override
-  TextStyle get carouselSubtitleTextStyle => _titleSmall.copyWith(
-        color: colorScheme.onSurfaceVariant,
-      );
+  TextStyle get carouselSubtitleTextStyle =>
+      _titleSmall.copyWith(color: colorScheme.onSurfaceVariant);
 
   @override
   ButtonStyle get carouselButtonStyle => FilledButton.styleFrom(
-        backgroundColor: colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
-      );
+    backgroundColor: colorScheme.primary,
+    foregroundColor: colorScheme.onPrimary,
+  );
 
   @override
   BoxDecoration get carouselBoxDecoration => BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: colorScheme.surfaceContainerHighest,
-      );
+    borderRadius: BorderRadius.circular(16),
+    color: colorScheme.surfaceContainerHighest,
+  );
 
   @override
   BorderRadius get imageBorderRadius => BorderRadius.circular(16);
 
   @override
   ButtonStyle get quickReplyButtonStyle => FilledButton.styleFrom(
-        backgroundColor: colorScheme.tertiaryContainer,
-        foregroundColor: colorScheme.onTertiaryContainer,
-      );
+    backgroundColor: colorScheme.tertiaryContainer,
+    foregroundColor: colorScheme.onTertiaryContainer,
+  );
 
   @override
   Color get htmlTextColor => colorScheme.onSurface;
@@ -201,10 +182,10 @@ final class Material3ChatTheme extends ChatTheme {
 
   @override
   int get hashCode => Object.hash(
-        colorScheme,
-        textTheme,
-        messageBorderRadiusValue,
-        textMessagePaddingValue,
-        messageInsetValue,
-      );
+    colorScheme,
+    textTheme,
+    messageBorderRadiusValue,
+    textMessagePaddingValue,
+    messageInsetValue,
+  );
 }

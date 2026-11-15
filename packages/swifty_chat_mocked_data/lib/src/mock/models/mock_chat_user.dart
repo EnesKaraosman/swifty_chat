@@ -4,10 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 
 class MockChatUser extends ChatUser {
-  MockChatUser({
-    required super.userName,
-    super.avatar,
-  });
+  MockChatUser({required super.userName, super.avatar});
 
   static MockChatUser incomingUser = MockChatUser(
     userName: "incoming",

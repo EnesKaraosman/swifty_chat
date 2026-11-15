@@ -40,8 +40,9 @@ Future<void> testQuickReplyTheme({
 }) async {
   final theme = isLightMode ? const DefaultChatTheme() : const DarkChatTheme();
   const quickReplyOptionTitle = "Option 1";
-  final messageUser =
-      isIncomingMessage ? MockChatUser.incomingUser : MockChatUser.outgoingUser;
+  final messageUser = isIncomingMessage
+      ? MockChatUser.incomingUser
+      : MockChatUser.outgoingUser;
   await tester.pumpWidget(
     _appContainer(
       Chat(
@@ -86,11 +87,7 @@ Future<void> testQuickReplyTheme({
   );
 }
 
-Widget _appContainer(Widget child) => MaterialApp(
-      home: Scaffold(
-        body: child,
-      ),
-    );
+Widget _appContainer(Widget child) => MaterialApp(home: Scaffold(body: child));
 
 MessageInputField _messageInputField(Function(String) onSendAction) =>
     MessageInputField(

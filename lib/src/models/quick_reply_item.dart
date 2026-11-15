@@ -1,10 +1,6 @@
 /// Represents a quick reply option
 abstract class QuickReplyItem {
-  const QuickReplyItem({
-    required this.title,
-    this.payload,
-    this.url,
-  });
+  const QuickReplyItem({required this.title, this.payload, this.url});
 
   /// Display text of the quick reply button
   final String title;
