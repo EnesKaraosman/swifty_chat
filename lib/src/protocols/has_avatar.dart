@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../models/message.dart';
 import '../models/user_avatar.dart';
@@ -16,12 +16,9 @@ mixin HasAvatar {
   double get _radius => (userAvatar?.size ?? 36) / 2;
 
   List<Widget> avatarWithPadding([double padding = 8]) => [
-        SizedBox(width: padding),
-        if (avatarImageProvider != null)
-          CircleAvatar(
-            radius: _radius,
-            backgroundImage: avatarImageProvider,
-          ),
-        SizedBox(width: padding),
-      ].toList();
+    SizedBox(width: padding),
+    if (avatarImageProvider != null)
+      CircleAvatar(radius: _radius, backgroundImage: avatarImageProvider),
+    SizedBox(width: padding),
+  ].toList();
 }

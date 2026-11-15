@@ -2,7 +2,7 @@ import 'package:example/advanced_chat.dart';
 import 'package:example/basic_chat.dart';
 import 'package:example/custom_message_kind_chat.dart';
 import 'package:example/material3_example.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const MyApp());
 
@@ -50,10 +50,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       routes: {
-        '/': (_) => Home(
-              themeMode: _themeMode,
-              onThemeToggle: _toggleTheme,
-            ),
+        '/': (_) => Home(themeMode: _themeMode, onThemeToggle: _toggleTheme),
         '/basic-chat': (_) => const BasicChat(key: Key('basic_chat')),
         '/advanced-chat': (_) => const AdvancedChat(key: Key('advanced_chat')),
         '/custom-message-kind-chat': (_) =>
@@ -70,26 +67,22 @@ class _MyAppState extends State<MyApp> {
 }
 
 final class Home extends StatelessWidget {
-  const Home({
-    super.key,
-    required this.themeMode,
-    required this.onThemeToggle,
-  });
+  const Home({super.key, required this.themeMode, required this.onThemeToggle});
 
   final ThemeMode themeMode;
   final VoidCallback onThemeToggle;
 
   String get _themeModeLabel => switch (themeMode) {
-        ThemeMode.light => 'Light',
-        ThemeMode.dark => 'Dark',
-        ThemeMode.system => 'System',
-      };
+    ThemeMode.light => 'Light',
+    ThemeMode.dark => 'Dark',
+    ThemeMode.system => 'System',
+  };
 
   IconData get _themeModeIcon => switch (themeMode) {
-        ThemeMode.light => Icons.light_mode,
-        ThemeMode.dark => Icons.dark_mode,
-        ThemeMode.system => Icons.brightness_auto,
-      };
+    ThemeMode.light => Icons.light_mode,
+    ThemeMode.dark => Icons.dark_mode,
+    ThemeMode.system => Icons.brightness_auto,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -198,10 +191,8 @@ class _SectionHeader extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(context).textTheme.titleMedium
+                ?.copyWith(color: color, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -285,9 +276,8 @@ class _PackageInfoCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   'swifty_chat',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(context).textTheme.titleMedium
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ],
             ),

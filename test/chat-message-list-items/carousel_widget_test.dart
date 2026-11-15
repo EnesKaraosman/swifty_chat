@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:swifty_chat/swifty_chat.dart';
@@ -42,8 +42,9 @@ Future<void> testCarouselTheme({
   const carouselMessageTitle = "Carousel_Title";
   const carouselMessageSubtitle = "Carousel_Subtitle";
   const carouselButtonTitle = "Carousel_Button_Title";
-  final messageUser =
-      isIncomingMessage ? MockChatUser.incomingUser : MockChatUser.outgoingUser;
+  final messageUser = isIncomingMessage
+      ? MockChatUser.incomingUser
+      : MockChatUser.outgoingUser;
   await tester.pumpWidget(
     _appContainer(
       Chat(
@@ -83,31 +84,19 @@ Future<void> testCarouselTheme({
   final buttonStyle = theme.carouselButtonStyle;
 
   final titleTextWidget = tester.widget<Text>(find.text(carouselMessageTitle));
-  final subtitleTextWidget =
-      tester.widget<Text>(find.text(carouselMessageSubtitle));
+  final subtitleTextWidget = tester.widget<Text>(
+    find.text(carouselMessageSubtitle),
+  );
   final buttonWidget = tester
       .element(find.text(carouselButtonTitle))
       .findAncestorWidgetOfExactType<ElevatedButton>();
 
-  expect(
-    titleTextStyle.toString(),
-    titleTextWidget.style.toString(),
-  );
-  expect(
-    subtitleTextStyle.toString(),
-    subtitleTextWidget.style.toString(),
-  );
-  expect(
-    buttonStyle.toString(),
-    buttonWidget?.style.toString(),
-  );
+  expect(titleTextStyle.toString(), titleTextWidget.style.toString());
+  expect(subtitleTextStyle.toString(), subtitleTextWidget.style.toString());
+  expect(buttonStyle.toString(), buttonWidget?.style.toString());
 }
 
-Widget _appContainer(Widget child) => MaterialApp(
-      home: Scaffold(
-        body: child,
-      ),
-    );
+Widget _appContainer(Widget child) => MaterialApp(home: Scaffold(body: child));
 
 MessageInputField _messageInputField(Function(String) onSendAction) =>
     MessageInputField(

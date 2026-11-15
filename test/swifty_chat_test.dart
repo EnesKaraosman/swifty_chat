@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:flutter_test/flutter_test.dart';
@@ -12,24 +12,17 @@ import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
 
 void main() {
   group("Chat", () {
-    testWidgets("Chat view Should be available with the minimum requirements",
-        (tester) async {
+    testWidgets("Chat view Should be available with the minimum requirements", (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        _appContainer(
-          Chat(
-            chatMessageInputField: _messageInputField((_) {}),
-          ),
-        ),
+        _appContainer(Chat(chatMessageInputField: _messageInputField((_) {}))),
       );
     });
 
     testWidgets("Message Input Field Should Exist", (tester) async {
       await tester.pumpWidget(
-        _appContainer(
-          Chat(
-            chatMessageInputField: _messageInputField((_) {}),
-          ),
-        ),
+        _appContainer(Chat(chatMessageInputField: _messageInputField((_) {}))),
       );
       expect(find.byKey(ChatKeys.messageInputWidget.key), findsOneWidget);
     });
@@ -132,8 +125,7 @@ void main() {
       expect(
         currentOffset == 0,
         true,
-        reason:
-            "ListView's position is not initially bottom. Make sure list has reverse=true",
+        reason: "ListView's position is not initially bottom. Make sure list has reverse=true",
       );
 
       await tester.fling(listView, const Offset(0, 200), 500);
@@ -153,79 +145,64 @@ void main() {
         (scrollController?.offset ?? 0) ==
             (scrollController?.position.minScrollExtent ?? 0),
         true,
-        reason:
-            'List could not scrolled to bottom properly, check Chat.scrollToBottom method.',
+        reason: 'List could not scrolled to bottom properly, check Chat.scrollToBottom method.',
       );
     });
 
-    testWidgets(
-      "Should close keyboard when tapped outside.",
-      (tester) async {
-        await tester.pumpWidget(
-          _appContainer(
-            Chat(
-              chatMessageInputField: _messageInputField((_) {}),
-            ),
-          ),
-        );
+    testWidgets("Should close keyboard when tapped outside.", (tester) async {
+      await tester.pumpWidget(
+        _appContainer(Chat(chatMessageInputField: _messageInputField((_) {}))),
+      );
 
-        final textField = tester.firstWidget<TextField>(find.byType(TextField));
+      final textField = tester.firstWidget<TextField>(find.byType(TextField));
 
-        final messageInputFieldWidget = find.byType(TextField);
-        expect(
-          textField.focusNode?.hasFocus,
-          false,
-          reason: 'Should have no initial focus',
-        );
-        await tester.tap(messageInputFieldWidget);
-        await tester.showKeyboard(messageInputFieldWidget);
+      final messageInputFieldWidget = find.byType(TextField);
+      expect(
+        textField.focusNode?.hasFocus,
+        false,
+        reason: 'Should have no initial focus',
+      );
+      await tester.tap(messageInputFieldWidget);
+      await tester.showKeyboard(messageInputFieldWidget);
 
-        expect(textField.focusNode?.hasFocus, true);
+      expect(textField.focusNode?.hasFocus, true);
 
-        const msg = 'New message';
-        await tester.enterText(messageInputFieldWidget, msg);
-        expect(
-          find.text(msg),
-          findsOneWidget,
-          reason: 'Input widget does not contain the entered text',
-        );
+      const msg = 'New message';
+      await tester.enterText(messageInputFieldWidget, msg);
+      expect(
+        find.text(msg),
+        findsOneWidget,
+        reason: 'Input widget does not contain the entered text',
+      );
 
-        await tester.tap(find.byType(Chat));
-        expect(
-          textField.focusNode?.hasFocus,
-          false,
-          reason: 'Should lose focus after Chat tapped',
-        );
-      },
-    );
+      await tester.tap(find.byType(Chat));
+      expect(
+        textField.focusNode?.hasFocus,
+        false,
+        reason: 'Should lose focus after Chat tapped',
+      );
+    });
 
-    testWidgets(
-      "Keyboard Should respond Send button.",
-      (tester) async {
-        await tester.pumpWidget(
-          _appContainer(
-            Chat(
-              chatMessageInputField: _messageInputField((_) {}),
-            ),
-          ),
-        );
+    testWidgets("Keyboard Should respond Send button.", (tester) async {
+      await tester.pumpWidget(
+        _appContainer(Chat(chatMessageInputField: _messageInputField((_) {}))),
+      );
 
-        final textField = tester.firstWidget<TextField>(find.byType(TextField));
+      final textField = tester.firstWidget<TextField>(find.byType(TextField));
 
-        final messageInputFieldWidget = find.byType(TextField);
-        await tester.tap(messageInputFieldWidget);
-        await tester.showKeyboard(messageInputFieldWidget);
+      final messageInputFieldWidget = find.byType(TextField);
+      await tester.tap(messageInputFieldWidget);
+      await tester.showKeyboard(messageInputFieldWidget);
 
-        const msg = 'New message';
-        await tester.enterText(messageInputFieldWidget, msg);
-        expect(textField.controller?.text.isEmpty, false);
+      const msg = 'New message';
+      await tester.enterText(messageInputFieldWidget, msg);
+      expect(textField.controller?.text.isEmpty, false);
 
-        await tester.testTextInput.receiveAction(TextInputAction.send);
-        await tester.pump();
+      await tester.testTextInput.receiveAction(TextInputAction.send);
+      await tester.pump();
 
-        expect(textField.controller?.text.isEmpty, true);
-      },
-    );
+      expect(textField.controller?.text.isEmpty, true);
+    });
 
     testWidgets('HTML MessageKind should contain link & image', (tester) async {
       late final Chat chatView;
@@ -241,15 +218,16 @@ void main() {
           ),
         );
 
-      chatView = Chat(
-        messages: messages,
-        chatMessageInputField: _messageInputField((_) {}),
-      ).setOnHTMLWidgetPressed(
-        () => {
-          "onLinkTap": (url) => debugPrint("onLinkTap: $url"),
-          "onImageTap": (src) => debugPrint("onImageTapped: $src"),
-        },
-      );
+      chatView =
+          Chat(
+            messages: messages,
+            chatMessageInputField: _messageInputField((_) {}),
+          ).setOnHTMLWidgetPressed(
+            () => {
+              "onLinkTap": (url) => debugPrint("onLinkTap: $url"),
+              "onImageTap": (src) => debugPrint("onImageTapped: $src"),
+            },
+          );
 
       await tester.pumpWidget(_appContainer(chatView));
 
@@ -268,11 +246,7 @@ void main() {
   });
 }
 
-Widget _appContainer(Widget child) => MaterialApp(
-      home: Scaffold(
-        body: child,
-      ),
-    );
+Widget _appContainer(Widget child) => MaterialApp(home: Scaffold(body: child));
 
 MessageInputField _messageInputField(Function(String) onSendAction) =>
     MessageInputField(

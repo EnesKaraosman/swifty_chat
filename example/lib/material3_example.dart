@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 import 'package:swifty_chat_mocked_data/swifty_chat_mocked_data.dart';
@@ -331,10 +331,7 @@ class _MiniContrastCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              color: foreground,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(color: foreground, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
           Row(
@@ -376,26 +373,22 @@ class _AccessibilityInfoSheet extends StatelessWidget {
           const _InfoRow(
             icon: Icons.text_fields,
             title: 'Text Scaling',
-            description:
-                'Respects system text size preferences via MediaQuery.textScalerOf',
+            description: 'Respects system text size preferences via MediaQuery.textScalerOf',
           ),
           const _InfoRow(
             icon: Icons.contrast,
             title: 'WCAG Contrast',
-            description:
-                'Validates color contrast ratios meet WCAG AA (4.5:1) and AAA (7:1) standards',
+            description: 'Validates color contrast ratios meet WCAG AA (4.5:1) and AAA (7:1) standards',
           ),
           const _InfoRow(
             icon: Icons.animation,
             title: 'Reduce Motion',
-            description:
-                'Animations are simplified or disabled when reduce motion is enabled',
+            description: 'Animations are simplified or disabled when reduce motion is enabled',
           ),
           const _InfoRow(
             icon: Icons.record_voice_over,
             title: 'Screen Reader',
-            description:
-                'All messages include semantic labels for VoiceOver and TalkBack',
+            description: 'All messages include semantic labels for VoiceOver and TalkBack',
           ),
           const SizedBox(height: 16),
         ],
@@ -432,10 +425,7 @@ class _InfoRow extends StatelessWidget {
                   title,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  description,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+                Text(description, style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
           ),
@@ -548,10 +538,7 @@ class _ResponsiveDemoState extends State<ResponsiveDemo> {
 }
 
 class _ResponsiveInfoChip extends StatelessWidget {
-  const _ResponsiveInfoChip({
-    required this.label,
-    required this.icon,
-  });
+  const _ResponsiveInfoChip({required this.label, required this.icon});
 
   final String label;
   final IconData icon;
@@ -612,8 +599,9 @@ class _Material3ChatExampleState extends State<Material3ChatExample> {
 
   void _toggleTheme() {
     setState(() {
-      _themeMode =
-          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = _themeMode == ThemeMode.light
+          ? ThemeMode.dark
+          : ThemeMode.light;
     });
   }
 
@@ -695,7 +683,8 @@ class _Material3ChatExampleState extends State<Material3ChatExample> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                'Text Scale Factor: ${textScaler.scale(1.0).toStringAsFixed(2)}'),
+              'Text Scale Factor: ${textScaler.scale(1.0).toStringAsFixed(2)}',
+            ),
             Text('High Contrast: ${highContrast ? "Enabled" : "Disabled"}'),
             Text('Reduce Motion: ${reduceMotion ? "Enabled" : "Disabled"}'),
             Text('Bold Text: ${boldText ? "Enabled" : "Disabled"}'),
@@ -752,9 +741,7 @@ class _CustomMaterial3ChatExampleState
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Material 3 Chat'),
-      ),
+      appBar: AppBar(title: const Text('Custom Material 3 Chat')),
       body: Chat(
         messages: _messages,
         theme: customTheme,
@@ -790,9 +777,7 @@ class AccessibilityContrastExample extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contrast Checker'),
-      ),
+      appBar: AppBar(title: const Text('Contrast Checker')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

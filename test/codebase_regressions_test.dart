@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swifty_chat/src/extensions/date_extensions.dart';
@@ -32,8 +32,9 @@ void main() {
     expect(controller.offset, 0);
   });
 
-  testWidgets('changing a Chat callback leaves the old widget unchanged',
-      (tester) async {
+  testWidgets('changing a Chat callback leaves the old widget unchanged', (
+    tester,
+  ) async {
     var oldCalls = 0;
     var newCalls = 0;
     final original = Chat(
@@ -53,14 +54,15 @@ void main() {
     expect(newCalls, 1);
   });
 
-  testWidgets('inserted messages retain the state of existing rows',
-      (tester) async {
+  testWidgets('inserted messages retain the state of existing rows', (
+    tester,
+  ) async {
     final messages = [_message('a', custom: true), _message('b', custom: true)];
     Widget chat() => Chat(
-          messages: messages,
-          chatMessageInputField: const SizedBox.shrink(),
-          customMessageWidget: (message) => _RememberMessage(message.id),
-        );
+      messages: messages,
+      chatMessageInputField: const SizedBox.shrink(),
+      customMessageWidget: (message) => _RememberMessage(message.id),
+    );
 
     await tester.pumpWidget(_app(chat()));
     messages.insert(0, _message('c', custom: true));
@@ -73,21 +75,28 @@ void main() {
 
   test('previous calendar day uses relative date text', () {
     final now = DateTime.now();
-    final previousDay = DateTime(now.year, now.month, now.day)
-        .subtract(const Duration(milliseconds: 1));
+    final previousDay = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).subtract(const Duration(milliseconds: 1));
     expect(previousDay.relativeTimeFromNow(), isNot(previousDay.hourMinute()));
   });
 
   testWidgets('HTML messages fit inside a narrow chat panel', (tester) async {
-    await tester.pumpWidget(_app(Center(
-      child: SizedBox(
-        width: 220,
-        child: Chat(
-          messages: [_message('html', html: true)],
-          chatMessageInputField: const SizedBox.shrink(),
+    await tester.pumpWidget(
+      _app(
+        Center(
+          child: SizedBox(
+            width: 220,
+            child: Chat(
+              messages: [_message('html', html: true)],
+              chatMessageInputField: const SizedBox.shrink(),
+            ),
+          ),
         ),
       ),
-    )));
+    );
     expect(tester.takeException(), isNull);
   });
 
@@ -106,9 +115,7 @@ void main() {
         ),
       ],
       chatMessageInputField: const SizedBox.shrink(),
-    ).setOnHTMLWidgetPressed(() => {
-          'onLinkTap': (url) => tappedUrl = url,
-        });
+    ).setOnHTMLWidgetPressed(() => {'onLinkTap': (url) => tappedUrl = url});
 
     await tester.pumpWidget(_app(chat));
     await tester.tapOnText(find.textRange.ofSubstring('Docs'));
@@ -117,22 +124,23 @@ void main() {
 
   testWidgets('HTML image taps reach the configured callback', (tester) async {
     String? tappedSource;
-    final chat = Chat(
-      messages: [
-        MockMessage(
-          id: 'html-image',
-          date: DateTime.now(),
-          user: MockChatUser.incomingUser,
-          isMe: false,
-          messageKind: MessageKind.html(
-            '<img width="32" height="32" src="https://example.com/image.png">',
-          ),
-        ),
-      ],
-      chatMessageInputField: const SizedBox.shrink(),
-    ).setOnHTMLWidgetPressed(() => {
-          'onImageTap': (source) => tappedSource = source,
-        });
+    final chat =
+        Chat(
+          messages: [
+            MockMessage(
+              id: 'html-image',
+              date: DateTime.now(),
+              user: MockChatUser.incomingUser,
+              isMe: false,
+              messageKind: MessageKind.html(
+                '<img width="32" height="32" src="https://example.com/image.png">',
+              ),
+            ),
+          ],
+          chatMessageInputField: const SizedBox.shrink(),
+        ).setOnHTMLWidgetPressed(
+          () => {'onImageTap': (source) => tappedSource = source},
+        );
 
     await tester.pumpWidget(_app(chat));
     final image = find.descendant(
@@ -145,28 +153,32 @@ void main() {
   });
 
   testWidgets('image messages fit inside a narrow chat panel', (tester) async {
-    await tester.pumpWidget(_app(Center(
-      child: SizedBox(
-        width: 220,
-        child: Chat(
-          messages: [
-            MockMessage(
-              id: 'image',
-              date: DateTime.now(),
-              user: MockChatUser.incomingUser,
-              isMe: false,
-              messageKind: MessageKind.imageProvider(
-                const AssetImage(
-                  'assets/images/mock_image_1.jpg',
-                  package: 'swifty_chat_mocked_data',
+    await tester.pumpWidget(
+      _app(
+        Center(
+          child: SizedBox(
+            width: 220,
+            child: Chat(
+              messages: [
+                MockMessage(
+                  id: 'image',
+                  date: DateTime.now(),
+                  user: MockChatUser.incomingUser,
+                  isMe: false,
+                  messageKind: MessageKind.imageProvider(
+                    const AssetImage(
+                      'assets/images/mock_image_1.jpg',
+                      package: 'swifty_chat_mocked_data',
+                    ),
+                  ),
                 ),
-              ),
+              ],
+              chatMessageInputField: const SizedBox.shrink(),
             ),
-          ],
-          chatMessageInputField: const SizedBox.shrink(),
+          ),
         ),
       ),
-    )));
+    );
     expect(tester.takeException(), isNull);
   });
 
@@ -208,8 +220,8 @@ MockMessage _message(String id, {bool custom = false, bool html = false}) =>
       messageKind: custom
           ? MessageKind.custom(id)
           : html
-              ? MessageKind.html('<p>hello</p>')
-              : MessageKind.text(id),
+          ? MessageKind.html('<p>hello</p>')
+          : MessageKind.text(id),
     );
 
 Widget _app(Widget child) => MaterialApp(home: Scaffold(body: child));

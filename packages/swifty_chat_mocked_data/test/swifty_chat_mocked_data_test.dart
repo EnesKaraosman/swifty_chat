@@ -18,10 +18,9 @@ void main() {
   test('image generator uses both available assets', () {
     final paths = List.generate(
       100,
-      (_) => generateRandomMessage(MockMessageKind.image)
-          .messageKind
-          .imageProvider
-          .toString(),
+      (_) =>
+          generateRandomMessage(MockMessageKind.image).messageKind.imageProvider
+              .toString(),
     );
 
     expect(paths.any((path) => path.contains('mock_image_1.jpg')), isTrue);

@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../chat.dart';
 import '../extensions/theme_context.dart';
@@ -21,29 +21,28 @@ final class CarouselWidget extends StatelessWidget with HasAvatar {
 
   @override
   Widget build(BuildContext context) => Semantics(
-        label: 'Carousel with ${items.length} items',
-        child: SizedBox(
-          height: _carouselItemHeight(context),
-          child: LayoutBuilder(
-            builder: (context, constraints) => CarouselView.builder(
-              itemExtent: constraints.maxWidth * 0.8,
-              itemCount: items.length,
-              itemSnapping: true,
-              padding: EdgeInsets.zero,
-              itemBuilder: (_, index) => _CarouselItem(
-                item: items[index],
-                index: index,
-                total: items.length,
-              ),
-            ),
+    label: 'Carousel with ${items.length} items',
+    child: SizedBox(
+      height: _carouselItemHeight(context),
+      child: LayoutBuilder(
+        builder: (context, constraints) => CarouselView.builder(
+          itemExtent: constraints.maxWidth * 0.8,
+          itemCount: items.length,
+          itemSnapping: true,
+          padding: EdgeInsets.zero,
+          itemBuilder: (_, index) => _CarouselItem(
+            item: items[index],
+            index: index,
+            total: items.length,
           ),
         ),
-      );
+      ),
+    ),
+  );
 
   double _carouselItemHeight(BuildContext context) {
     final screenHeight = MediaQuery.sizeOf(context).height;
-    final height = ChatStateContainer.of(context)
-        .messageCellSizeConfigurator
+    final height = ChatStateContainer.of(context).messageCellSizeConfigurator
         .carouselCellMaxHeightConfiguration(screenHeight);
     return height;
   }
@@ -92,7 +91,7 @@ final class _CarouselItem extends StatelessWidget {
                           child: CircularProgressIndicator(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
+                                      loadingProgress.expectedTotalBytes!
                                 : null,
                           ),
                         ),
@@ -145,9 +144,10 @@ final class _CarouselItem extends StatelessWidget {
                         button: true,
                         label: 'Carousel button: ${button.title}',
                         child: ElevatedButton(
-                          onPressed: () => ChatStateContainer.of(context)
-                              .onCarouselButtonItemPressed
-                              ?.call(button),
+                          onPressed: () =>
+                              ChatStateContainer.of(context)
+                                  .onCarouselButtonItemPressed
+                                  ?.call(button),
                           style: context.theme.carouselButtonStyle,
                           child: Text(button.title),
                         ),

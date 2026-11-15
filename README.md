@@ -30,7 +30,7 @@ Other;
 
 ### Usage
 
-Requires Flutter 3.41.0 or later. This example sends text messages using concrete `Message` and `ChatUser` classes:
+Requires Flutter 3.47.0 or later. This example sends text messages using concrete `Message` and `ChatUser` classes:
 
 ```dart
 import 'package:flutter/material.dart';

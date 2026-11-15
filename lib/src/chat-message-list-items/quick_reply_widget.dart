@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../chat.dart';
 import '../extensions/theme_context.dart';
@@ -17,10 +17,7 @@ final class QuickReplyWidget extends StatelessWidget {
       label: 'Quick reply options',
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: Wrap(
-          spacing: 8,
-          children: _buttons(context),
-        ),
+        child: Wrap(spacing: 8, children: _buttons(context)),
       ),
     );
   }
@@ -33,9 +30,9 @@ final class QuickReplyWidget extends StatelessWidget {
             label: AccessibilityHelpers.createQuickReplySemanticLabel(qr.title),
             child: OutlinedButton(
               style: context.theme.quickReplyButtonStyle,
-              onPressed: () => ChatStateContainer.of(context)
-                  .onQuickReplyItemPressed
-                  ?.call(qr),
+              onPressed: () =>
+                  ChatStateContainer.of(context).onQuickReplyItemPressed
+                      ?.call(qr),
               child: Text(qr.title),
             ),
           ),

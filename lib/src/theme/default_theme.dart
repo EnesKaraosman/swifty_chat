@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import 'chat_theme.dart';
 
 /// Default chat theme which extends [ChatTheme]
@@ -20,57 +21,57 @@ final class DefaultChatTheme extends ChatTheme {
 
   @override
   TextStyle get incomingMessageBodyTextStyle => const TextStyle(
-        color: neutral0,
-        fontFamily: 'Avenir',
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral0,
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   TextStyle get outgoingMessageBodyTextStyle => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   TextStyle get incomingChatTextTime => const TextStyle(
-        color: neutral0,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
+    color: neutral0,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 0.3,
+  );
 
   @override
   TextStyle get outgoingChatTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 0.3,
+  );
 
   @override
   TextStyle get htmlWidgetTextTime => const TextStyle(
-        color: neutral0,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral0,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   TextStyle get imageWidgetTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   Color get secondaryColor => secondary;
@@ -80,39 +81,36 @@ final class DefaultChatTheme extends ChatTheme {
 
   @override
   TextStyle get carouselTitleTextStyle => const TextStyle(
-        color: neutral0,
-        fontSize: 19,
-        fontFamily: 'Avenir',
-        fontWeight: FontWeight.bold,
-      );
+    color: neutral0,
+    fontSize: 19,
+    fontFamily: 'Avenir',
+    fontWeight: FontWeight.bold,
+  );
 
   @override
-  TextStyle get carouselSubtitleTextStyle => const TextStyle(
-        color: neutral0,
-        fontSize: 16,
-        fontFamily: 'Avenir',
-      );
+  TextStyle get carouselSubtitleTextStyle =>
+      const TextStyle(color: neutral0, fontSize: 16, fontFamily: 'Avenir');
 
   @override
   ButtonStyle get carouselButtonStyle => const ButtonStyle();
 
   @override
   BoxDecoration get carouselBoxDecoration => BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: secondaryColor,
-      );
+    borderRadius: BorderRadius.circular(16),
+    color: secondaryColor,
+  );
 
   @override
   BorderRadius get imageBorderRadius => BorderRadius.circular(16);
 
   @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(neutral2),
-        foregroundColor: WidgetStateProperty.all<Color>(neutral0),
-        textStyle: WidgetStateProperty.all<TextStyle>(
-          const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      );
+    backgroundColor: WidgetStateProperty.all<Color>(neutral2),
+    foregroundColor: WidgetStateProperty.all<Color>(neutral0),
+    textStyle: WidgetStateProperty.all<TextStyle>(
+      const TextStyle(fontWeight: FontWeight.bold),
+    ),
+  );
 
   @override
   Color get htmlTextColor => neutral0;
@@ -140,57 +138,57 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   TextStyle get incomingMessageBodyTextStyle => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   TextStyle get outgoingMessageBodyTextStyle => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   TextStyle get incomingChatTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 0.3,
+  );
 
   @override
   TextStyle get outgoingChatTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 0.3,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 0.3,
+  );
 
   @override
   TextStyle get htmlWidgetTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   TextStyle get imageWidgetTextTime => const TextStyle(
-        color: neutral7,
-        fontFamily: 'Avenir',
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5,
-      );
+    color: neutral7,
+    fontFamily: 'Avenir',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    height: 1.5,
+  );
 
   @override
   Color get secondaryColor => secondaryDark;
@@ -200,39 +198,36 @@ class DarkChatTheme extends ChatTheme {
 
   @override
   TextStyle get carouselTitleTextStyle => const TextStyle(
-        color: neutral7,
-        fontSize: 19,
-        fontFamily: 'Avenir',
-        fontWeight: FontWeight.bold,
-      );
+    color: neutral7,
+    fontSize: 19,
+    fontFamily: 'Avenir',
+    fontWeight: FontWeight.bold,
+  );
 
   @override
-  TextStyle get carouselSubtitleTextStyle => const TextStyle(
-        color: neutral7,
-        fontSize: 19,
-        fontFamily: 'Avenir',
-      );
+  TextStyle get carouselSubtitleTextStyle =>
+      const TextStyle(color: neutral7, fontSize: 19, fontFamily: 'Avenir');
 
   @override
   ButtonStyle get carouselButtonStyle => const ButtonStyle();
 
   @override
   BoxDecoration get carouselBoxDecoration => BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: primaryColor,
-      );
+    borderRadius: BorderRadius.circular(16),
+    color: primaryColor,
+  );
 
   @override
   BorderRadius get imageBorderRadius => BorderRadius.circular(16);
 
   @override
   ButtonStyle get quickReplyButtonStyle => ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(secondaryDark),
-        foregroundColor: WidgetStateProperty.all<Color>(secondary),
-        textStyle: WidgetStateProperty.all<TextStyle>(
-          const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      );
+    backgroundColor: WidgetStateProperty.all<Color>(secondaryDark),
+    foregroundColor: WidgetStateProperty.all<Color>(secondary),
+    textStyle: WidgetStateProperty.all<TextStyle>(
+      const TextStyle(fontWeight: FontWeight.bold),
+    ),
+  );
 
   @override
   Color get htmlTextColor => neutral7;

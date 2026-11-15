@@ -1,3 +1,7 @@
+## 4.1.0
+
+* Minimum Flutter version is 3.47.0. Imports `material_ui` and `cupertino_ui` instead of `package:flutter/material.dart` and `package:flutter/cupertino.dart`, which Flutter 3.50 deprecates. Apps on older Flutter versions keep resolving 4.0.0.
+
 ## 4.0.0
 
 * **BREAKING**: HTML messages render with `flutter_widget_from_html_core` instead of `flutter_html`, which no longer works with the latest `html` package. `onHtmlWidgetPressed` callbacks now take only the URL: replace `(url, _, _) => ...` with `(url) => ...`.

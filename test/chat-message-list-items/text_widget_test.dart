@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:swifty_chat/swifty_chat.dart';
@@ -40,8 +40,9 @@ Future<void> testTextTheme({
 }) async {
   final theme = isLightMode ? const DefaultChatTheme() : const DarkChatTheme();
   final message = isIncomingMessage ? "incomingMessage_1" : "outgoingMessage_1";
-  final messageUser =
-      isIncomingMessage ? MockChatUser.incomingUser : MockChatUser.outgoingUser;
+  final messageUser = isIncomingMessage
+      ? MockChatUser.incomingUser
+      : MockChatUser.outgoingUser;
   await tester.pumpWidget(
     _appContainer(
       Chat(
@@ -64,17 +65,10 @@ Future<void> testTextTheme({
       ? theme.incomingMessageBodyTextStyle
       : theme.outgoingMessageBodyTextStyle;
   final textWidget = tester.widget<Text>(find.text(message));
-  expect(
-    textWidget.style.toString(),
-    textStyle.toString(),
-  );
+  expect(textWidget.style.toString(), textStyle.toString());
 }
 
-Widget _appContainer(Widget child) => MaterialApp(
-      home: Scaffold(
-        body: child,
-      ),
-    );
+Widget _appContainer(Widget child) => MaterialApp(home: Scaffold(body: child));
 
 MessageInputField _messageInputField(Function(String) onSendAction) =>
     MessageInputField(

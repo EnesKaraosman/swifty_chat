@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 
 mixin ChatKeys {
   static const messageInputWidget = 'message_input_widget';

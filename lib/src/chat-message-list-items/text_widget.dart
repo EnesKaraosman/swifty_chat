@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:jiffy/jiffy.dart';
 
 import '../extensions/date_extensions.dart';
@@ -18,40 +18,40 @@ final class TextMessageWidget extends StatelessWidget
 
   @override
   Widget incomingMessageWidget(BuildContext context) => Semantics(
-        label: AccessibilityHelpers.createMessageSemanticLabel(
-          userName: message.user.userName,
-          message: message.messageKind.text ?? '',
-          timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
-          isOutgoing: false,
-        ),
-        child: Row(
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            ...avatarWithPadding(),
-            Flexible(child: _DecoratedText(message: message)),
-            const SizedBox(width: 24),
-          ],
-        ),
-      );
+    label: AccessibilityHelpers.createMessageSemanticLabel(
+      userName: message.user.userName,
+      message: message.messageKind.text ?? '',
+      timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+      isOutgoing: false,
+    ),
+    child: Row(
+      crossAxisAlignment: avatarPosition.alignment,
+      children: [
+        ...avatarWithPadding(),
+        Flexible(child: _DecoratedText(message: message)),
+        const SizedBox(width: 24),
+      ],
+    ),
+  );
 
   @override
   Widget outgoingMessageWidget(BuildContext context) => Semantics(
-        label: AccessibilityHelpers.createMessageSemanticLabel(
-          userName: 'You',
-          message: message.messageKind.text ?? '',
-          timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
-          isOutgoing: true,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: avatarPosition.alignment,
-          children: [
-            const SizedBox(width: 24),
-            Flexible(child: _DecoratedText(message: message)),
-            ...avatarWithPadding(),
-          ],
-        ),
-      );
+    label: AccessibilityHelpers.createMessageSemanticLabel(
+      userName: 'You',
+      message: message.messageKind.text ?? '',
+      timestamp: Jiffy.parseFromDateTime(message.date).fromNow(),
+      isOutgoing: true,
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: avatarPosition.alignment,
+      children: [
+        const SizedBox(width: 24),
+        Flexible(child: _DecoratedText(message: message)),
+        ...avatarWithPadding(),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) => message.isMe
@@ -102,10 +102,7 @@ final class _DecoratedText extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              right: 12,
-              bottom: 6,
-            ),
+            padding: const EdgeInsets.only(right: 12, bottom: 6),
             child: Text(
               message.date.relativeTimeFromNow(),
               style: message.isMe

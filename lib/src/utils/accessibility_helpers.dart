@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Accessibility utilities for WCAG compliance and improved user experience
 final class AccessibilityHelpers {
@@ -102,10 +102,7 @@ final class AccessibilityHelpers {
     double minSize = minimumTouchTargetSize,
   }) {
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        minWidth: minSize,
-        minHeight: minSize,
-      ),
+      constraints: BoxConstraints(minWidth: minSize, minHeight: minSize),
       child: child,
     );
   }
