@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../inherited_chat_theme.dart';
 import '../theme/chat_theme.dart';

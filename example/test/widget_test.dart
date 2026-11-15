@@ -1,7 +1,7 @@
 import 'package:example/advanced_chat.dart';
 import 'package:example/main.dart';
 import 'package:example/material3_example.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 

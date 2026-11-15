@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'chat-message-list-items/carousel_widget.dart';
 import 'chat-message-list-items/html_widget.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Position of the avatar relative to the message bubble
 enum AvatarPosition { top, center, bottom }

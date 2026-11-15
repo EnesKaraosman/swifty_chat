@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:swifty_chat/swifty_chat.dart';
 
 class MockChatUser extends ChatUser {

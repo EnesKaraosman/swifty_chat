@@ -2,7 +2,7 @@ import 'package:example/advanced_chat.dart';
 import 'package:example/basic_chat.dart';
 import 'package:example/custom_message_kind_chat.dart';
 import 'package:example/material3_example.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(const MyApp());
 

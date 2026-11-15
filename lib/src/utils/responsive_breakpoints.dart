@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Responsive breakpoints for adaptive layouts
 /// Follows common breakpoint standards for mobile, tablet, and desktop

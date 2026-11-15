@@ -2,15 +2,18 @@ name: swifty_chat
 description: >-
   A Flutter package to quickly get started building Chat UIs
   with different type of message kinds.
-version: 4.0.0
+version: 4.1.0
 homepage: https://github.com/EnesKaraosman/swifty_chat
 repository: https://github.com/EnesKaraosman/swifty_chat
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
-  flutter: ">=3.41.0"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
 
 dependencies:
+  # https://pub.dev/packages/cupertino_ui
+  cupertino_ui: ^1.1.6
+
   # https://pub.dev/packages/equatable
   equatable: ^3.0.0
 
@@ -25,6 +28,9 @@ dependencies:
 
   # https://pub.dev/packages/jiffy
   jiffy: ^6.4.5
+
+  # https://pub.dev/packages/material_ui
+  material_ui: ^1.11.0
 
   # https://pub.dev/packages/url_launcher
   url_launcher: ^6.3.2
